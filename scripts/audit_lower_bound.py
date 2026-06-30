@@ -66,7 +66,7 @@ def suffix_step_bound(K,m_worst,s,cap=200):
     E=term/(3*K*LOG2L)
     return E,min_vf
 
-def audit(m_worst, expected=False):
+def audit(m_worst):
     print('m_worst',m_worst)
     rows=[]
     for idx,s in enumerate(S_STAGES):
@@ -80,4 +80,11 @@ def audit(m_worst, expected=False):
         print(rows[-1])
     return rows
 
-for m in [95,96,98,105]: audit(m)
+def main():
+    results = {m: audit(m) for m in [95, 96, 98, 105]}
+    if not all(row[-1] for row in results[96]):
+        raise SystemExit('m=96 lower-bound audit failed')
+
+
+if __name__ == '__main__':
+    main()

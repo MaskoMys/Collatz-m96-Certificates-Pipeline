@@ -1,0 +1,44 @@
+name: Smoke
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install GMP
+        run: sudo apt-get update && sudo apt-get install -y g++ libgmp-dev
+
+      - name: Compile Python scripts
+        run: python3 -m py_compile scripts/*.py
+
+      - name: Run exact audit scripts
+        run: |
+          python3 scripts/certify_constants.py
+          python3 scripts/audit_lower_bound.py
+
+      - name: Build m96 search engine
+        run: |
+          mkdir -p build
+          g++ -O3 -std=c++17 src/m96/affine_ladder_prefix.cpp -lgmpxx -lgmp \
+            -o build/affine_ladder_prefix
+
+      - name: Run and verify k1=1 sample
+        run: |
+          python3 scripts/run_tasks.py \
+            --exe ./build/affine_ladder_prefix \
+            --tasks manifests/tasks_sample_k1_1.jsonl \
+            --out runs_sample \
+            --jobs 1 \
+            --timeout 60
+          python3 scripts/verify_certificate.py \
+            --tasks manifests/tasks_sample_k1_1.jsonl \
+            --runs runs_sample \
+            --source src/m96/affine_ladder_prefix.cpp \
+            --exe ./build/affine_ladder_prefix

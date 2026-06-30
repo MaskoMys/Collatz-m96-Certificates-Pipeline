@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Rigorous certification of the make_case(96) constants in affine_ladder_prefix.cpp.
+Rigorous certification of the make_case(96) constants in src/m96/affine_ladder_prefix.cpp.
 Exact rational/integer arithmetic only. Each check is a sound over-approximation
 guarantee: constants must never EXCLUDE a valid cycle (caps are upper bounds on k_i,
 extra are lower bounds on n_i, the CF bracket decides floor(n*log2 3) exactly).

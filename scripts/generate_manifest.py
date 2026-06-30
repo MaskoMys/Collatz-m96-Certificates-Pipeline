@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import argparse, json, hashlib
+import argparse, hashlib, json, sys
 from pathlib import Path
 
 
@@ -13,18 +13,27 @@ def sha256_file(path: Path) -> str:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--out', default='tasks.jsonl')
+    ap.add_argument('--out', default='manifests/tasks.jsonl')
     ap.add_argument('--mode', choices=['k1'], default='k1')
     ap.add_argument('--m', type=int, default=96)
     ap.add_argument('--k1-min', type=int, default=1)
     ap.add_argument('--k1-max', type=int, default=75)
     ap.add_argument('--verbose', type=int, default=0)
     ap.add_argument('--enum-threshold', type=int, default=256)
-    ap.add_argument('--source', default='affine_ladder_prefix.cpp')
+    ap.add_argument('--source', default='src/m96/affine_ladder_prefix.cpp')
     args = ap.parse_args()
 
-    source_hash = sha256_file(Path(args.source)) if Path(args.source).exists() else None
-    with open(args.out, 'w', encoding='utf-8') as out:
+    if args.k1_min < 1 or args.k1_max < args.k1_min:
+        raise SystemExit('invalid k1 range')
+
+    source = Path(args.source)
+    if not source.is_file():
+        raise SystemExit(f'source file does not exist: {source}')
+
+    source_hash = sha256_file(source)
+    out_path = Path(args.out)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    with out_path.open('w', encoding='utf-8') as out:
         header = {
             'kind': 'header',
             'cover': f'm{args.m}_k1_{args.k1_min}_{args.k1_max}',
@@ -50,4 +59,8 @@ def main():
             out.write(json.dumps(task, sort_keys=True) + '\n')
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except Exception as e:
+        print(f'ERROR: {e}', file=sys.stderr)
+        sys.exit(1)

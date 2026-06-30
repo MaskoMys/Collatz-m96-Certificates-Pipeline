@@ -6,9 +6,9 @@
   "k1_max": 75,
   "requires_lemmas": [
     "Every m=96 cycle in the reduced Hercher/Simons-de Weger model satisfies 1 <= k1 <= 75.",
-    "For fixed k1, affine_ladder_prefix.cpp recursively enumerates all legal downstream valuations under the stated caps and lower-bound stages.",
+    "For fixed k1, src/m96/affine_ladder_prefix.cpp recursively enumerates all legal downstream valuations under the stated caps and lower-bound stages.",
     "The lower-bound stages and caps in make_case(96) are valid consequences of the imported m-cycle inequalities."
   ],
   "engine_case": 96,
-  "engine_source": "affine_ladder_prefix.cpp"
+  "engine_source": "src/m96/affine_ladder_prefix.cpp"
 }

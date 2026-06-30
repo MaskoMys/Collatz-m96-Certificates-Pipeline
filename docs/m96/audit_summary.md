@@ -5,9 +5,12 @@ Audit of `m96_certificate_pipeline` on a single-core sandbox. Source SHA-256 mat
 exactly (`HUG_PRUNES=5, HITS=0, PASS`). Below, "certified" means proved by exact arithmetic here;
 "imported" means it is the Hercher/Simons–de Weger reduction content = your point 3.
 
+Repository status note: this is a partial audit record. It documents completed checks and
+remaining work; it is not a complete 75-branch certificate archive.
+
 ## Point 5 — constant certification (DONE, all pass)
 
-`certify_constants.py` checks every constant in `make_case(96)` with exact rational/integer
+`scripts/certify_constants.py` checks every constant in `make_case(96)` with exact rational/integer
 arithmetic. Each is a *soundness* check: a cap must be an upper bound on `k_i`, a stage must be a
 lower bound on `n_i`, the CF bracket must decide `⌊n·log2 3⌋`. Results:
 
@@ -22,7 +25,7 @@ lower bound on `n_i`, the CF bracket must decide `⌊n·log2 3⌋`. Results:
   (Paper 2). OK.
 - **Lower-bound stages** `extra=[…,3·2^74,7·2^117,⌈93·2^189/50⌉]`: the rounded term is exact;
   the stages are strictly increasing (`2^75.6 < 2^119.8 < 2^189.9`). OK.
-- **Staged audit** `audit_lower_bound.py` **accepts for m=96** (all 6 stages `True`); it fails the last
+- **Staged audit** `scripts/audit_lower_bound.py` **accepts for m=96** (all 6 stages `True`); it fails the last
   stage for m=98 and m=105, consistent with m=96 sitting at the provable boundary.
 
 Caveat: this certifies the constants are *correctly computed and sound given the imported inequalities*
@@ -31,7 +34,7 @@ inequalities is point 3.
 
 ## Point 4 — fixed-branch completeness (DONE, written up)
 
-`completeness_proof.md` proves Lemma 2: for fixed `k1`, the recursion enumerates **every** admissible
+`docs/m96/fixed_branch_completeness.md` proves Lemma 2: for fixed `k1`, the recursion enumerates **every** admissible
 downstream pattern. Key points verified against the source:
 
 - The block map `n_{i+1}=(3^{k_i}a_i−1)/2^{ℓ_i}`, `a_{i+1}=(n_{i+1}+1)/2^{k_{i+1}}` is the exact
@@ -82,7 +85,7 @@ plateaus.
 
 This is well within reach on a normal multi-core machine; it is only impractical in this single-core,
 short-window sandbox. The hard branches can be run one-by-one (`./affine_ladder_prefix 96 K 0 256`)
-and checked with `verify_certificate.py`.
+and checked with `scripts/verify_certificate.py`.
 
 ## What remains for the record
 
@@ -98,7 +101,7 @@ a setting that changes the asymptotics, so I did not alter the verified engine; 
 may shave constant factors on a cluster.
 
 ## Deliverables
-- `certify_constants.py` — exact certification of all make_case(96) constants (run: `python3 certify_constants.py`).
-- `completeness_proof.md` — rigorous Lemma 2 proof (point 4).
-- `branch_results.txt` — per-branch timings and HITS=0 confirmations.
+- `scripts/certify_constants.py` — exact certification of all make_case(96) constants.
+- `docs/m96/fixed_branch_completeness.md` — rigorous Lemma 2 proof (point 4).
+- `docs/m96/branch_results.txt` — per-branch timings and HITS=0 confirmations.
 - this summary.

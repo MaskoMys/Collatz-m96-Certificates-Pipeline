@@ -4,6 +4,11 @@ This document records the complete logical interface between the published
 Collatz-cycle literature and the finite search. It is intended to make the
 normalizations and constants independently auditable.
 
+Repository status note: this file describes the intended complete certificate
+interface. The current repository snapshot contains the branch pipeline and
+partial audit scripts, but it does not yet contain the full analytic certificate
+JSON or all 75 raw branch logs.
+
 ## 1. Common notation
 
 Use the shortcut Collatz map
@@ -156,9 +161,10 @@ bound for
 0<\frac{K+L}{K}-\delta.
 \]
 
-`code/m96/certify_reduction.py` evaluates the bound using exact fractions and
-certified logarithm intervals. With the published lower input for `K` and the
-Barina floor, the first Farey-neighbor certificate forces
+In the intended full release, an exact reduction certificate evaluates the bound
+using exact fractions and certified logarithm intervals. With the published
+lower input for `K` and the Barina floor, the first Farey-neighbor certificate
+forces
 
 \[
 K\ge K_0:=205{,}632{,}218{,}873{,}398{,}596{,}256.
@@ -203,8 +209,9 @@ n_7\ge7\cdot2^{117},\qquad
 n_8\ge\left\lceil\frac{93}{50}2^{189}\right\rceil.
 \]
 
-Every one of these numerical implications is rechecked in
-`certificates/m96_reduction_certificate.json`.
+Every one of these numerical implications should be rechecked in the final
+analytic certificate archive. This repository currently includes the supporting
+stage audit in `scripts/audit_lower_bound.py`.
 
 The source-level proof in `FIXED_BRANCH_COMPLETENESS.md` shows that, for each
 fixed `k1`, the search partitions the entire admissible set by the exact

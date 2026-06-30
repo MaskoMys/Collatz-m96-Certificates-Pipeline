@@ -1,9 +1,9 @@
-# Fixed-branch completeness of `affine_ladder_prefix.cpp` (Lemma 2)
+# Fixed-branch completeness of `src/m96/affine_ladder_prefix.cpp` (Lemma 2)
 
-This document is the independent source audit required by point 4 / `branch_cover_theorem.md`
+This document is the independent source audit required by point 4 / `docs/m96/branch_cover_theorem.md`
 Lemma 2: *for fixed `k1=j`, the C++ recursion enumerates every downstream valuation pattern
 allowed by the reduced model.* It establishes completeness **conditional on** the five imported
-facts (A)–(E) listed in §7, which are certified separately (`certify_constants.py`) or are the
+facts (A)–(E) listed in §7, which are certified separately (`scripts/certify_constants.py`) or are the
 branch-cover content (point 3).
 
 Throughout, all engine arithmetic is exact GMP integer arithmetic; there is no floating point in
@@ -94,7 +94,7 @@ below the cutoff. The walk stops at `kmax = min(⌊log2(n_{i+1,max}+1)⌋, kcap[
 - `⌊log2(n_{i+1,max}+1)⌋` is a hard arithmetic bound: `ν_2(N) ≤ ⌊log2 N⌋` for any `N`, so no admissible
   `k_{i+1}` exceeds it;
 - `kcap[i+1]` is the imported valuation cap. Dropping `k_{i+1} > kcap[i+1]` is sound **iff** the cap is
-  a valid upper bound (fact (A)); `certify_constants.py` checks each `kcap[i] ≥ ⌈(317/200)^{i-1}·76⌉−1`,
+  a valid upper bound (fact (A)); `scripts/certify_constants.py` checks each `kcap[i] ≥ ⌈(317/200)^{i-1}·76⌉−1`,
   the largest integer below the imported bound `k_i < α^{i-1}·log2(n_1+1)` with `α<317/200`,
   `log2(n_1+1)<76`.
 
@@ -145,13 +145,14 @@ rejects. So this guard cannot silently hide a survivor.
 - **(A)** the caps `kcap[i]` are valid upper bounds for `k_i` (certified given the imported
   `k_{i+j} < α^j log2(n_1+1)`, `α<317/200`, `n_1<2^{76}`);
 - **(B)** the stage bounds `extra[i]` are valid lower bounds for `n_i` (imported m-cycle reduction;
-  the staged audit `audit_lower_bound.py` accepts for `m=96`);
+  the staged audit `scripts/audit_lower_bound.py` accepts for `m=96`);
 - **(C)** the height window `n_1 ∈ [2^{71}, 29·2^{71}]` is valid (imported);
 - **(D)** the hugging/frontier data (`floor_alpha`, `FIRST_POSITIVE_SURPLUS=72057431991`) are valid
   (Paper 2; CF bracket certified);
 - **(E)** the CF bracket decides `⌊n·log2 3⌋` over the used range (certified; self-checking via throw).
 
-Then `affine_ladder_prefix.cpp 96 "j" ...` enumerates **every** `a_1` (equivalently every downstream
+Then `src/m96/affine_ladder_prefix.cpp`, compiled and run as `affine_ladder_prefix 96 "j" ...`,
+enumerates **every** `a_1` (equivalently every downstream
 valuation pattern `k_2,…,k_7, ℓ_1,…,ℓ_7`) admissible in the reduced model for that `j`, with the
 `ℓ`- and `k`-branches forming exact partitions and the deterministic tail an exact simulation.
 Consequently `HITS = 0` for branch `j` is a sound proof that the reduced model has no admissible
@@ -169,8 +170,8 @@ cannot hide survivors. Composing these over the at most seven levels, the set of
 ## 8. Scope
 
 This lemma is the *engine-completeness* half of the proof. It does **not** establish (A)–(E)
-themselves: (A),(D),(E) are certified by `certify_constants.py`; (B),(C) are the imported
-Hercher/Simons–de Weger reduction and the staged lower bound (point 3 / `branch_cover_theorem.md`
+themselves: (A),(D),(E) are certified by `scripts/certify_constants.py`; (B),(C) are the imported
+Hercher/Simons–de Weger reduction and the staged lower bound (point 3 / `docs/m96/branch_cover_theorem.md`
 Lemma 1), to be supplied independently. Given (A)–(E) and the branch-cover Lemma 1 (every `m=96`
 cycle has `1 ≤ k1 ≤ 75`), a complete run with `HITS=0` on all 75 branches proves no nontrivial
 `m=96` cycle exists.
