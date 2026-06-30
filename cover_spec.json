@@ -1,0 +1,14 @@
+{
+  "name": "cover_m96_k1_1_75",
+  "m": 96,
+  "description": "Disjoint k1 branch cover for the affine-ladder m=96 reduced search. Each task fixes exactly one first block parameter k1; the search engine recursively enumerates all downstream choices allowed by the model.",
+  "k1_min": 1,
+  "k1_max": 75,
+  "requires_lemmas": [
+    "Every m=96 cycle in the reduced Hercher/Simons-de Weger model satisfies 1 <= k1 <= 75.",
+    "For fixed k1, affine_ladder_prefix.cpp recursively enumerates all legal downstream valuations under the stated caps and lower-bound stages.",
+    "The lower-bound stages and caps in make_case(96) are valid consequences of the imported m-cycle inequalities."
+  ],
+  "engine_case": 96,
+  "engine_source": "affine_ladder_prefix.cpp"
+}
