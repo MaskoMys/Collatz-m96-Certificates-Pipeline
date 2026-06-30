@@ -1,0 +1,19 @@
+# m=96 branch verification results (single-core sandbox), HITS=0 confirmed
+# k1   seconds   status
+1      0.00002   DONE hits=0
+45     149.5     DONE hits=0   (det=312M nodes=16.4M)
+47     61.5      DONE hits=0   (det=117M nodes=6.4M)
+50     18.5      DONE hits=0
+51     8.37      DONE hits=0
+52     4.88      DONE hits=0
+53     2.77      DONE hits=0
+54     1.59      DONE hits=0
+55     0.88      DONE hits=0
+56     0.50      DONE hits=0
+57     0.25      DONE hits=0
+58     0.137     DONE hits=0
+59     0.074     DONE hits=0
+60     0.040     DONE hits=0
+61-75  <0.04 ea  DONE hits=0   (all 15 confirmed HITS=0)
+2      >150      PARTIAL hits=0 so far (det=429M@148s, still running; needs cluster)
+3-44   not run   HARD region (saturated ~150-800s each); run on multi-core
