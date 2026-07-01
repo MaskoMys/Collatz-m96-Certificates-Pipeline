@@ -1,6 +1,5 @@
 import json
 import os
-import signal
 import stat
 import subprocess
 import sys
@@ -228,7 +227,7 @@ class RunTasksTest(unittest.TestCase):
         self.assertEqual(run.returncode, 0, run.stderr + run.stdout)
         self.assertEqual(self.counter_lines(), ["3", "2", "1"])
 
-    def test_lock_blocks_second_runner_and_sigint_quarantines(self):
+    def test_lock_blocks_second_runner_and_stop_quarantines(self):
         write_manifest(self.manifest)
         env = os.environ.copy()
         env["FAKE_SLEEP"] = "5"
@@ -263,7 +262,21 @@ class RunTasksTest(unittest.TestCase):
             self.assertNotEqual(second.returncode, 0)
             self.assertIn("another runner", second.stderr)
 
-            first.send_signal(signal.SIGINT)
+            stop = subprocess.run(
+                [
+                    sys.executable,
+                    str(RUNNER),
+                    "--stop",
+                    "--out",
+                    str(self.out),
+                ],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(stop.returncode, 0, stop.stderr + stop.stdout)
+            self.assertIn('"event": "stop"', stop.stdout)
+
             stdout, stderr = first.communicate(timeout=10)
             self.assertEqual(first.returncode, 130, stderr + stdout)
             self.assertFalse((self.out / "m96_k1_01.meta.json").exists())

@@ -380,6 +380,50 @@ def read_runner_record(outdir):
     return obj
 
 
+def process_cmdline(pid):
+    path = Path("/proc") / str(pid) / "cmdline"
+    if not path.is_file():
+        return None
+    try:
+        data = path.read_bytes()
+    except OSError:
+        return None
+    return data.replace(b"\0", b" ").decode("utf-8", errors="replace").strip()
+
+
+def stop_runner(outdir, human=False):
+    lock_path = Path(outdir) / LOCK_FILE
+    record = read_runner_record(outdir)
+    if record is None:
+        raise SystemExit(f"no runner lock found at {lock_path}")
+    pid = record.get("pid")
+    if not isinstance(pid, int) or pid <= 0:
+        raise SystemExit(f"runner lock has invalid pid: {pid!r}")
+    if not pid_alive(pid):
+        raise SystemExit(f"runner pid {pid} is not alive; remove stale lock {lock_path}")
+
+    cmdline = process_cmdline(pid)
+    if cmdline is not None and "run_tasks.py" not in cmdline:
+        raise SystemExit(
+            f"runner pid {pid} does not look like run_tasks.py; refusing to signal it"
+        )
+
+    os.kill(pid, signal.SIGINT)
+    payload = {
+        "event": "stop",
+        "pid": pid,
+        "signal": "SIGINT",
+        "message": "sent SIGINT; active partial tasks will be quarantined by the runner",
+    }
+    if human:
+        print(
+            f"sent SIGINT to runner pid {pid}; active partial tasks will be quarantined",
+            flush=True,
+        )
+    else:
+        emit(payload)
+
+
 def runner_elapsed_seconds(outdir, running):
     record = read_runner_record(outdir)
     now = time.time()
@@ -1007,9 +1051,14 @@ def main():
     ap.add_argument("--order", choices=("manifest", "asc", "desc"), default="manifest")
     ap.add_argument("--status", action="store_true")
     ap.add_argument(
+        "--stop",
+        action="store_true",
+        help="send SIGINT to the active runner recorded in --out/.runner.lock",
+    )
+    ap.add_argument(
         "--human",
         action="store_true",
-        help="print --status as a human progress summary",
+        help="print --status or --stop in a human-readable form",
     )
     args = ap.parse_args()
 
@@ -1019,8 +1068,14 @@ def main():
         raise SystemExit("--timeout must be non-negative")
     if args.heartbeat_seconds < 0:
         raise SystemExit("--heartbeat-seconds must be non-negative")
-    if not args.status and not args.exe:
-        raise SystemExit("--exe is required unless --status is used")
+    if args.status and args.stop:
+        raise SystemExit("--status and --stop are mutually exclusive")
+    if not (args.status or args.stop) and not args.exe:
+        raise SystemExit("--exe is required unless --status or --stop is used")
+
+    if args.stop:
+        stop_runner(args.out, args.human)
+        return
 
     _header, tasks = load_tasks(args.tasks)
     tasks = order_tasks(tasks, args.order)

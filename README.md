@@ -60,6 +60,16 @@ Watch the detached log with:
 tail -f dist/run_logs/full_run.log
 ```
 
+Interrupt a detached run gracefully with:
+
+```bash
+python3 scripts/run_tasks.py --stop --out dist/runs --human
+```
+
+Completed root artifacts remain in `dist/runs/`; active partial attempts are
+quarantined under `dist/runs/.quarantine/`. Re-run the same start command later
+to resume.
+
 When status reaches `75/75 complete`, run the final verifier:
 
 ```bash
@@ -245,6 +255,17 @@ Watch the detached log:
 ```bash
 tail -f dist/run_logs/full_run.log
 ```
+
+Interrupt a detached run gracefully:
+
+```bash
+python3 scripts/run_tasks.py --stop --out dist/runs --human
+```
+
+This sends `SIGINT` to the active runner recorded in
+`dist/runs/.runner.lock`. The runner terminates active child processes,
+quarantines their partial files, and keeps completed root artifacts untouched.
+Run the same detached command again later to resume from accepted artifacts.
 
 Success criteria for the run:
 

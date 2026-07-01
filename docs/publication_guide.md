@@ -66,6 +66,15 @@ Use a `--jobs` value that leaves the machine responsive. Keep the completed
 `dist/runs/` directory unchanged after verification; any changed log must create
 a new archive version.
 
+To interrupt a detached run gracefully:
+
+```bash
+python3 scripts/run_tasks.py --stop --out dist/runs --human
+```
+
+The runner keeps accepted root artifacts, quarantines active partial attempts,
+and can be resumed later with the same run command.
+
 ## 3. Release Artifact Still Needed
 
 A finished certificate release should add:
