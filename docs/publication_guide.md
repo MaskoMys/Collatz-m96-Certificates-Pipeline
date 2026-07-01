@@ -19,17 +19,17 @@ g++ -O3 -std=c++17 src/m96/affine_ladder_prefix.cpp -lgmpxx -lgmp \
 python3 scripts/certify_constants.py
 python3 scripts/audit_lower_bound.py
 
-rm -rf runs_sample
+rm -rf build/runs_sample
 python3 scripts/run_tasks.py \
   --exe ./build/affine_ladder_prefix \
   --tasks manifests/tasks_sample_k1_1.jsonl \
-  --out runs_sample \
+  --out build/runs_sample \
   --jobs 1 \
   --timeout 60
 
 python3 scripts/verify_certificate.py \
   --tasks manifests/tasks_sample_k1_1.jsonl \
-  --runs runs_sample \
+  --runs build/runs_sample \
   --source src/m96/affine_ladder_prefix.cpp \
   --exe ./build/affine_ladder_prefix
 ```
@@ -41,30 +41,36 @@ The final command should print `"result": "ACCEPT"`.
 For the expensive `m=96` run:
 
 ```bash
-rm -rf runs
+rm -rf dist/runs
+mkdir -p dist/run_logs
 python3 scripts/run_tasks.py \
   --exe ./build/affine_ladder_prefix \
   --tasks manifests/tasks.jsonl \
-  --out runs \
-  --jobs 16 \
-  --timeout 14400
+  --out dist/runs \
+  --jobs 8 \
+  --timeout 0 \
+  --resume \
+  --retry-invalid \
+  --heartbeat-seconds 60 \
+  --progress \
+  --order desc
 
 python3 scripts/verify_certificate.py \
   --tasks manifests/tasks.jsonl \
-  --runs runs \
+  --runs dist/runs \
   --source src/m96/affine_ladder_prefix.cpp \
   --exe ./build/affine_ladder_prefix
 ```
 
-Use half to all available CPU cores for `--jobs`. Keep the completed `runs/`
-directory unchanged after verification; any changed log must create a new
-archive version.
+Use a `--jobs` value that leaves the machine responsive. Keep the completed
+`dist/runs/` directory unchanged after verification; any changed log must create
+a new archive version.
 
 ## 3. Release Artifact Still Needed
 
 A finished certificate release should add:
 
-- `runs/` or an archived equivalent containing all 75 branch logs and metadata;
+- `dist/runs/` or an archived equivalent containing all 75 branch logs and metadata;
 - a whole-file SHA-256 manifest for the release archive;
 - a one-command `verify_all.py` that checks the full release without rerunning
   the expensive search;

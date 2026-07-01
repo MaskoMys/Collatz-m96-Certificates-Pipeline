@@ -3,7 +3,7 @@ PYTHON ?= python3
 
 ENGINE := build/affine_ladder_prefix
 SOURCE := src/m96/affine_ladder_prefix.cpp
-SAMPLE_RUNS := runs_sample
+SAMPLE_RUNS := build/runs_sample
 
 .PHONY: build audit sample verify-sample smoke clean
 

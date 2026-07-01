@@ -1,14 +1,15 @@
 # Build outputs
-build/
-affine_ladder_prefix
+/build/
+/affine_ladder_prefix
+/a.out
 *.o
-*.out
 
 # Generated run artifacts
-runs/
-runs_*/
-*.log
-*.meta.json
+/dist/
+/runs/
+/runs_*/
+/runs_sample/
+/run_logs/
 
 # Python caches
 __pycache__/

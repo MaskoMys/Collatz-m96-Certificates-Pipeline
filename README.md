@@ -13,6 +13,66 @@ claims about shipped raw logs, `verify_all.py`, immutable manifests, and
 supplementary certificates should be read as target release language, not as a
 description of this repository snapshot.
 
+## TL;DR Full Run
+
+From the repository root, start a clean detached full run with:
+
+```bash
+rm -rf build dist
+make build
+
+python3 scripts/generate_manifest.py \
+  --out manifests/tasks.jsonl \
+  --mode k1 \
+  --source src/m96/affine_ladder_prefix.cpp
+
+rm -rf dist/runs
+mkdir -p dist/run_logs
+setsid -f python3 scripts/run_tasks.py \
+  --exe ./build/affine_ladder_prefix \
+  --tasks manifests/tasks.jsonl \
+  --out dist/runs \
+  --jobs 8 \
+  --timeout 0 \
+  --resume \
+  --retry-invalid \
+  --heartbeat-seconds 60 \
+  --progress \
+  --order desc \
+  > dist/run_logs/full_run.log 2>&1
+```
+
+Check status at any time with:
+
+```bash
+watch -t -n 5 'python3 scripts/run_tasks.py \
+  --status \
+  --human \
+  --order desc \
+  --tasks manifests/tasks.jsonl \
+  --out dist/runs \
+  --exe ./build/affine_ladder_prefix'
+```
+
+Watch the detached log with:
+
+```bash
+tail -f dist/run_logs/full_run.log
+```
+
+When status reaches `75/75 complete`, run the final verifier:
+
+```bash
+python3 scripts/verify_certificate.py \
+  --tasks manifests/tasks.jsonl \
+  --runs dist/runs \
+  --source src/m96/affine_ladder_prefix.cpp \
+  --exe ./build/affine_ladder_prefix
+```
+
+Success means the verifier prints `"verified_tasks": 75` and
+`"result": "ACCEPT"`.
+
 ## Repository Layout
 
 ```text
@@ -25,8 +85,26 @@ paper/                   manuscript draft PDF
 .github/workflows/       CI smoke checks
 ```
 
-Generated artifacts such as binaries, logs, and build directories are ignored by
-Git.
+Generated artifacts such as binaries, logs, and certificate run directories are
+ignored by Git.
+
+## Generated Artifacts
+
+Use one standard layout for local/generated files:
+
+- `dist/runs/` is the canonical full-run certificate output directory. Final accepted
+  `{task_id}.log` and `{task_id}.meta.json` files live at its root; runner
+  bookkeeping lives under hidden subdirectories such as `.partial/`, `.status/`,
+  and `.quarantine/`.
+- `dist/run_logs/` is only for terminal/nohup output from long runner processes.
+- `build/` contains the compiled engine and disposable smoke-test outputs such
+  as `build/runs_sample/`.
+
+These paths are ignored by Git. Root-level `runs/`, `run_logs/`, and
+`runs_sample/` are legacy scratch names and are also ignored, but new commands
+should use `dist/` and `build/`. The public proof artifact is not complete until
+the root of `dist/runs/` contains all 75 accepted branch log/meta pairs and the
+verifier accepts them.
 
 ## Current Status
 
@@ -37,7 +115,7 @@ Git.
 - The run record is incomplete: `docs/m96/audit_summary.md` reports 32/75
   branches confirmed, with `k1=2..44` not fully completed in this snapshot.
 - The final public-release pieces described in the manuscript are not present:
-  no `runs/` directory, no complete raw branch archive, no whole-repository
+  no complete `dist/runs/` archive, no whole-repository
   SHA-256 manifest, no `verify_all.py`, and no adversarial verifier suite.
 
 ## Prerequisites
@@ -80,17 +158,17 @@ python3 scripts/audit_lower_bound.py
 Run and verify the one-branch sample:
 
 ```bash
-rm -rf runs_sample
+rm -rf build/runs_sample
 python3 scripts/run_tasks.py \
   --exe ./build/affine_ladder_prefix \
   --tasks manifests/tasks_sample_k1_1.jsonl \
-  --out runs_sample \
+  --out build/runs_sample \
   --jobs 1 \
   --timeout 60
 
 python3 scripts/verify_certificate.py \
   --tasks manifests/tasks_sample_k1_1.jsonl \
-  --runs runs_sample \
+  --runs build/runs_sample \
   --source src/m96/affine_ladder_prefix.cpp \
   --exe ./build/affine_ladder_prefix
 ```
@@ -98,6 +176,12 @@ python3 scripts/verify_certificate.py \
 The verifier should print JSON with `"result": "ACCEPT"`.
 
 ## Full Branch Run
+
+Build the engine first:
+
+```bash
+make build
+```
 
 Regenerate the manifest if the source changes:
 
@@ -108,31 +192,85 @@ python3 scripts/generate_manifest.py \
   --source src/m96/affine_ladder_prefix.cpp
 ```
 
-Run all 75 branches:
+Run all 75 branches. Descending order certifies the easy high-`k1` branches
+first, then continues into the harder low-`k1` region:
 
 ```bash
-rm -rf runs
+mkdir -p dist/run_logs
 python3 scripts/run_tasks.py \
   --exe ./build/affine_ladder_prefix \
   --tasks manifests/tasks.jsonl \
-  --out runs \
-  --jobs 16 \
-  --timeout 14400
+  --out dist/runs \
+  --jobs 8 \
+  --timeout 0 \
+  --resume \
+  --retry-invalid \
+  --heartbeat-seconds 60 \
+  --progress \
+  --order desc
 ```
+
+Detached long run:
+
+```bash
+mkdir -p dist/run_logs
+setsid -f python3 scripts/run_tasks.py \
+  --exe ./build/affine_ladder_prefix \
+  --tasks manifests/tasks.jsonl \
+  --out dist/runs \
+  --jobs 8 \
+  --timeout 0 \
+  --resume \
+  --retry-invalid \
+  --heartbeat-seconds 60 \
+  --progress \
+  --order desc \
+  > dist/run_logs/full_run.log 2>&1
+```
+
+Human-readable status at any time:
+
+```bash
+python3 scripts/run_tasks.py \
+  --status \
+  --human \
+  --order desc \
+  --tasks manifests/tasks.jsonl \
+  --out dist/runs \
+  --exe ./build/affine_ladder_prefix
+```
+
+Watch the detached log:
+
+```bash
+tail -f dist/run_logs/full_run.log
+```
+
+Success criteria for the run:
+
+- the status command eventually reports `75/75 complete`, `running 0`, and
+  `pending 0`;
+- if starting from a clean `dist/runs/`, it should also report `quarantined 0`
+  and `invalid 0`;
+- the root of `dist/runs/` contains 75 `.log` files and 75 `.meta.json` files;
+- hidden runner state under `dist/runs/.partial/`, `.status/`, and
+  `.quarantine/` is not part of the certificate surface.
 
 Verify the resulting branch logs:
 
 ```bash
 python3 scripts/verify_certificate.py \
   --tasks manifests/tasks.jsonl \
-  --runs runs \
+  --runs dist/runs \
   --source src/m96/affine_ladder_prefix.cpp \
   --exe ./build/affine_ladder_prefix
 ```
 
 This branch verifier checks the task cover, source hash, metadata, exact engine
 arguments, exit status, timeouts, raw-log hashes, unique summary markers, branch
-range, and all parsed `HITS=` counters.
+range, and all parsed `HITS=` counters. The full branch run is accepted only
+when this verifier prints JSON with `"verified_tasks": 75` and
+`"result": "ACCEPT"`.
 
 ## Trust Boundary
 

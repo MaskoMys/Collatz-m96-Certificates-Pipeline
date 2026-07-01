@@ -110,7 +110,11 @@ def audit_run_files(runs, tasks):
         expected.add(f'{tid}.log')
         expected.add(f'{tid}.meta.json')
 
-    actual = {p.name for p in runs.iterdir() if p.is_file()}
+    actual = {
+        p.name
+        for p in runs.iterdir()
+        if p.is_file() and not p.name.startswith('.')
+    }
     extra = sorted(actual - expected)
     missing = sorted(expected - actual)
     if missing:
@@ -119,10 +123,8 @@ def audit_run_files(runs, tasks):
         raise AssertionError(f'unexpected run files {extra[:5]}')
 
 
-def verify_one(task, runs, exe=None):
+def verify_artifact_pair(task, log, meta, exe=None):
     tid = require_task_id(task)
-    log = runs / f'{tid}.log'
-    meta = runs / f'{tid}.meta.json'
     if not log.is_file():
         raise AssertionError(f'missing log {log}')
     if not meta.is_file():
@@ -170,10 +172,17 @@ def verify_one(task, runs, exe=None):
     return {'task_id': tid, 'log_sha256': m['log_sha256']}
 
 
+def verify_one(task, runs, exe=None):
+    tid = require_task_id(task)
+    log = runs / f'{tid}.log'
+    meta = runs / f'{tid}.meta.json'
+    return verify_artifact_pair(task, log, meta, exe)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--tasks', default='manifests/tasks.jsonl')
-    ap.add_argument('--runs', default='runs')
+    ap.add_argument('--runs', default='dist/runs')
     ap.add_argument('--source', default='src/m96/affine_ladder_prefix.cpp')
     ap.add_argument('--exe', help='optional executable path to require in run metadata')
     args = ap.parse_args()
