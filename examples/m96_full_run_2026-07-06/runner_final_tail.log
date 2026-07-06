@@ -1,0 +1,120 @@
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 120666.47872447968, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 473831.54908823967, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 120726.49262833595, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 473891.56299209595, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 120786.53451991081, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 473951.6048836708, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 120846.57153606415, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 474011.64189982414, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 120906.59620952606, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 474071.66657328606, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 120966.62549161911, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 474131.6958553791, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 121026.68738555908, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 474191.7577493191, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 121086.70126581192, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 474251.7716295719, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 121146.74828910828, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 474311.81865286827, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 121206.81184148788, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 474371.8822052479, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 121266.83038830757, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 474431.90075206757, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 121326.84889006615, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 474491.91925382614, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 121386.88178753853, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 474551.9521512985, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 121446.9090616703, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 474611.9794254303, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 121506.92910194397, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 474671.99946570396, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 121566.9451122284, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 474732.0154759884, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 121626.95654892921, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 474792.0269126892, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 121686.96837449074, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 474852.03873825073, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 121746.98049139977, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 474912.05085515976, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 121806.99325728416, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 474972.06362104416, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 121867.00508785248, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 475032.0754516125, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 121927.01764464378, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 475092.0880084038, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 121987.03239607811, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 475152.1027598381, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d11h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 122047.04783725739, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 475212.1182010174, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d12h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 122107.05956172943, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 475272.1299254894, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d12h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 122167.07096838951, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 475332.1413321495, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d12h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 122227.08239746094, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 475392.15276122093, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d12h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 122287.09382343292, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 475452.1641871929, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d12h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"active": [{"elapsed_seconds": 122347.10556173325, "k1": 4, "log_bytes": 0, "pid": 3523174, "task_id": "m96_k1_04"}], "completed": 74, "elapsed_seconds": 475512.17592549324, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 1, "skipped": 0, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5d12h
+active:
+  m96_k1_04 k1=4 pid=3523174 elapsed=1d09h log=0B
+{"cmd": ["./build/affine_ladder_prefix", "96", "4", "0", "256"], "exit_code": 0, "log_sha256": "91202e38f53170547a015a992332c15b608991f7e4f75863c9f6e1493428c290", "seconds": 122400.11588144302, "task_id": "m96_k1_04", "timed_out": false}
+[##############################] 75/75 complete (100.0%) | running 0 | pending 0 | quarantined 0 | elapsed 5d12h

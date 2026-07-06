@@ -5,8 +5,9 @@ Audit of `m96_certificate_pipeline` on a single-core sandbox. Source SHA-256 mat
 exactly (`HUG_PRUNES=5, HITS=0, PASS`). Below, "certified" means proved by exact arithmetic here;
 "imported" means it is the Hercher/Simons–de Weger reduction content = your point 3.
 
-Repository status note: this is a partial audit record. It documents completed checks and
-remaining work; it is not a complete 75-branch certificate archive.
+Repository status note: this audit began as a partial sandbox record. As of 2026-07-06, the full
+75-branch computational run has completed and is archived in
+`examples/m96_full_run_2026-07-06/`.
 
 ## Point 5 — constant certification (DONE, all pass)
 
@@ -55,43 +56,49 @@ downstream pattern. Key points verified against the source:
 Completeness holds **conditional on** (A) caps, (B) stages, (C) window, (D) hugging/frontier, (E) CF
 bracket — i.e. exactly the constants certified above plus the imported reduction.
 
-## Points 1, 2 — branch runs (32/75 confirmed, all HITS=0)
+## Points 1, 2 — branch runs (75/75 confirmed, all HITS=0)
 
-Single core, so branches run serially. Cost falls monotonically with k1; **every branch run to
-completion returns HITS=0**:
+The committed full-run example verifies all manifest branches:
 
-| region | branches | result |
-|---|---|---|
-| k1 = 1 | 1 | HITS=0 (instant) |
-| k1 = 45–75 | 31 | HITS=0 (149.5 s … <0.04 s) |
-| k1 = 2 | 1 | HITS=0 so far (partial, det=429M @148 s, unfinished) |
-| k1 = 3–44 | 42 | hard region — not run here (see estimate) |
+```json
+{
+  "combined_log_hash": "d8f99127dceeccd3a9fbcee254a0334fa9940a9cc8d231801e7d46adcd0b2f65",
+  "cover": "m96_k1_1_75",
+  "result": "ACCEPT",
+  "verified_tasks": 75
+}
+```
 
-So 32 of 75 branches are fully confirmed HITS=0; no branch has ever produced a hit. Representative
-completed hard-ish points: k1=45 → 149.5 s (det 312M), k1=47 → 61.5 s, k1=50 → 18.5 s.
+The accepted output surface is `examples/m96_full_run_2026-07-06/runs/`.
+Every branch exits with code 0, `timed_out=false`, `RESULT: PASS`, and `HITS=0`.
+The verifier checks the manifest cover, source hash, command metadata, log hashes,
+result markers, hit counts, and branch ranges.
 
-## Calibrated total-cost estimate
+## Realized computational cost
 
-Cost grows ×1.8 per unit decrease in k1 for k1≥52, **decelerating to ×1.5 below k1=50**, and
-**saturating** for small k1: k1=2 reaches det=429M at 148 s — larger than k1=45's *total* (312M) but
-the same order of magnitude, not exponentially larger. The level-5 combination count is bounded by
-`kcap` (independent of k1), so once the a_1 range covers all combinations (k1≲44) the per-branch cost
-plateaus.
+The completed example was run on an AMD Ryzen 5 3600 using `--jobs 8`,
+`--timeout 0`, and descending branch order. The run took approximately
+5d 12h 6m wall time and 990.49 summed branch CPU-hours.
 
-- **Fast region k1=45–75 (31 branches):** ≈ **250 s total** on 1 core (measured).
-- **Hard region k1=2–44 (43 branches):** saturated at ≈ **150–800 s each** → **1.8–9.6 core-hours**.
-- **Grand total ≈ 2–10 core-hours** on 1 core; on the author's `--jobs 16` design, **≈ 20–40 min
-  wall-clock**. Memory per branch is modest (progressions + ~few-thousand-bit GMP integers).
+The earlier sandbox estimate in this document was too optimistic; the real low-`k1`
+branches were much more expensive. Representative completed timings:
 
-This is well within reach on a normal multi-core machine; it is only impractical in this single-core,
-short-window sandbox. The hard branches can be run one-by-one (`./affine_ladder_prefix 96 K 0 256`)
-and checked with `scripts/verify_certificate.py`.
+| branch | seconds | hours |
+|---:|---:|---:|
+| k1 = 12 | 214381.379 | 59.550 |
+| k1 = 11 | 206819.943 | 57.450 |
+| k1 = 9 | 202954.307 | 56.376 |
+| k1 = 10 | 197782.945 | 54.940 |
+| k1 = 8 | 194269.332 | 53.964 |
+| k1 = 19 | 116780.018 | 32.439 |
+| k1 = 20 | 103954.022 | 28.876 |
+| k1 = 1 | 0.501 | 0.000139 |
+
+See `examples/m96_full_run_2026-07-06/branch_timings.tsv` for the full table.
 
 ## What remains for the record
 
-1. **Run k1 = 2–44 to completion** on multi-core hardware and confirm HITS=0 (≈ 20–40 min on 16 cores).
-   32/75 are already confirmed; nothing suggests any hit.
-2. **Point 3 (branch cover, your analytical work):** prove every m=96 cycle has `1 ≤ k1 ≤ 75` and that
+1. **Point 3 (branch cover, your analytical work):** prove every m=96 cycle has `1 ≤ k1 ≤ 75` and that
    the depth-7 prefix with these stages covers it. Points 4–5 above make the engine and constants
    sound *given* this; it is the remaining gap to the unconditional theorem.
 
@@ -103,5 +110,6 @@ may shave constant factors on a cluster.
 ## Deliverables
 - `scripts/certify_constants.py` — exact certification of all make_case(96) constants.
 - `docs/m96/fixed_branch_completeness.md` — rigorous Lemma 2 proof (point 4).
-- `docs/m96/branch_results.txt` — per-branch timings and HITS=0 confirmations.
+- `examples/m96_full_run_2026-07-06/` — accepted 75-branch run, verifier output, and timings.
+- `docs/m96/branch_results.txt` — historical early per-branch timing notes.
 - this summary.

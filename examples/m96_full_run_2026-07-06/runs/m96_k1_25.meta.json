@@ -1,0 +1,14 @@
+{
+  "cmd": [
+    "./build/affine_ladder_prefix",
+    "96",
+    "25",
+    "0",
+    "256"
+  ],
+  "exit_code": 0,
+  "log_sha256": "e0ec993f5d618468be7c6dbecc7312fdbd951c8671b8537174960f7b04c62aa8",
+  "seconds": 49218.98911881447,
+  "task_id": "m96_k1_25",
+  "timed_out": false
+}

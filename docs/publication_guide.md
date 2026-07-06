@@ -3,9 +3,10 @@
 This guide tracks what must be true before this repository should be advertised
 as a completed public certificate release.
 
-The current checkout is a reorganized, partial pipeline. It is suitable for
-reviewing the source, manifests, proof notes, and smoke-test verifier. It is not
-yet the immutable supplementary archive described by the manuscript PDF.
+The current checkout is a reorganized pipeline with a committed full branch-run
+example. It is suitable for reviewing the source, manifests, proof notes,
+smoke-test verifier, and one accepted 75-branch output. It is not yet the
+immutable supplementary archive described by the manuscript PDF.
 
 ## 1. Local Smoke Check
 
@@ -75,11 +76,14 @@ python3 scripts/run_tasks.py --stop --out dist/runs --human
 The runner keeps accepted root artifacts, quarantines active partial attempts,
 and can be resumed later with the same run command.
 
-## 3. Release Artifact Still Needed
+An accepted example output is committed at
+`examples/m96_full_run_2026-07-06/`. It was run with `--jobs 8` on an AMD Ryzen
+5 3600 and accepted all 75 tasks.
+
+## 3. Release Pieces Still Needed
 
 A finished certificate release should add:
 
-- `dist/runs/` or an archived equivalent containing all 75 branch logs and metadata;
 - a whole-file SHA-256 manifest for the release archive;
 - a one-command `verify_all.py` that checks the full release without rerunning
   the expensive search;

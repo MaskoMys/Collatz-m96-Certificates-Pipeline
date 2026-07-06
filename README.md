@@ -5,8 +5,9 @@ Hercher/Simons--de Weger style `m=96` Collatz cycle route.
 
 It is **not yet a complete public proof artifact**. The current repository can
 build the search engine, generate the 75-branch task manifest, run branches, and
-verify branch logs. A completed certificate release still requires all 75 raw
-branch logs, final analytic certificates, and an accepted full verifier run.
+verify branch logs. It now includes one completed 75-branch run example, but a
+completed public certificate release still requires final analytic certificates,
+whole-release manifests, and release packaging.
 
 The manuscript PDF in `paper/` describes the intended complete release. Its
 claims about shipped raw logs, `verify_all.py`, immutable manifests, and
@@ -91,6 +92,7 @@ scripts/                 manifest, runner, verifier, and audit scripts
 manifests/               branch-cover manifests and cover specification
 docs/m96/                m=96 proof notes, audits, and partial run status
 docs/                    broader notes and publication-readiness guide
+examples/                verified run examples and compact reports
 paper/                   manuscript draft PDF
 .github/workflows/       CI smoke checks
 ```
@@ -116,17 +118,22 @@ should use `dist/` and `build/`. The public proof artifact is not complete until
 the root of `dist/runs/` contains all 75 accepted branch log/meta pairs and the
 verifier accepts them.
 
+Committed examples live under `examples/`; these are intentionally small,
+reviewable snapshots of accepted outputs rather than scratch run directories.
+
 ## Current Status
 
 - Constants and local arithmetic checks pass with exact integer/rational
   arithmetic.
 - The `k1=1` sample branch rebuilds and verifies successfully.
 - The full `k1=1..75` manifest exists in `manifests/tasks.jsonl`.
-- The run record is incomplete: `docs/m96/audit_summary.md` reports 32/75
-  branches confirmed, with `k1=2..44` not fully completed in this snapshot.
+- A full `k1=1..75` branch run example is committed at
+  `examples/m96_full_run_2026-07-06/`; `scripts/verify_certificate.py` accepts
+  all 75 tasks with combined log hash
+  `d8f99127dceeccd3a9fbcee254a0334fa9940a9cc8d231801e7d46adcd0b2f65`.
 - The final public-release pieces described in the manuscript are not present:
-  no complete `dist/runs/` archive, no whole-repository
-  SHA-256 manifest, no `verify_all.py`, and no adversarial verifier suite.
+  no whole-repository SHA-256 manifest, no `verify_all.py`, no adversarial
+  verifier suite, and no final release package.
 
 ## Prerequisites
 
