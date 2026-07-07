@@ -1,0 +1,44 @@
+{
+  "branch_cpu_hours_sum": 990.4899026391241,
+  "branch_cpu_seconds_sum": 3565763.649500847,
+  "captured_at": "2026-07-06T22:00:03.534064Z",
+  "combined_log_hash": "d8f99127dceeccd3a9fbcee254a0334fa9940a9cc8d231801e7d46adcd0b2f65",
+  "cover": "m96_k1_1_75",
+  "fastest_task": {
+    "exit_code": 0,
+    "hits": "0",
+    "hours": 0.00013907949129740398,
+    "k1": 1,
+    "log_sha256": "4938ebe4ad0afb8fbde24ef5cec820fc770a1a0294b1d75e7dec95e0151a4068",
+    "result": "PASS",
+    "seconds": 0.5006861686706543,
+    "task_id": "m96_k1_01",
+    "timed_out": false
+  },
+  "machine": {
+    "cores_per_socket": "6",
+    "kernel": "Linux sinruda 7.0.13-zen1-1-zen #1 ZEN SMP PREEMPT_DYNAMIC Tue, 23 Jun 2026 11:14:06 +0000 x86_64 GNU/Linux",
+    "logical_cpus": "12",
+    "model_name": "AMD Ryzen 5 3600 6-Core Processor",
+    "sockets": "1",
+    "threads_per_core": "2"
+  },
+  "result": "ACCEPT",
+  "runner_jobs": 8,
+  "runner_order": "desc",
+  "runner_timeout": 0,
+  "slowest_task": {
+    "exit_code": 0,
+    "hits": "0",
+    "hours": 59.55038311706649,
+    "k1": 12,
+    "log_sha256": "7df1da547f3b19f6758b903f6f24dbf68b3df65f4fd05cbd847a2bddb7769e86",
+    "result": "PASS",
+    "seconds": 214381.37922143936,
+    "task_id": "m96_k1_12",
+    "timed_out": false
+  },
+  "source_sha256": "2e364660d26cd7d06ea07f22d555e8b758bc75955b7d71e0a98fb98f846ba3b0",
+  "verified_tasks": 75,
+  "wall_seconds_from_runner_log": 475565
+}

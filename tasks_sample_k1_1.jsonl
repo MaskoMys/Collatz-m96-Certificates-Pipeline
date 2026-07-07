@@ -1,2 +1,0 @@
-{"cover": "m96_sample_k1_1", "engine_args_schema": ["m", "prefix_csv", "verbose", "enum_threshold"], "k1_max": 1, "k1_min": 1, "kind": "header", "m": 96, "source": "affine_ladder_prefix.cpp", "source_sha256": "2e364660d26cd7d06ea07f22d555e8b758bc75955b7d71e0a98fb98f846ba3b0"}
-{"enum_threshold": 256, "expected": {"exit_code": 0, "hits": 0, "result": "PASS"}, "fixed_prefix": "1", "k1": 1, "kind": "task", "m": 96, "task_id": "m96_k1_01", "verbose": 0}

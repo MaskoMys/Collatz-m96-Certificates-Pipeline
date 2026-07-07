@@ -1,0 +1,22 @@
+# Build outputs
+/build/
+/affine_ladder_prefix
+/a.out
+*.o
+
+# Generated run artifacts
+/dist/
+/runs/
+/runs_*/
+/runs_sample/
+/run_logs/
+
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local/editor files
+.DS_Store
+*.swp
+*~
