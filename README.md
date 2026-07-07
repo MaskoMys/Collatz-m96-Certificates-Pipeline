@@ -3,10 +3,7 @@
 This repository contains a partial, exact-arithmetic certificate pipeline for the
 Hercher/Simons--de Weger style `m=96` Collatz cycle route.
 
-It is **not yet a complete public proof artifact**. The current repository can
-build the search engine, generate the 75-branch task manifest, run branches, and
-verify branch logs. It now includes one completed 75-branch run example, but a
-completed public certificate release still requires final analytic certificates,
+The current repository can build the search engine, generate the 75-branch task manifest, run branches, and verify branch logs. It now includes one completed 75-branch run example, but a completed public certificate release still requires final analytic certificates,
 whole-release manifests, and release packaging.
 
 The manuscript PDF in `paper/` describes the intended complete release. Its
