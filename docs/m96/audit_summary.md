@@ -11,9 +11,11 @@ Repository status note: this audit began as a partial sandbox record. As of 2026
 
 ## Point 5 — constant certification (DONE, all pass)
 
-`scripts/certify_constants.py` checks every constant in `make_case(96)` with exact rational/integer
-arithmetic. Each is a *soundness* check: a cap must be an upper bound on `k_i`, a stage must be a
-lower bound on `n_i`, the CF bracket must decide `⌊n·log2 3⌋`. Results:
+`scripts/certify_constants.py` now checks the exact source tables for
+`make_case(92)` through `make_case(96)`. For this `m=96` audit, it checks every
+constant in `make_case(96)` with exact rational/integer arithmetic. Each is a
+*soundness* check: a cap must be an upper bound on `k_i`, a stage must be a lower
+bound on `n_i`, the CF bracket must decide `⌊n·log2 3⌋`. Results:
 
 - **α = 317/200 > log2 3** (and integer witness `3^200 < 2^317`). OK.
 - **Height window**: `29·2^71 < 2^76` and `log2(29·2^71+1) < 76` (so `log2(n_1+1)<76` is usable). OK.
@@ -108,7 +110,7 @@ a setting that changes the asymptotics, so I did not alter the verified engine; 
 may shave constant factors on a cluster.
 
 ## Deliverables
-- `scripts/certify_constants.py` — exact certification of all make_case(96) constants.
+- `scripts/certify_constants.py` — exact certification of all configured source tables, including all make_case(96) constants.
 - `docs/m96/fixed_branch_completeness.md` — rigorous Lemma 2 proof (point 4).
 - `examples/m96_full_run_2026-07-06/` — accepted 75-branch run, verifier output, and timings.
 - `docs/m96/branch_results.txt` — historical early per-branch timing notes.

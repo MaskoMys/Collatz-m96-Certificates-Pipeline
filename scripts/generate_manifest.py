@@ -6,6 +6,15 @@ import sys
 from pathlib import Path
 
 
+CASE_K1_MAX = {
+    92: 73,
+    93: 74,
+    94: 75,
+    95: 75,
+    96: 75,
+}
+
+
 def sha256_file(path: Path) -> str:
     h = hashlib.sha256()
     with path.open("rb") as f:
@@ -20,14 +29,29 @@ def main():
     ap.add_argument("--mode", choices=["k1"], default="k1")
     ap.add_argument("--m", type=int, default=96)
     ap.add_argument("--k1-min", type=int, default=1)
-    ap.add_argument("--k1-max", type=int, default=75)
+    ap.add_argument(
+        "--k1-max",
+        type=int,
+        help="inclusive k1 maximum; defaults to the supported case range",
+    )
     ap.add_argument("--verbose", type=int, default=0)
     ap.add_argument("--enum-threshold", type=int, default=256)
     ap.add_argument("--source", default="src/m96/affine_ladder_prefix.cpp")
     args = ap.parse_args()
 
+    if args.m not in CASE_K1_MAX:
+        supported = ", ".join(str(m) for m in sorted(CASE_K1_MAX))
+        raise SystemExit(f"unsupported m={args.m}; supported cases: {supported}")
+    if args.k1_max is None:
+        args.k1_max = CASE_K1_MAX[args.m]
+
     if args.k1_min < 1 or args.k1_max < args.k1_min:
         raise SystemExit("invalid k1 range")
+    if args.k1_max > CASE_K1_MAX[args.m]:
+        raise SystemExit(
+            f"k1 max {args.k1_max} exceeds supported m={args.m} range "
+            f"1..{CASE_K1_MAX[args.m]}"
+        )
 
     source = Path(args.source)
     if not source.is_file():

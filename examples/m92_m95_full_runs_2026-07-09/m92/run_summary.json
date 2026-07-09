@@ -1,0 +1,39 @@
+{
+  "branch_cpu_hours_sum": 0.010241862403021919,
+  "branch_cpu_seconds_sum": 36.870704650878906,
+  "combined_log_hash": "ffb745aa8226dcb48a3389bf2581157f0c4def031db606c06614d3e3c1754a51",
+  "cover": "m92_k1_1_73",
+  "fastest_task": {
+    "exit_code": 0,
+    "hits": "0",
+    "hours": 0.00013910942607455782,
+    "k1": 1,
+    "log_sha256": "ffca492614addc4c9599601e6d54c625f3b1de0010f6b981b1adb64d3209ec87",
+    "result": "PASS",
+    "seconds": 0.5007939338684082,
+    "task_id": "m92_k1_01",
+    "timed_out": false
+  },
+  "observed_wall_seconds_from_log_bounds": 6,
+  "result": "ACCEPT",
+  "slowest_task": {
+    "exit_code": 0,
+    "hits": "0",
+    "hours": 0.00014075716336568197,
+    "k1": 37,
+    "log_sha256": "749d27ae703e9770fee954e491d08f7d56b462001bca3dcfa68467b14718dc78",
+    "result": "PASS",
+    "seconds": 0.5067257881164551,
+    "task_id": "m92_k1_37",
+    "timed_out": false
+  },
+  "source_sha256": "2e364660d26cd7d06ea07f22d555e8b758bc75955b7d71e0a98fb98f846ba3b0",
+  "status": {
+    "completed": 73,
+    "invalid": 0,
+    "pending": 0,
+    "quarantined": 0,
+    "running": 0
+  },
+  "verified_tasks": 73
+}

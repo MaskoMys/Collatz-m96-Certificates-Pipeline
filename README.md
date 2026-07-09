@@ -1,11 +1,12 @@
-# Collatz m=96 certificate pipeline
+# Collatz m=92-96 certificate pipeline
 
 This repository contains a partial, exact-arithmetic certificate pipeline for the
-Hercher/Simons--de Weger style `m=96` Collatz cycle route.
+Hercher/Simons--de Weger style Collatz cycle route for the configured
+`m=92,93,94,95,96` cases.
 
 It is **not yet a complete public proof artifact**. The current repository can
-build the search engine, generate the 75-branch task manifest, run branches, and
-verify branch logs. It now includes one completed 75-branch run example, but a
+build the search engine, generate branch task manifests, run branches, and verify
+branch logs. It now includes one completed `m=96` 75-branch run example, but a
 completed public certificate release still requires final analytic certificates,
 whole-release manifests, and release packaging.
 
@@ -14,7 +15,7 @@ claims about shipped raw logs, `verify_all.py`, immutable manifests, and
 supplementary certificates should be read as target release language, not as a
 description of this repository snapshot.
 
-## TL;DR Full Run
+## TL;DR m=96 Full Run
 
 From the repository root, start a clean detached full run with:
 
@@ -84,6 +85,97 @@ python3 scripts/verify_certificate.py \
 Success means the verifier prints `"verified_tasks": 75` and
 `"result": "ACCEPT"`.
 
+## TL;DR m=92..95 Runs
+
+Build once, then generate the four manifests:
+
+```bash
+make build
+
+for m in 92 93 94 95; do
+  python3 scripts/generate_manifest.py \
+    --m "$m" \
+    --out "manifests/tasks_m${m}.jsonl" \
+    --mode k1 \
+    --source src/m96/affine_ladder_prefix.cpp
+done
+```
+
+Run the cases sequentially. This keeps each case in its own output directory, so
+one long case cannot obscure completed ones:
+
+```bash
+mkdir -p dist/run_logs
+for m in 92 93 94 95; do
+  python3 scripts/run_tasks.py \
+    --exe ./build/affine_ladder_prefix \
+    --tasks "manifests/tasks_m${m}.jsonl" \
+    --out "dist/runs_m${m}" \
+    --jobs 8 \
+    --timeout 0 \
+    --resume \
+    --retry-invalid \
+    --heartbeat-seconds 60 \
+    --progress \
+    --order desc \
+    > "dist/run_logs/m${m}_run.log" 2>&1
+done
+```
+
+To detach one case at a time:
+
+```bash
+m=95
+mkdir -p dist/run_logs
+setsid -f python3 scripts/run_tasks.py \
+  --exe ./build/affine_ladder_prefix \
+  --tasks "manifests/tasks_m${m}.jsonl" \
+  --out "dist/runs_m${m}" \
+  --jobs 8 \
+  --timeout 0 \
+  --resume \
+  --retry-invalid \
+  --heartbeat-seconds 60 \
+  --progress \
+  --order desc \
+  > "dist/run_logs/m${m}_run.log" 2>&1
+```
+
+Check one case at a time:
+
+```bash
+m=95
+python3 scripts/run_tasks.py \
+  --status \
+  --human \
+  --order desc \
+  --tasks "manifests/tasks_m${m}.jsonl" \
+  --out "dist/runs_m${m}" \
+  --exe ./build/affine_ladder_prefix
+```
+
+Stop one detached case gracefully:
+
+```bash
+m=95
+python3 scripts/run_tasks.py --stop --out "dist/runs_m${m}" --human
+```
+
+Verify all four cases after their statuses are complete:
+
+```bash
+for m in 92 93 94 95; do
+  python3 scripts/verify_certificate.py \
+    --tasks "manifests/tasks_m${m}.jsonl" \
+    --runs "dist/runs_m${m}" \
+    --source src/m96/affine_ladder_prefix.cpp \
+    --exe ./build/affine_ladder_prefix
+done
+```
+
+Expected accepted task counts are `m=92: 73`, `m=93: 74`, `m=94: 75`, and
+`m=95: 75`.
+
 ## Repository Layout
 
 ```text
@@ -124,9 +216,13 @@ reviewable snapshots of accepted outputs rather than scratch run directories.
 ## Current Status
 
 - Constants and local arithmetic checks pass with exact integer/rational
-  arithmetic.
+  arithmetic for the configured `m=92..96` source constants.
 - The `k1=1` sample branch rebuilds and verifies successfully.
-- The full `k1=1..75` manifest exists in `manifests/tasks.jsonl`.
+- The `m=96` full `k1=1..75` manifest exists in `manifests/tasks.jsonl`;
+  additional manifests for `m=92..95` live in `manifests/tasks_m*.jsonl`.
+- Full branch run examples for `m=92..95` are committed at
+  `examples/m92_m95_full_runs_2026-07-09/`; all four cases verify with
+  `"result": "ACCEPT"` across 297 total tasks.
 - A full `k1=1..75` branch run example is committed at
   `examples/m96_full_run_2026-07-06/`; `scripts/verify_certificate.py` accepts
   all 75 tasks with combined log hash
@@ -299,6 +395,66 @@ arguments, exit status, timeouts, raw-log hashes, unique summary markers, branch
 range, and all parsed `HITS=` counters. The full branch run is accepted only
 when this verifier prints JSON with `"verified_tasks": 75` and
 `"result": "ACCEPT"`.
+
+## m=92..95 Branch Runs
+
+The same engine contains `make_case(92)`, `make_case(93)`, `make_case(94)`,
+and `make_case(95)`. Their natural branch ranges are encoded in
+`scripts/generate_manifest.py`. See `docs/m92_m95_companion_runs.md` for the
+companion-run note:
+
+```text
+m=92: k1=1..73
+m=93: k1=1..74
+m=94: k1=1..75
+m=95: k1=1..75
+```
+
+To produce clean publication-grade local runs, remove each target output
+directory before starting. To resume an interrupted local run, keep the existing
+directory and run the same command with `--resume --retry-invalid`.
+
+```bash
+make build
+
+for m in 92 93 94 95; do
+  python3 scripts/generate_manifest.py \
+    --m "$m" \
+    --out "manifests/tasks_m${m}.jsonl" \
+    --mode k1 \
+    --source src/m96/affine_ladder_prefix.cpp
+done
+
+for m in 92 93 94 95; do
+  mkdir -p dist/run_logs
+  python3 scripts/run_tasks.py \
+    --exe ./build/affine_ladder_prefix \
+    --tasks "manifests/tasks_m${m}.jsonl" \
+    --out "dist/runs_m${m}" \
+    --jobs 8 \
+    --timeout 0 \
+    --resume \
+    --retry-invalid \
+    --heartbeat-seconds 60 \
+    --progress \
+    --order desc \
+    > "dist/run_logs/m${m}_run.log" 2>&1
+
+  python3 scripts/verify_certificate.py \
+    --tasks "manifests/tasks_m${m}.jsonl" \
+    --runs "dist/runs_m${m}" \
+    --source src/m96/affine_ladder_prefix.cpp \
+    --exe ./build/affine_ladder_prefix \
+    > "dist/run_logs/m${m}_verify.json"
+done
+```
+
+Each verifier output must contain `"result": "ACCEPT"` with the expected task
+count for that case.
+
+For `m=94` and `m=95`, some encoded caps are tighter than the coarse cap
+argument used for `m=96`; their derivation should be included in the analytic
+certificate layer before presenting a final self-contained `m <= 96` theorem.
 
 ## Trust Boundary
 

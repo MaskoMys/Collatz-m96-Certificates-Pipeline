@@ -11,6 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 RUNNER = ROOT / "scripts" / "run_tasks.py"
+MANIFEST_GENERATOR = ROOT / "scripts" / "generate_manifest.py"
 
 
 def write_manifest(path, count=1):
@@ -285,6 +286,64 @@ class RunTasksTest(unittest.TestCase):
             if first.poll() is None:
                 first.kill()
                 first.communicate(timeout=10)
+
+
+class GenerateManifestTest(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.base = Path(self.tmp.name)
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def generate(self, m):
+        out = self.base / f"tasks_m{m}.jsonl"
+        run = subprocess.run(
+            [
+                sys.executable,
+                str(MANIFEST_GENERATOR),
+                "--m",
+                str(m),
+                "--out",
+                str(out),
+                "--source",
+                "src/m96/affine_ladder_prefix.cpp",
+            ],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(run.returncode, 0, run.stderr + run.stdout)
+        return [json.loads(line) for line in out.read_text(encoding="utf-8").splitlines()]
+
+    def test_supported_cases_default_to_natural_k1_ranges(self):
+        expected = {92: 73, 93: 74, 94: 75, 95: 75, 96: 75}
+        for m, k1max in expected.items():
+            with self.subTest(m=m):
+                rows = self.generate(m)
+                header, tasks = rows[0], rows[1:]
+                self.assertEqual(header["cover"], f"m{m}_k1_1_{k1max}")
+                self.assertEqual(header["k1_max"], k1max)
+                self.assertEqual(len(tasks), k1max)
+                self.assertEqual(tasks[-1]["task_id"], f"m{m}_k1_{k1max:02d}")
+
+    def test_manifest_rejects_unsupported_case(self):
+        out = self.base / "bad.jsonl"
+        run = subprocess.run(
+            [
+                sys.executable,
+                str(MANIFEST_GENERATOR),
+                "--m",
+                "91",
+                "--out",
+                str(out),
+            ],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+        )
+        self.assertNotEqual(run.returncode, 0)
+        self.assertIn("unsupported m=91", run.stderr)
 
 
 if __name__ == "__main__":

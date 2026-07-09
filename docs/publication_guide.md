@@ -5,7 +5,8 @@ as a completed public certificate release.
 
 The current checkout is a reorganized pipeline with a committed full branch-run
 example. It is suitable for reviewing the source, manifests, proof notes,
-smoke-test verifier, and one accepted 75-branch output. It is not yet the
+smoke-test verifier, the configured `m=92..96` manifests, accepted `m=92..95`
+companion outputs, and one accepted `m=96` 75-branch output. It is not yet the
 immutable supplementary archive described by the manuscript PDF.
 
 ## 1. Local Smoke Check
@@ -80,7 +81,56 @@ An accepted example output is committed at
 `examples/m96_full_run_2026-07-06/`. It was run with `--jobs 8` on an AMD Ryzen
 5 3600 and accepted all 75 tasks.
 
-## 3. Release Pieces Still Needed
+## 3. m=92..95 Reproduction
+
+The same runner/verifier flow applies to `m=92..95`. Generate the manifests:
+
+```bash
+for m in 92 93 94 95; do
+  python3 scripts/generate_manifest.py \
+    --m "$m" \
+    --out "manifests/tasks_m${m}.jsonl" \
+    --mode k1 \
+    --source src/m96/affine_ladder_prefix.cpp
+done
+```
+
+Run and verify each case in its own directory:
+
+```bash
+for m in 92 93 94 95; do
+  mkdir -p dist/run_logs
+  python3 scripts/run_tasks.py \
+    --exe ./build/affine_ladder_prefix \
+    --tasks "manifests/tasks_m${m}.jsonl" \
+    --out "dist/runs_m${m}" \
+    --jobs 8 \
+    --timeout 0 \
+    --resume \
+    --retry-invalid \
+    --heartbeat-seconds 60 \
+    --progress \
+    --order desc \
+    > "dist/run_logs/m${m}_run.log" 2>&1
+
+  python3 scripts/verify_certificate.py \
+    --tasks "manifests/tasks_m${m}.jsonl" \
+    --runs "dist/runs_m${m}" \
+    --source src/m96/affine_ladder_prefix.cpp \
+    --exe ./build/affine_ladder_prefix \
+    > "dist/run_logs/m${m}_verify.json"
+done
+```
+
+Expected accepted task counts are `m=92: 73`, `m=93: 74`, `m=94: 75`, and
+`m=95: 75`. See `docs/m92_m95_companion_runs.md` for the companion-run trust
+boundary, especially the note that tighter `m=94` and `m=95` caps still need
+their analytic derivation in the final certificate layer.
+
+An accepted example output is committed at
+`examples/m92_m95_full_runs_2026-07-09/`.
+
+## 4. Release Pieces Still Needed
 
 A finished certificate release should add:
 
@@ -94,20 +144,21 @@ A finished certificate release should add:
 - a license selected by the author;
 - release notes that state exactly what is proved and what remains conditional.
 
-## 4. GitHub Publication Checklist
+## 5. GitHub Publication Checklist
 
 - [ ] README status matches the shipped artifacts.
 - [ ] `python3 scripts/certify_constants.py` succeeds.
 - [ ] `python3 scripts/audit_lower_bound.py` succeeds.
 - [ ] CI smoke test is green.
 - [ ] The sample branch verifier accepts.
-- [ ] The full branch verifier accepts all 75 tasks.
+- [ ] The `m=92`, `m=93`, `m=94`, and `m=95` branch verifiers accept.
+- [ ] The `m=96` full branch verifier accepts all 75 tasks.
 - [ ] The manuscript data-availability statement matches the release contents.
 - [ ] No compiled binary is tracked.
 - [ ] A license is present.
 - [ ] The release tag points to the verified commit.
 
-## 5. Archival Submission
+## 6. Archival Submission
 
 After the full artifact exists, create an immutable GitHub release and consider
 archiving it with Zenodo. Cite the release tag or DOI, not the moving `main`

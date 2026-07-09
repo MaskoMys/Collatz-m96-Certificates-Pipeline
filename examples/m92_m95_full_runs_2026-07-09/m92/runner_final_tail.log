@@ -1,0 +1,107 @@
+=== m=92 start 2026-07-09T12:34:44+01:00 ===
+[..............................] 0/73 complete (0.0%) | running 0 | pending 73 | quarantined 0 | elapsed 0s
+estimate: no ETA yet (no completed timings yet)
+next: m92_k1_73, m92_k1_72, m92_k1_71, m92_k1_70, m92_k1_69, m92_k1_68, m92_k1_67, m92_k1_66, m92_k1_65, m92_k1_64 ...
+{"cmd": ["./build/affine_ladder_prefix", "92", "73", "0", "256"], "exit_code": 0, "log_sha256": "74add5370a324c6671bfa540c1066abca407843978c0154ccdce8ffa38901412", "seconds": 0.504676103591919, "task_id": "m92_k1_73", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "72", "0", "256"], "exit_code": 0, "log_sha256": "402a5cf09af27f424ab15a1995ac6c76bf72e3a82ad43d3b28cd98315615f0b7", "seconds": 0.5048892498016357, "task_id": "m92_k1_72", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "71", "0", "256"], "exit_code": 0, "log_sha256": "9f75a7da9f775dec20d79a77f1524298586b63f194b48318ca33adb90608d2aa", "seconds": 0.5048577785491943, "task_id": "m92_k1_71", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "70", "0", "256"], "exit_code": 0, "log_sha256": "a12eda286a423fa59500894ae9c4c765017926817a08f83049d23192458bcb8d", "seconds": 0.5048351287841797, "task_id": "m92_k1_70", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "69", "0", "256"], "exit_code": 0, "log_sha256": "13fd7e4d3bb373c4071bb2a798c782165981ee4fa8c5867cd05ba44343a286c6", "seconds": 0.5047883987426758, "task_id": "m92_k1_69", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "68", "0", "256"], "exit_code": 0, "log_sha256": "025f22864e0bd8ff438f0cd4ea5c894126b7e450968c19b3624f7bbcdf088882", "seconds": 0.5049493312835693, "task_id": "m92_k1_68", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "67", "0", "256"], "exit_code": 0, "log_sha256": "529619a32cfbb641b8b00f06cca67cc5a69982102d9b847b4145e3cb65e9610d", "seconds": 0.5047762393951416, "task_id": "m92_k1_67", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "66", "0", "256"], "exit_code": 0, "log_sha256": "f34ae18ff2c809e8e9b27e3d3ecd217619486a2a19f5abc4d3787a80089bd100", "seconds": 0.5046041011810303, "task_id": "m92_k1_66", "timed_out": false}
+[###...........................] 8/73 complete (11.0%) | running 0 | pending 65 | quarantined 0 | elapsed 0s
+estimate: no full ETA yet; remaining k1 range is 65 steps outside the completed timing data (8 samples)
+next: m92_k1_65, m92_k1_64, m92_k1_63, m92_k1_62, m92_k1_61, m92_k1_60, m92_k1_59, m92_k1_58, m92_k1_57, m92_k1_56 ...
+{"cmd": ["./build/affine_ladder_prefix", "92", "65", "0", "256"], "exit_code": 0, "log_sha256": "99bf1678130bd98a0ff5601a96d9aee5e9b366f7116d97f750218929a5201082", "seconds": 0.5041821002960205, "task_id": "m92_k1_65", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "64", "0", "256"], "exit_code": 0, "log_sha256": "073e52b2e3990e0a1d84ced2cb3d547f1015b8bfa7760aa452dfe53813449a70", "seconds": 0.5042867660522461, "task_id": "m92_k1_64", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "63", "0", "256"], "exit_code": 0, "log_sha256": "f305ecba7acaf0d8123c52febb2c77b6ea6e25dffdd699e5b6efa096acb4e2b6", "seconds": 0.5042364597320557, "task_id": "m92_k1_63", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "62", "0", "256"], "exit_code": 0, "log_sha256": "63652103991f5f8e1fd7a8de01dc725273017fd2d30d9fc09d73bfa04975869b", "seconds": 0.5044572353363037, "task_id": "m92_k1_62", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "61", "0", "256"], "exit_code": 0, "log_sha256": "01e4193e53fa76e904ac2c6180da417ee5baf15d387effe7216ccae9ff41268c", "seconds": 0.5049788951873779, "task_id": "m92_k1_61", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "60", "0", "256"], "exit_code": 0, "log_sha256": "92dfccea55772fa60253043c5b6749fadf5f75054544b474c33cc890fdc46b3b", "seconds": 0.505054235458374, "task_id": "m92_k1_60", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "59", "0", "256"], "exit_code": 0, "log_sha256": "3efed203adabae647c12033506dab7b65fec89202245f3ad55087cc13df082f6", "seconds": 0.5057539939880371, "task_id": "m92_k1_59", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "58", "0", "256"], "exit_code": 0, "log_sha256": "bc99d80797c8eb40695d2ef6bce041d08ea17ccdb966031d2fa1a3234f1eae50", "seconds": 0.505408763885498, "task_id": "m92_k1_58", "timed_out": false}
+[######........................] 16/73 complete (21.9%) | running 0 | pending 57 | quarantined 0 | elapsed 1s
+estimate: no full ETA yet; remaining k1 range is 57 steps outside the completed timing data (16 samples)
+next: m92_k1_57, m92_k1_56, m92_k1_55, m92_k1_54, m92_k1_53, m92_k1_52, m92_k1_51, m92_k1_50, m92_k1_49, m92_k1_48 ...
+{"cmd": ["./build/affine_ladder_prefix", "92", "57", "0", "256"], "exit_code": 0, "log_sha256": "5e139412de217d1b0d142f4fde3f4fc328bbf01ee98773f47f5b66f92f4c4a29", "seconds": 0.5058917999267578, "task_id": "m92_k1_57", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "56", "0", "256"], "exit_code": 0, "log_sha256": "18605b16734b4885876ce963075ff93eb2a40ce21e0a5f17f5295fb743554613", "seconds": 0.5061144828796387, "task_id": "m92_k1_56", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "55", "0", "256"], "exit_code": 0, "log_sha256": "19401af58af0e722df3e4e24610e5ac4e30f84dd206aebc1af21b6d77dc67aef", "seconds": 0.5062665939331055, "task_id": "m92_k1_55", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "54", "0", "256"], "exit_code": 0, "log_sha256": "aa59bd38a4eb7877f65f8491e0f9c76a7425525ee30a68f443267d026b0731cb", "seconds": 0.5061872005462646, "task_id": "m92_k1_54", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "53", "0", "256"], "exit_code": 0, "log_sha256": "b3498527b26c15303b8b407215858672af800245b9fce0891811015a39614ea4", "seconds": 0.5060911178588867, "task_id": "m92_k1_53", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "52", "0", "256"], "exit_code": 0, "log_sha256": "d8e2cd25c5c35cb5a51b19d29592c94e78cdec1e33f5c109e0918205c914e61c", "seconds": 0.5058550834655762, "task_id": "m92_k1_52", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "51", "0", "256"], "exit_code": 0, "log_sha256": "07caa2c93065fbcaeb6bd36506e5da1caffc13392046ba7ee9e13cb47f4ccb0b", "seconds": 0.5055432319641113, "task_id": "m92_k1_51", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "50", "0", "256"], "exit_code": 0, "log_sha256": "262c73b733f0e6421ba6b214868a0ba3f3ce2e0b8555db8af5a917685bb6569b", "seconds": 0.505622148513794, "task_id": "m92_k1_50", "timed_out": false}
+[#########.....................] 24/73 complete (32.9%) | running 0 | pending 49 | quarantined 0 | elapsed 1s
+estimate: no full ETA yet; remaining k1 range is 49 steps outside the completed timing data (24 samples)
+next: m92_k1_49, m92_k1_48, m92_k1_47, m92_k1_46, m92_k1_45, m92_k1_44, m92_k1_43, m92_k1_42, m92_k1_41, m92_k1_40 ...
+{"cmd": ["./build/affine_ladder_prefix", "92", "49", "0", "256"], "exit_code": 0, "log_sha256": "5422b0d26f83160b9d5249bcb9d1fd5983a9e90029bf05b50c7b1daef7f6d51a", "seconds": 0.5038440227508545, "task_id": "m92_k1_49", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "48", "0", "256"], "exit_code": 0, "log_sha256": "020da1de9705d5fd3966fa73cdc78b455059d1ad68915bbf7904abd7c56876c1", "seconds": 0.504204273223877, "task_id": "m92_k1_48", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "47", "0", "256"], "exit_code": 0, "log_sha256": "7d5c12d269842d9201d85dd6de0f168bd4ef892baa2f28f235104ae7282f12ea", "seconds": 0.5044116973876953, "task_id": "m92_k1_47", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "46", "0", "256"], "exit_code": 0, "log_sha256": "830b1b849cf068411f6820d4266cc683bebce919860d99222d43957748b22e57", "seconds": 0.5045180320739746, "task_id": "m92_k1_46", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "45", "0", "256"], "exit_code": 0, "log_sha256": "d56c7ca5c8d60a8dd7a2f94555a453ad9ae32e5ff23f008fdfaa8bd101fda151", "seconds": 0.5044708251953125, "task_id": "m92_k1_45", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "44", "0", "256"], "exit_code": 0, "log_sha256": "9d6e8a6743f127aea002ddbd026e8c5963a2f553eee2fe568dae6343b1a46944", "seconds": 0.5044460296630859, "task_id": "m92_k1_44", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "43", "0", "256"], "exit_code": 0, "log_sha256": "892f965b1ba62910764d8605955a2f8c45bc5c1ccdf1d3c444a4dff4d68edfb6", "seconds": 0.5043609142303467, "task_id": "m92_k1_43", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "42", "0", "256"], "exit_code": 0, "log_sha256": "4f11ab47d9f8d716a7e10d09ce3d75746daf2cb09213b12d109ad44e7ac5cef7", "seconds": 0.5042800903320312, "task_id": "m92_k1_42", "timed_out": false}
+[#############.................] 32/73 complete (43.8%) | running 0 | pending 41 | quarantined 0 | elapsed 2s
+estimate: no full ETA yet; remaining k1 range is 41 steps outside the completed timing data (32 samples)
+next: m92_k1_41, m92_k1_40, m92_k1_39, m92_k1_38, m92_k1_37, m92_k1_36, m92_k1_35, m92_k1_34, m92_k1_33, m92_k1_32 ...
+{"cmd": ["./build/affine_ladder_prefix", "92", "41", "0", "256"], "exit_code": 0, "log_sha256": "79ab5a205065c6804c43f5f588211e01f7615c94a31304df11b299cfeba9a3fe", "seconds": 0.5062441825866699, "task_id": "m92_k1_41", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "40", "0", "256"], "exit_code": 0, "log_sha256": "e3d2f9a326f2c5b3437cf2f736a8fe621b672eccd333e8b20505c41710f0c578", "seconds": 0.5065715312957764, "task_id": "m92_k1_40", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "39", "0", "256"], "exit_code": 0, "log_sha256": "4005fd86091b2f81f3107eb9a08c17dfb00912e112721000a294355e6d2b41dc", "seconds": 0.5065999031066895, "task_id": "m92_k1_39", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "38", "0", "256"], "exit_code": 0, "log_sha256": "11925fbd6163c71357e4e3a1d7a12895596936984a998d5fb12d005f90d88a38", "seconds": 0.5066063404083252, "task_id": "m92_k1_38", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "37", "0", "256"], "exit_code": 0, "log_sha256": "749d27ae703e9770fee954e491d08f7d56b462001bca3dcfa68467b14718dc78", "seconds": 0.5067257881164551, "task_id": "m92_k1_37", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "36", "0", "256"], "exit_code": 0, "log_sha256": "7a64f8d3188f585d73713d5a428fea9a048219546e7ba7ca245d9b5860ad2cf7", "seconds": 0.506718635559082, "task_id": "m92_k1_36", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "35", "0", "256"], "exit_code": 0, "log_sha256": "a7e59d083c7e3f8abacebd4207220e021823aa7068fbe3283dd9bc862384a293", "seconds": 0.506352424621582, "task_id": "m92_k1_35", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "34", "0", "256"], "exit_code": 0, "log_sha256": "4aa1ae31b70c5dfcf0f19a9039fb208039db52361aa19f39ffa8fb98e7058069", "seconds": 0.5045261383056641, "task_id": "m92_k1_34", "timed_out": false}
+[################..............] 40/73 complete (54.8%) | running 0 | pending 33 | quarantined 0 | elapsed 2s
+estimate: no full ETA yet; remaining k1 range is 33 steps outside the completed timing data (40 samples)
+next: m92_k1_33, m92_k1_32, m92_k1_31, m92_k1_30, m92_k1_29, m92_k1_28, m92_k1_27, m92_k1_26, m92_k1_25, m92_k1_24 ...
+{"cmd": ["./build/affine_ladder_prefix", "92", "33", "0", "256"], "exit_code": 0, "log_sha256": "51ab0b9dc80adbc1551d57484419ade57e42bef88bb07de1bcd7f74881bfe3b1", "seconds": 0.5061633586883545, "task_id": "m92_k1_33", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "32", "0", "256"], "exit_code": 0, "log_sha256": "11fdf33117626e1a1909d7c422de3b8eedc8698a3ce22b5b9de259fe0cd4d58d", "seconds": 0.5064315795898438, "task_id": "m92_k1_32", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "31", "0", "256"], "exit_code": 0, "log_sha256": "e30cf374aae4b4fbfee265c47121148f1b164f57a9a326a9644e278f1e7a722b", "seconds": 0.5064868927001953, "task_id": "m92_k1_31", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "30", "0", "256"], "exit_code": 0, "log_sha256": "a05e8a75bf9453d70d0def651d5720e1ab3340e4a8d50bf2cacfef5bcfcd2b04", "seconds": 0.5064713954925537, "task_id": "m92_k1_30", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "29", "0", "256"], "exit_code": 0, "log_sha256": "e6a059532af98a50987e9e64deb085c4100a899183797753996f6f91cdd5a41b", "seconds": 0.5059733390808105, "task_id": "m92_k1_29", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "28", "0", "256"], "exit_code": 0, "log_sha256": "00bbc683e609b1524d9a0903c1374e324b41ac6dfa0d047a35221c842cb7a997", "seconds": 0.5059776306152344, "task_id": "m92_k1_28", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "27", "0", "256"], "exit_code": 0, "log_sha256": "572c04a49cb70f697f2ace24768b483020cdfd2b6aaf7a4eb15e257938532e4d", "seconds": 0.5048928260803223, "task_id": "m92_k1_27", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "26", "0", "256"], "exit_code": 0, "log_sha256": "8c0b1840cee1f5526c07bdc6c6154e4a24b14b6b1f53644f5ef7a1cbbc11152f", "seconds": 0.5047202110290527, "task_id": "m92_k1_26", "timed_out": false}
+[###################...........] 48/73 complete (65.8%) | running 0 | pending 25 | quarantined 0 | elapsed 3s
+estimate: no full ETA yet; remaining k1 range is 25 steps outside the completed timing data (48 samples)
+next: m92_k1_25, m92_k1_24, m92_k1_23, m92_k1_22, m92_k1_21, m92_k1_20, m92_k1_19, m92_k1_18, m92_k1_17, m92_k1_16 ...
+{"cmd": ["./build/affine_ladder_prefix", "92", "25", "0", "256"], "exit_code": 0, "log_sha256": "45851c54a3f9baeb94b7a21a67c0816ab46b8fced222c041a31f9a73c6c181ef", "seconds": 0.5046052932739258, "task_id": "m92_k1_25", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "24", "0", "256"], "exit_code": 0, "log_sha256": "d89cb3555048b8c13017408398deb851b7264eac6c675a067ff4a6229fa0c076", "seconds": 0.5047516822814941, "task_id": "m92_k1_24", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "23", "0", "256"], "exit_code": 0, "log_sha256": "a78f5edacbba563e14da674923c5c2c45942d20988029c6060bfba4bb6128c41", "seconds": 0.5047328472137451, "task_id": "m92_k1_23", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "22", "0", "256"], "exit_code": 0, "log_sha256": "23f9b7d35f4a377396b63287a82a1f41c28bffdd07b7f4439842a8be415788d6", "seconds": 0.5047078132629395, "task_id": "m92_k1_22", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "21", "0", "256"], "exit_code": 0, "log_sha256": "cabc2f431c8b302df247a243b431cf84721b4ff4d60089cf8fab3d20c2905b32", "seconds": 0.504737377166748, "task_id": "m92_k1_21", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "20", "0", "256"], "exit_code": 0, "log_sha256": "a032b6d42d56b3ff8f4247967484d9225817278fe704164477f445ec172a2cfb", "seconds": 0.5047426223754883, "task_id": "m92_k1_20", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "19", "0", "256"], "exit_code": 0, "log_sha256": "6084ced6313dee11cf9381d742202a4d5620b1a4cfa7f040578271def6cbde68", "seconds": 0.5046706199645996, "task_id": "m92_k1_19", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "18", "0", "256"], "exit_code": 0, "log_sha256": "3e87ad6ae6da509f767744c304d356aeaf8a898d9ca85b89a9a44fa74258b5d9", "seconds": 0.5047142505645752, "task_id": "m92_k1_18", "timed_out": false}
+[#######################.......] 56/73 complete (76.7%) | running 0 | pending 17 | quarantined 0 | elapsed 3s
+estimate: no full ETA yet; remaining k1 range is 17 steps outside the completed timing data (56 samples)
+next: m92_k1_17, m92_k1_16, m92_k1_15, m92_k1_14, m92_k1_13, m92_k1_12, m92_k1_11, m92_k1_10, m92_k1_09, m92_k1_08 ...
+{"cmd": ["./build/affine_ladder_prefix", "92", "17", "0", "256"], "exit_code": 0, "log_sha256": "e3f0d0a02e12fe4569b6b32b897b56aaa7b4eba358930f2e4c728dbb10f4bd68", "seconds": 0.5038418769836426, "task_id": "m92_k1_17", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "16", "0", "256"], "exit_code": 0, "log_sha256": "f056c88cc2e8432a180e829ee7696e4c17bff630c2ba593b13a9bba5e27fd777", "seconds": 0.5041325092315674, "task_id": "m92_k1_16", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "15", "0", "256"], "exit_code": 0, "log_sha256": "f570afa36bea0012530b64c79c880cc6cdff6f36ec841712745ea03b983d15f2", "seconds": 0.5042896270751953, "task_id": "m92_k1_15", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "14", "0", "256"], "exit_code": 0, "log_sha256": "63d12783f4a4f17ab996fb36477414c4f59fd8eb4aabca8be512408be7827930", "seconds": 0.5043160915374756, "task_id": "m92_k1_14", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "13", "0", "256"], "exit_code": 0, "log_sha256": "0eab6cd961d6c20826630a1ce8ab0a26a0dd923dbe1976ba82a176ca78192018", "seconds": 0.504279375076294, "task_id": "m92_k1_13", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "12", "0", "256"], "exit_code": 0, "log_sha256": "b63e003253dd58291bbee577979f1d259c9bde2f7fc068a4a08283cf0f9f41f7", "seconds": 0.504218578338623, "task_id": "m92_k1_12", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "11", "0", "256"], "exit_code": 0, "log_sha256": "d4eb3115c38b07d9195ee825a5a049d02183bb5e0a2c2e5d20fcb8c209e1acee", "seconds": 0.5041065216064453, "task_id": "m92_k1_11", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "10", "0", "256"], "exit_code": 0, "log_sha256": "c80215b25cb7cfc6a0ae0aea92b7b777aca880af88ff48772aec2cfc5e54c86e", "seconds": 0.5040206909179688, "task_id": "m92_k1_10", "timed_out": false}
+[##########################....] 64/73 complete (87.7%) | running 0 | pending 9 | quarantined 0 | elapsed 4s | eta rough 4s | total rough 8s
+estimate: low confidence from 64 completed timings (k1 timing trend)
+next: m92_k1_09, m92_k1_08, m92_k1_07, m92_k1_06, m92_k1_05, m92_k1_04, m92_k1_03, m92_k1_02, m92_k1_01
+{"cmd": ["./build/affine_ladder_prefix", "92", "9", "0", "256"], "exit_code": 0, "log_sha256": "e17361c54b88ad03584b6f25b4ab7f1dd978a7ec0a7b6ee132c011df6474e05e", "seconds": 0.5052742958068848, "task_id": "m92_k1_09", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "8", "0", "256"], "exit_code": 0, "log_sha256": "47c0236b2701c965074b36826db870ecf8f2360ad54a647a426418211067f311", "seconds": 0.5053825378417969, "task_id": "m92_k1_08", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "7", "0", "256"], "exit_code": 0, "log_sha256": "835f3e7c671d7b4395b3ecc669d3d347cffcab27870684ad13e7d67a0558034d", "seconds": 0.5053694248199463, "task_id": "m92_k1_07", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "6", "0", "256"], "exit_code": 0, "log_sha256": "e0deb6cd7ff1163aad57f767cf1bf745147b9e3cec27020019c78ed3889e7bf1", "seconds": 0.5052967071533203, "task_id": "m92_k1_06", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "5", "0", "256"], "exit_code": 0, "log_sha256": "5875a30524ea4a36e312458dd06cef65546e90705c046f2c4d8596f86e9637fe", "seconds": 0.5053524971008301, "task_id": "m92_k1_05", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "4", "0", "256"], "exit_code": 0, "log_sha256": "9d306254733bd5977e820e197e39a2d11135ae816c2e6a9ed59a37ebd1bc625f", "seconds": 0.5054302215576172, "task_id": "m92_k1_04", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "3", "0", "256"], "exit_code": 0, "log_sha256": "f916d9fc001b73317564d5026b0337ae4692eea66489958bf280e92b4053ee3a", "seconds": 0.5057127475738525, "task_id": "m92_k1_03", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "92", "2", "0", "256"], "exit_code": 0, "log_sha256": "2e1b31d37e153507a4f25b1eee011c78b6b0914f6f015da98e73c8b5ae8b629d", "seconds": 0.5049200057983398, "task_id": "m92_k1_02", "timed_out": false}
+[#############################.] 72/73 complete (98.6%) | running 0 | pending 1 | quarantined 0 | elapsed 4s | eta rough 0s | total rough 5s
+estimate: low confidence from 72 completed timings (k1 timing trend)
+next: m92_k1_01
+{"cmd": ["./build/affine_ladder_prefix", "92", "1", "0", "256"], "exit_code": 0, "log_sha256": "ffca492614addc4c9599601e6d54c625f3b1de0010f6b981b1adb64d3209ec87", "seconds": 0.5007939338684082, "task_id": "m92_k1_01", "timed_out": false}
+[##############################] 73/73 complete (100.0%) | running 0 | pending 0 | quarantined 0 | elapsed 5s | eta rough 0s | total rough 5s
+estimate: medium confidence from 73 completed timings (k1 timing trend)
+=== m=92 verified 2026-07-09T12:34:50+01:00 ===
