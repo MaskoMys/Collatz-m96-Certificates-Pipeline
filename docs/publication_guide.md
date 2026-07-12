@@ -7,7 +7,8 @@ The current checkout is a reorganized pipeline with a committed full branch-run
 example. It is suitable for reviewing the source, manifests, proof notes,
 smoke-test verifier, the configured `m=92..96` manifests, accepted `m=92..95`
 companion outputs, and one accepted `m=96` 75-branch output. It is not yet the
-immutable supplementary archive described by the manuscript PDF.
+immutable supplementary archive described by the manuscript PDF, but the full
+affine-ladder artifact now verifies with `python3 -B verify_all.py`.
 
 ## 1. Local Smoke Check
 
@@ -19,7 +20,7 @@ g++ -O3 -std=c++17 src/m96/affine_ladder_prefix.cpp -lgmpxx -lgmp \
   -o build/affine_ladder_prefix
 
 python3 scripts/certify_constants.py
-python3 scripts/audit_lower_bound.py
+python3 scripts/verify_reduction_certificates.py
 
 rm -rf build/runs_sample
 python3 scripts/run_tasks.py \
@@ -123,36 +124,32 @@ done
 ```
 
 Expected accepted task counts are `m=92: 73`, `m=93: 74`, `m=94: 75`, and
-`m=95: 75`. See `docs/m92_m95_companion_runs.md` for the companion-run trust
-boundary, especially the note that tighter `m=94` and `m=95` caps still need
-their analytic derivation in the final certificate layer.
+`m=95: 75`. The tighter `m=94` and `m=95` caps and stage targets are now
+derived by the exact reduction verifier.
 
 An accepted example output is committed at
 `examples/m92_m95_full_runs_2026-07-09/`.
 
 ## 4. Release Pieces Still Needed
 
-A finished certificate release should add:
+The computational release now has exact reductions, all manuscript certificate
+families, a whole-file manifest, `SHA256SUMS`, one-command verification, and
+adversarial tests. The complete publication still needs:
 
-- a whole-file SHA-256 manifest for the release archive;
-- a one-command `verify_all.py` that checks the full release without rerunning
-  the expensive search;
-- adversarial verifier tests for missing branches, altered hit counts, modified
-  logs, source mismatches, unexpected files, malformed metadata, and path-safety
-  cases;
-- exact analytic certificate files referenced by the manuscript;
+- the LaTeX source and a reproducible PDF build;
 - a license selected by the author;
+- independent mathematical review and a second full computation;
 - release notes that state exactly what is proved and what remains conditional.
 
 ## 5. GitHub Publication Checklist
 
-- [ ] README status matches the shipped artifacts.
-- [ ] `python3 scripts/certify_constants.py` succeeds.
-- [ ] `python3 scripts/audit_lower_bound.py` succeeds.
+- [x] README status matches the shipped affine-ladder artifacts.
+- [x] `python3 scripts/certify_constants.py` succeeds.
+- [x] `python3 scripts/verify_reduction_certificates.py` succeeds.
 - [ ] CI smoke test is green.
-- [ ] The sample branch verifier accepts.
-- [ ] The `m=92`, `m=93`, `m=94`, and `m=95` branch verifiers accept.
-- [ ] The `m=96` full branch verifier accepts all 75 tasks.
+- [x] The sample branch verifier accepts.
+- [x] The `m=92`, `m=93`, `m=94`, and `m=95` branch verifiers accept.
+- [x] The `m=96` full branch verifier accepts all 75 tasks.
 - [ ] The manuscript data-availability statement matches the release contents.
 - [ ] No compiled binary is tracked.
 - [ ] A license is present.

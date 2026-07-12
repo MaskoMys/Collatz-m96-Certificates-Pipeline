@@ -9,7 +9,7 @@ the m=96 coarse cap derivation.
 
 For m=92..95, the stage targets and tighter caps are case-specific reduction
 constants. This script checks their exact encoded values and basic consistency;
-their mathematical derivation belongs in the analytic reduction certificate.
+`verify_reduction_certificates.py` independently checks their derivation.
 """
 
 from dataclasses import dataclass
@@ -196,7 +196,7 @@ def certify_case(case: CaseConstants) -> None:
                 cap >= max_allowed,
             )
     else:
-        print("   cap table is case-specific; exact derivation belongs to analytic certificate")
+        print("   cap table is case-specific; derivation checked by reduction verifier")
         chk("caps are positive", all(cap >= 1 for cap in case.kcap))
         chk("caps are nondecreasing", list(case.kcap) == sorted(case.kcap))
 

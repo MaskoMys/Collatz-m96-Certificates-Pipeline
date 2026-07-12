@@ -102,11 +102,8 @@ python3 scripts/verify_certificate.py \
 
 ## Current Trust Boundary
 
-`scripts/certify_constants.py` checks exact source tables for `m=92..96` and
-the reusable arithmetic facts used by all cases. For `m=92`, `m=93`, and `m=96`,
-the encoded caps are also covered by the coarse `alpha=317/200` cap argument.
-
-For `m=94` and `m=95`, several caps are tighter than the coarse window argument.
-The script checks that the exact encoded tables are internally consistent, but
-the derivation of those tighter case-specific constants belongs in the analytic
-certificate layer before making a final self-contained theorem claim.
+`scripts/verify_reduction_certificates.py` now checks the exact analytic
+reduction for every case. In particular, it derives the tighter `m=94` and
+`m=95` caps from successive exact integer growth bounds, verifies every suffix
+stage target, and checks the complement denominator contradiction. The accepted
+proof objects live in `certificates/reductions/`.

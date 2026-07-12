@@ -1,19 +1,33 @@
 # Collatz m=92-96 certificate pipeline
 
-This repository contains a partial, exact-arithmetic certificate pipeline for the
+This repository contains an exact-arithmetic certificate pipeline for the
 Hercher/Simons--de Weger style Collatz cycle route for the configured
-`m=92,93,94,95,96` cases.
+`m=92,93,94,95,96` cases. It includes deterministic analytic reduction
+certificates and accepted branch archives for all five cases.
 
-It is **not yet a complete public proof artifact**. The current repository can
-build the search engine, generate branch task manifests, run branches, and verify
-branch logs. It now includes one completed `m=96` 75-branch run example, but a
-completed public certificate release still requires final analytic certificates,
-whole-release manifests, and release packaging.
+It is **not yet the complete supplementary release promised by the manuscript**.
+The arithmetic reductions, 372 branch records, `A28` and `A29` frontier checks,
+first-spike check, structural oracle, descent covers, release inventory,
+one-command verifier, and mutation tests are present. Manuscript source,
+author-selected licenses, independent review and reproduction, and the final
+archival release remain outstanding.
 
 The manuscript PDF in `paper/` describes the intended complete release. Its
-claims about shipped raw logs, `verify_all.py`, immutable manifests, and
-supplementary certificates should be read as target release language, not as a
-description of this repository snapshot.
+claims about LaTeX source and the final immutable archive remain target release
+language. The current proof surface is described by `docs/THEOREM_MAP.md`.
+
+## TL;DR Verify the Committed Artifact
+
+From a clean checkout:
+
+```bash
+python3 -B verify_all.py
+```
+
+Success is a final JSON object with top-level `"result": "ACCEPT"`. This verifies
+the managed release hashes, regenerates all five analytic reductions, checks all
+372 committed branch records, and runs the adversarial tests. It does not rerun
+the expensive searches.
 
 ## TL;DR m=96 Full Run
 
@@ -180,13 +194,16 @@ Expected accepted task counts are `m=92: 73`, `m=93: 74`, `m=94: 75`, and
 
 ```text
 src/m96/                 C++ affine-ladder search engine
+certificates/            exact reductions and release inventory
 scripts/                 manifest, runner, verifier, and audit scripts
 manifests/               branch-cover manifests and cover specification
-docs/m96/                m=96 proof notes, audits, and partial run status
+docs/m96/                m=96 proof notes, audits, and theorem contract
 docs/                    broader notes and publication-readiness guide
 examples/                verified run examples and compact reports
 paper/                   manuscript draft PDF
 .github/workflows/       CI smoke checks
+verify_all.py             one-command committed-artifact verifier
+SHA256SUMS                release payload hashes
 ```
 
 Generated artifacts such as binaries, logs, and certificate run directories are
@@ -227,9 +244,15 @@ reviewable snapshots of accepted outputs rather than scratch run directories.
   `examples/m96_full_run_2026-07-06/`; `scripts/verify_certificate.py` accepts
   all 75 tasks with combined log hash
   `d8f99127dceeccd3a9fbcee254a0334fa9940a9cc8d231801e7d46adcd0b2f65`.
-- The final public-release pieces described in the manuscript are not present:
-  no whole-repository SHA-256 manifest, no `verify_all.py`, no adversarial
-  verifier suite, and no final release package.
+- Exact analytic reduction certificates for `m=92..96` are committed under
+  `certificates/reductions/`; their verifier checks the common `K0` lift, all
+  windows, caps and stage bounds, the local prefix gate, each final `Q` lift,
+  and the Simons--de Weger contradictions.
+- `verify_all.py`, `certificates/release_manifest.json`, `SHA256SUMS`, and the
+  unit/mutation suite provide the one-command affine-ladder artifact check.
+- The remaining publication work is manuscript source and licensing,
+  independent reproduction and mathematical review, and the immutable tagged
+  archive.
 
 ## Prerequisites
 
@@ -265,7 +288,7 @@ Run the exact audit scripts:
 
 ```bash
 python3 scripts/certify_constants.py
-python3 scripts/audit_lower_bound.py
+python3 scripts/verify_reduction_certificates.py
 ```
 
 Run and verify the one-branch sample:
@@ -452,15 +475,16 @@ done
 Each verifier output must contain `"result": "ACCEPT"` with the expected task
 count for that case.
 
-For `m=94` and `m=95`, some encoded caps are tighter than the coarse cap
-argument used for `m=96`; their derivation should be included in the analytic
-certificate layer before presenting a final self-contained `m <= 96` theorem.
+The tighter `m=94` and `m=95` caps are now derived from exact dynamic growth
+bounds and checked by `scripts/verify_reduction_certificates.py`.
 
 ## Trust Boundary
 
 Trusted kernel:
 
 - `scripts/verify_certificate.py` parsing and cover audit;
+- `scripts/verify_reduction_certificates.py` exact analytic arithmetic;
+- `scripts/verify_release_manifest.py` file inventory and hashes;
 - exact SHA-256 hashes;
 - exact GMP/integer/rational arithmetic in the shipped source and scripts;
 - independently audited mathematical reductions in `docs/m96/`.
@@ -472,14 +496,17 @@ Untrusted payload:
 - partial runs;
 - any output not checked by the verifier.
 
+The raw logs are integrity-checked execution records, not compact proof traces.
+Independent confirmation of the expensive computation requires rerunning the
+frozen source. The mathematical lemmas listed in `docs/THEOREM_MAP.md` remain
+human review obligations.
+
 ## Before Public Release
 
-At minimum, complete these before presenting the repository as a finished proof
-artifact:
+Before presenting the complete manuscript supplement as finished:
 
-- Run `k1=1..75` to completion and archive every `.log` and `.meta.json`.
-- Add a whole-repository manifest and one-command `verify_all.py`.
-- Add adversarial tests for verifier failure modes.
-- Reconcile the manuscript data-availability statement with the actual archive.
-- Choose and add an explicit license.
-- Mint an immutable GitHub release and, if desired, a Zenodo DOI.
+- Add the LaTeX source and make the data-availability statement match the archive.
+- Obtain independent mathematical review and a second frozen-source run.
+- Choose and add explicit code, paper, and data licenses.
+- Regenerate the release manifest, merge to the release branch, and mint an
+  immutable GitHub release and archival DOI.

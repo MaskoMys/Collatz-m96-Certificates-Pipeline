@@ -19,9 +19,13 @@ jobs:
         run: python3 -m py_compile scripts/*.py
 
       - name: Run exact audit scripts
-        run: |
-          python3 scripts/certify_constants.py
-          python3 scripts/audit_lower_bound.py
+        run: make audit
+
+      - name: Run unit and mutation tests
+        run: make test
+
+      - name: Verify committed release artifact
+        run: python3 -B verify_all.py --skip-tests
 
       - name: Build m96 search engine
         run: |
@@ -42,3 +46,6 @@ jobs:
             --runs runs_sample \
             --source src/m96/affine_ladder_prefix.cpp \
             --exe ./build/affine_ladder_prefix
+
+      - name: Run sanitizer smoke test
+        run: make sanitize-smoke

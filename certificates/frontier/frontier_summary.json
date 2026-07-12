@@ -1,0 +1,71 @@
+{
+  "alpha_convergent": {
+    "P": "83130157078217",
+    "Q": "52449289519716"
+  },
+  "band_counts": [
+    1,
+    58,
+    2918,
+    890,
+    9770,
+    266502
+  ],
+  "continued_fraction_coefficients": [
+    1,
+    1,
+    1,
+    2,
+    2,
+    3,
+    1,
+    5,
+    2,
+    23,
+    2,
+    2,
+    1,
+    1,
+    55,
+    1,
+    4,
+    3,
+    1,
+    1,
+    15,
+    1,
+    9,
+    2,
+    5,
+    7,
+    1,
+    1,
+    4
+  ],
+  "count": 280139,
+  "csv_sha256": "3c5ab9d7ee0a331bb8a9a83c238fd2481889b91420a963c1677cc17f87e72a57",
+  "decision_margin_strictly_greater_than": {
+    "denominator": "50",
+    "numerator": "27"
+  },
+  "maximum": "52449235803883",
+  "minimum": "72057431991",
+  "minimum_gap": 53715833,
+  "q26_subcertificate": {
+    "count": 3867,
+    "maximum": "6159008532722"
+  },
+  "result": "CERTIFIED",
+  "rho": {
+    "maximizers": [
+      "11571718688839",
+      "23143437377678",
+      "34715156066517",
+      "46286874755356"
+    ],
+    "strict_upper": 126669
+  },
+  "scan_distance_max": 560277,
+  "schema": "collatz-a28-frontier-v1",
+  "undecided": 0
+}

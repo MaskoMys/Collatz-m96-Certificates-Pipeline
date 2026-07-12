@@ -4,10 +4,10 @@ This document records the complete logical interface between the published
 Collatz-cycle literature and the finite search. It is intended to make the
 normalizations and constants independently auditable.
 
-Repository status note: this file describes the intended complete certificate
-interface. The current repository snapshot contains the branch pipeline and
-partial audit scripts, but it does not yet contain the full analytic certificate
-JSON or all 75 raw branch logs.
+Repository status note: the exact reduction certificate is now committed at
+`certificates/reductions/m96_reduction.json`, and all 75 accepted branch records
+are archived under `examples/m96_full_run_2026-07-06/`. The broader manuscript
+supplement remains incomplete as described in the root README.
 
 ## 1. Common notation
 
@@ -209,9 +209,8 @@ n_7\ge7\cdot2^{117},\qquad
 n_8\ge\left\lceil\frac{93}{50}2^{189}\right\rceil.
 \]
 
-Every one of these numerical implications should be rechecked in the final
-analytic certificate archive. This repository currently includes the supporting
-stage audit in `scripts/audit_lower_bound.py`.
+Every one of these numerical implications is rechecked by
+`scripts/verify_reduction_certificates.py` using exact rational arithmetic.
 
 The source-level proof in `FIXED_BRANCH_COMPLETENESS.md` shows that, for each
 fixed `k1`, the search partitions the entire admissible set by the exact
@@ -236,7 +235,6 @@ excludes `m=96`.
 
 Barina's, Hercher's, and Simons--de Weger's statements are published theorems
 or published verified computations. They are cited inputs, not conjectural
-assumptions. Once the exact analytic certificate, the 75 raw zero-hit branches,
-and the branch-cover verifier all accept, the conclusion “no nontrivial
-positive Collatz 96-cycle exists” is unconditional in the ordinary
-mathematical sense.
+assumptions. The exact analytic certificate and all 75 raw zero-hit branches now
+accept. Final publication still requires independent review of the mathematical
+bridge and fixed-branch completeness argument; see `docs/THEOREM_MAP.md`.

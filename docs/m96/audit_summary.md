@@ -28,8 +28,10 @@ bound on `n_i`, the CF bracket must decide `⌊n·log2 3⌋`. Results:
   (Paper 2). OK.
 - **Lower-bound stages** `extra=[…,3·2^74,7·2^117,⌈93·2^189/50⌉]`: the rounded term is exact;
   the stages are strictly increasing (`2^75.6 < 2^119.8 < 2^189.9`). OK.
-- **Staged audit** `scripts/audit_lower_bound.py` **accepts for m=96** (all 6 stages `True`); it fails the last
-  stage for m=98 and m=105, consistent with m=96 sitting at the provable boundary.
+- **Exact reduction certificate** `certificates/reductions/m96_reduction.json`
+  is independently accepted by `scripts/verify_reduction_certificates.py`. It
+  checks both Farey lifts, every cap and stage, the finite window, the local
+  prefix gate, and the final Simons--de Weger contradiction.
 
 Caveat: this certifies the constants are *correctly computed and sound given the imported inequalities*
 (the `k_{i+j} < α^j log2(n_1+1)` cap law and the m-cycle lower-bound stages). Deriving those
@@ -100,9 +102,11 @@ See `examples/m96_full_run_2026-07-06/branch_timings.tsv` for the full table.
 
 ## What remains for the record
 
-1. **Point 3 (branch cover, your analytical work):** prove every m=96 cycle has `1 ≤ k1 ≤ 75` and that
-   the depth-7 prefix with these stages covers it. Points 4–5 above make the engine and constants
-   sound *given* this; it is the remaining gap to the unconditional theorem.
+The arithmetic branch-cover implications are now machine-checked. Independent
+mathematical review is still required for the suffix-balanced reduction,
+published-input normalization, and fixed-branch completeness argument. A second
+full run of the frozen source is also required for independent computational
+replication.
 
 Optional engineering note: `enum_threshold` is a real lever (it trades symbolic interval-pruning
 against one-by-one `det_values` — e.g. k1=2 shows det=109M at th=256 vs 6M at th=8), but I did not find
@@ -111,6 +115,7 @@ may shave constant factors on a cluster.
 
 ## Deliverables
 - `scripts/certify_constants.py` — exact certification of all configured source tables, including all make_case(96) constants.
+- `scripts/verify_reduction_certificates.py` — independent exact verification of the complete m=92..96 analytic reductions.
 - `docs/m96/fixed_branch_completeness.md` — rigorous Lemma 2 proof (point 4).
 - `examples/m96_full_run_2026-07-06/` — accepted 75-branch run, verifier output, and timings.
 - `docs/m96/branch_results.txt` — historical early per-branch timing notes.
