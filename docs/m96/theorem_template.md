@@ -6,7 +6,7 @@ Assume the following imported results:
 
 1. The Simons--de Weger/Hercher reduction from nontrivial Collatz `m`-cycles to the affine-ladder branch model used here.
 2. The Barina convergence threshold below `2^71`, or the exact threshold required by the reduction.
-3. The lower-bound stage inequalities audited in `scripts/audit_lower_bound.py` or in a replacement formal proof.
+3. The lower-bound stage inequalities verified by `scripts/verify_reduction_certificates.py`.
 4. The branch-cover lemmas in `docs/m96/branch_cover_theorem.md`.
 
 Let `C96` be a certificate directory containing:
@@ -25,4 +25,6 @@ The verified source exhaustively searches that branch's reduced affine-ladder st
 
 ## Important limitation
 
-This theorem is not established until a complete run manifest has been generated and accepted. A partial set of task logs proves only exclusion of the corresponding subset of branches.
+The complete run manifest and analytic reduction now accept. The remaining
+publication obligation is independent mathematical review of the imported
+normalizations, suffix-balanced reduction, and fixed-branch completeness proof.

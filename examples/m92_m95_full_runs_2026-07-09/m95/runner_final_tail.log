@@ -1,0 +1,120 @@
+  m95_k1_03 k1=3 pid=684841 elapsed=25m02s log=0B
+  m95_k1_04 k1=4 pid=634899 elapsed=27m44s log=0B
+  m95_k1_05 k1=5 pid=379097 elapsed=42m10s log=0B
+  m95_k1_06 k1=6 pid=155737 elapsed=54m45s log=0B
+{"cmd": ["./build/affine_ladder_prefix", "95", "3", "0", "256"], "exit_code": 0, "log_sha256": "26a63650c04252fbe532664540050c612933d083416c8262ed094ce7ff610c8d", "seconds": 1531.4360647201538, "task_id": "m95_k1_03", "timed_out": false}
+[############################..] 71/75 complete (94.7%) | running 4 | pending 0 | quarantined 16 | skipped 45 | elapsed 3h36m | eta rough 2m26s | total rough 3h39m
+estimate: medium confidence from 71 completed timings (k1 timing trend)
+active:
+  m95_k1_02 k1=2 pid=690474 elapsed=25m05s log=0B
+  m95_k1_04 k1=4 pid=634899 elapsed=28m12s log=0B
+  m95_k1_05 k1=5 pid=379097 elapsed=42m38s log=0B
+  m95_k1_06 k1=6 pid=155737 elapsed=55m14s log=0B
+{"active": [{"elapsed_seconds": 3345.8075544834137, "k1": 6, "log_bytes": 0, "pid": 155737, "task_id": "m95_k1_06"}, {"elapsed_seconds": 2590.268471956253, "k1": 5, "log_bytes": 0, "pid": 379097, "task_id": "m95_k1_05"}, {"elapsed_seconds": 1724.1138088703156, "k1": 4, "log_bytes": 0, "pid": 634899, "task_id": "m95_k1_04"}, {"elapsed_seconds": 1537.3810703754425, "k1": 2, "log_bytes": 0, "pid": 690474, "task_id": "m95_k1_02"}], "completed": 71, "elapsed_seconds": 13028.889662027359, "estimate": {"available": true, "confidence": "medium", "estimated_task_count": 4, "estimated_total_wall_seconds": 13151.516497453442, "method": "k1 timing trend", "note": "rough ETA from completed task timings; no internal branch progress is measured", "parallelism": 4, "remaining_cpu_seconds": 490.5073417043345, "remaining_wall_seconds": 122.62683542608363, "sample_count": 71}, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 16, "running": 4, "skipped": 45, "total": 75}
+[############################..] 71/75 complete (94.7%) | running 4 | pending 0 | quarantined 16 | skipped 45 | elapsed 3h37m | eta rough 2m02s | total rough 3h39m
+estimate: medium confidence from 71 completed timings (k1 timing trend)
+active:
+  m95_k1_02 k1=2 pid=690474 elapsed=25m37s log=0B
+  m95_k1_04 k1=4 pid=634899 elapsed=28m44s log=0B
+  m95_k1_05 k1=5 pid=379097 elapsed=43m10s log=0B
+  m95_k1_06 k1=6 pid=155737 elapsed=55m45s log=0B
+{"cmd": ["./build/affine_ladder_prefix", "95", "2", "0", "256"], "exit_code": 0, "log_sha256": "3f825bde68a60dfeed9c379c7d98273d94b633f6893c91636aaf61eaaa07e6aa", "seconds": 1553.892008304596, "task_id": "m95_k1_02", "timed_out": false}
+[############################..] 72/75 complete (96.0%) | running 3 | pending 0 | quarantined 16 | skipped 45 | elapsed 3h37m | eta rough 2m26s | total rough 3h39m
+estimate: medium confidence from 72 completed timings (k1 timing trend)
+active:
+  m95_k1_04 k1=4 pid=634899 elapsed=29m00s log=0B
+  m95_k1_05 k1=5 pid=379097 elapsed=43m26s log=0B
+  m95_k1_06 k1=6 pid=155737 elapsed=56m02s log=0B
+{"active": [{"elapsed_seconds": 3405.8321521282196, "k1": 6, "log_bytes": 0, "pid": 155737, "task_id": "m95_k1_06"}, {"elapsed_seconds": 2650.293069601059, "k1": 5, "log_bytes": 0, "pid": 379097, "task_id": "m95_k1_05"}, {"elapsed_seconds": 1784.1384065151215, "k1": 4, "log_bytes": 0, "pid": 634899, "task_id": "m95_k1_04"}], "completed": 72, "elapsed_seconds": 13088.914259672165, "estimate": {"available": true, "confidence": "medium", "estimated_task_count": 3, "estimated_total_wall_seconds": 13192.466161708322, "method": "k1 timing trend", "note": "rough ETA from completed task timings; no internal branch progress is measured", "parallelism": 3, "remaining_cpu_seconds": 310.6557061084686, "remaining_wall_seconds": 103.5519020361562, "sample_count": 72}, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 16, "running": 3, "skipped": 45, "total": 75}
+[############################..] 72/75 complete (96.0%) | running 3 | pending 0 | quarantined 16 | skipped 45 | elapsed 3h38m | eta rough 1m43s | total rough 3h39m
+estimate: medium confidence from 72 completed timings (k1 timing trend)
+active:
+  m95_k1_04 k1=4 pid=634899 elapsed=29m44s log=0B
+  m95_k1_05 k1=5 pid=379097 elapsed=44m10s log=0B
+  m95_k1_06 k1=6 pid=155737 elapsed=56m45s log=0B
+{"active": [{"elapsed_seconds": 3465.8511333465576, "k1": 6, "log_bytes": 0, "pid": 155737, "task_id": "m95_k1_06"}, {"elapsed_seconds": 2710.312050819397, "k1": 5, "log_bytes": 0, "pid": 379097, "task_id": "m95_k1_05"}, {"elapsed_seconds": 1844.1573877334595, "k1": 4, "log_bytes": 0, "pid": 634899, "task_id": "m95_k1_04"}], "completed": 72, "elapsed_seconds": 13148.933240890503, "estimate": {"available": true, "confidence": "medium", "estimated_task_count": 3, "estimated_total_wall_seconds": 13212.4724887811, "method": "k1 timing trend", "note": "rough ETA from completed task timings; no internal branch progress is measured", "parallelism": 3, "remaining_cpu_seconds": 190.6177436717926, "remaining_wall_seconds": 63.53924789059753, "sample_count": 72}, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 16, "running": 3, "skipped": 45, "total": 75}
+[############################..] 72/75 complete (96.0%) | running 3 | pending 0 | quarantined 16 | skipped 45 | elapsed 3h39m | eta rough 1m03s | total rough 3h40m
+estimate: medium confidence from 72 completed timings (k1 timing trend)
+active:
+  m95_k1_04 k1=4 pid=634899 elapsed=30m44s log=0B
+  m95_k1_05 k1=5 pid=379097 elapsed=45m10s log=0B
+  m95_k1_06 k1=6 pid=155737 elapsed=57m45s log=0B
+{"active": [{"elapsed_seconds": 3525.8687269687653, "k1": 6, "log_bytes": 0, "pid": 155737, "task_id": "m95_k1_06"}, {"elapsed_seconds": 2770.3296444416046, "k1": 5, "log_bytes": 0, "pid": 379097, "task_id": "m95_k1_05"}, {"elapsed_seconds": 1904.1749813556671, "k1": 4, "log_bytes": 0, "pid": 634899, "task_id": "m95_k1_04"}], "completed": 72, "elapsed_seconds": 13208.95083451271, "estimate": {"available": true, "confidence": "medium", "estimated_task_count": 3, "estimated_total_wall_seconds": 13245.742711459932, "method": "k1 timing trend", "note": "rough ETA from completed task timings; no internal branch progress is measured", "parallelism": 3, "remaining_cpu_seconds": 110.3756308416655, "remaining_wall_seconds": 36.79187694722183, "sample_count": 72}, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 16, "running": 3, "skipped": 45, "total": 75}
+[############################..] 72/75 complete (96.0%) | running 3 | pending 0 | quarantined 16 | skipped 45 | elapsed 3h40m | eta rough 36s | total rough 3h40m
+estimate: medium confidence from 72 completed timings (k1 timing trend)
+active:
+  m95_k1_04 k1=4 pid=634899 elapsed=31m44s log=0B
+  m95_k1_05 k1=5 pid=379097 elapsed=46m10s log=0B
+  m95_k1_06 k1=6 pid=155737 elapsed=58m45s log=0B
+{"cmd": ["./build/affine_ladder_prefix", "95", "5", "0", "256"], "exit_code": 0, "log_sha256": "8fa1b5263e638dbe36d0c4633026a0bdd372d795e997e93e88f7c1eddbc20ccb", "seconds": 2822.3454337120056, "task_id": "m95_k1_05", "timed_out": false}
+[#############################.] 73/75 complete (97.3%) | running 2 | pending 0 | quarantined 16 | skipped 45 | elapsed 3h41m | eta rough 1m11s | total rough 3h42m
+estimate: medium confidence from 73 completed timings (k1 timing trend)
+active:
+  m95_k1_04 k1=4 pid=634899 elapsed=32m36s log=0B
+  m95_k1_06 k1=6 pid=155737 elapsed=59m37s log=0B
+{"active": [{"elapsed_seconds": 3585.8929557800293, "k1": 6, "log_bytes": 0, "pid": 155737, "task_id": "m95_k1_06"}, {"elapsed_seconds": 1964.1992101669312, "k1": 4, "log_bytes": 0, "pid": 634899, "task_id": "m95_k1_04"}], "completed": 73, "elapsed_seconds": 13268.975063323975, "estimate": {"available": true, "confidence": "medium", "estimated_task_count": 2, "estimated_total_wall_seconds": 13332.230164776214, "method": "k1 timing trend", "note": "rough ETA from completed task timings; no internal branch progress is measured", "parallelism": 2, "remaining_cpu_seconds": 126.51020290448105, "remaining_wall_seconds": 63.255101452240524, "sample_count": 73}, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 16, "running": 2, "skipped": 45, "total": 75}
+[#############################.] 73/75 complete (97.3%) | running 2 | pending 0 | quarantined 16 | skipped 45 | elapsed 3h41m | eta rough 1m03s | total rough 3h42m
+estimate: medium confidence from 73 completed timings (k1 timing trend)
+active:
+  m95_k1_04 k1=4 pid=634899 elapsed=32m44s log=0B
+  m95_k1_06 k1=6 pid=155737 elapsed=59m45s log=0B
+{"active": [{"elapsed_seconds": 3645.90895485878, "k1": 6, "log_bytes": 0, "pid": 155737, "task_id": "m95_k1_06"}, {"elapsed_seconds": 2024.2152092456818, "k1": 4, "log_bytes": 0, "pid": 634899, "task_id": "m95_k1_04"}], "completed": 73, "elapsed_seconds": 13328.991062402725, "estimate": {"available": true, "confidence": "medium", "estimated_task_count": 2, "estimated_total_wall_seconds": 13356.383528040202, "method": "k1 timing trend", "note": "rough ETA from completed task timings; no internal branch progress is measured", "parallelism": 2, "remaining_cpu_seconds": 54.78493127495176, "remaining_wall_seconds": 27.39246563747588, "sample_count": 73}, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 16, "running": 2, "skipped": 45, "total": 75}
+[#############################.] 73/75 complete (97.3%) | running 2 | pending 0 | quarantined 16 | skipped 45 | elapsed 3h42m | eta rough 27s | total rough 3h42m
+estimate: medium confidence from 73 completed timings (k1 timing trend)
+active:
+  m95_k1_04 k1=4 pid=634899 elapsed=33m44s log=0B
+  m95_k1_06 k1=6 pid=155737 elapsed=1h00m log=0B
+{"active": [{"elapsed_seconds": 3705.927357196808, "k1": 6, "log_bytes": 0, "pid": 155737, "task_id": "m95_k1_06"}, {"elapsed_seconds": 2084.2336115837097, "k1": 4, "log_bytes": 0, "pid": 634899, "task_id": "m95_k1_04"}], "completed": 73, "elapsed_seconds": 13389.009464740753, "estimate": {"available": true, "confidence": "medium", "estimated_task_count": 2, "estimated_total_wall_seconds": 13389.009464740753, "method": "k1 timing trend", "note": "rough ETA from completed task timings; no internal branch progress is measured", "parallelism": 2, "remaining_cpu_seconds": 0.0, "remaining_wall_seconds": 0.0, "sample_count": 73}, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 16, "running": 2, "skipped": 45, "total": 75}
+[#############################.] 73/75 complete (97.3%) | running 2 | pending 0 | quarantined 16 | skipped 45 | elapsed 3h43m | eta rough 0s | total rough 3h43m
+estimate: medium confidence from 73 completed timings (k1 timing trend)
+active:
+  m95_k1_04 k1=4 pid=634899 elapsed=34m44s log=0B
+  m95_k1_06 k1=6 pid=155737 elapsed=1h01m log=0B
+{"cmd": ["./build/affine_ladder_prefix", "95", "6", "0", "256"], "exit_code": 0, "log_sha256": "c014dd35e296a8f48c3c2809f15c9359c23e719a07ca857616e958c587f11259", "seconds": 3711.9354345798492, "task_id": "m95_k1_06", "timed_out": false}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 16 | skipped 45 | elapsed 3h43m | eta rough 0s | total rough 3h43m
+estimate: medium confidence from 74 completed timings (k1 timing trend)
+active:
+  m95_k1_04 k1=4 pid=634899 elapsed=34m50s log=0B
+{"active": [{"elapsed_seconds": 2144.2570996284485, "k1": 4, "log_bytes": 0, "pid": 634899, "task_id": "m95_k1_04"}], "completed": 74, "elapsed_seconds": 13449.032952785492, "estimate": {"available": true, "confidence": "medium", "estimated_task_count": 1, "estimated_total_wall_seconds": 13449.032952785492, "method": "k1 timing trend", "note": "rough ETA from completed task timings; no internal branch progress is measured", "parallelism": 1, "remaining_cpu_seconds": 0.0, "remaining_wall_seconds": 0.0, "sample_count": 74}, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 16, "running": 1, "skipped": 45, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 16 | skipped 45 | elapsed 3h44m | eta rough 0s | total rough 3h44m
+estimate: medium confidence from 74 completed timings (k1 timing trend)
+active:
+  m95_k1_04 k1=4 pid=634899 elapsed=35m44s log=0B
+{"active": [{"elapsed_seconds": 2204.2753450870514, "k1": 4, "log_bytes": 0, "pid": 634899, "task_id": "m95_k1_04"}], "completed": 74, "elapsed_seconds": 13509.051198244095, "estimate": {"available": true, "confidence": "medium", "estimated_task_count": 1, "estimated_total_wall_seconds": 13509.051198244095, "method": "k1 timing trend", "note": "rough ETA from completed task timings; no internal branch progress is measured", "parallelism": 1, "remaining_cpu_seconds": 0.0, "remaining_wall_seconds": 0.0, "sample_count": 74}, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 16, "running": 1, "skipped": 45, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 16 | skipped 45 | elapsed 3h45m | eta rough 0s | total rough 3h45m
+estimate: medium confidence from 74 completed timings (k1 timing trend)
+active:
+  m95_k1_04 k1=4 pid=634899 elapsed=36m44s log=0B
+{"active": [{"elapsed_seconds": 2264.2917630672455, "k1": 4, "log_bytes": 0, "pid": 634899, "task_id": "m95_k1_04"}], "completed": 74, "elapsed_seconds": 13569.067616224289, "estimate": {"available": true, "confidence": "medium", "estimated_task_count": 1, "estimated_total_wall_seconds": 13569.067616224289, "method": "k1 timing trend", "note": "rough ETA from completed task timings; no internal branch progress is measured", "parallelism": 1, "remaining_cpu_seconds": 0.0, "remaining_wall_seconds": 0.0, "sample_count": 74}, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 16, "running": 1, "skipped": 45, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 16 | skipped 45 | elapsed 3h46m | eta rough 0s | total rough 3h46m
+estimate: medium confidence from 74 completed timings (k1 timing trend)
+active:
+  m95_k1_04 k1=4 pid=634899 elapsed=37m44s log=0B
+{"active": [{"elapsed_seconds": 2324.3073863983154, "k1": 4, "log_bytes": 0, "pid": 634899, "task_id": "m95_k1_04"}], "completed": 74, "elapsed_seconds": 13629.083239555359, "estimate": {"available": true, "confidence": "medium", "estimated_task_count": 1, "estimated_total_wall_seconds": 13629.083239555359, "method": "k1 timing trend", "note": "rough ETA from completed task timings; no internal branch progress is measured", "parallelism": 1, "remaining_cpu_seconds": 0.0, "remaining_wall_seconds": 0.0, "sample_count": 74}, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 16, "running": 1, "skipped": 45, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 16 | skipped 45 | elapsed 3h47m | eta rough 0s | total rough 3h47m
+estimate: medium confidence from 74 completed timings (k1 timing trend)
+active:
+  m95_k1_04 k1=4 pid=634899 elapsed=38m44s log=0B
+{"active": [{"elapsed_seconds": 2384.323190689087, "k1": 4, "log_bytes": 0, "pid": 634899, "task_id": "m95_k1_04"}], "completed": 74, "elapsed_seconds": 13689.09904384613, "estimate": {"available": true, "confidence": "medium", "estimated_task_count": 1, "estimated_total_wall_seconds": 13689.09904384613, "method": "k1 timing trend", "note": "rough ETA from completed task timings; no internal branch progress is measured", "parallelism": 1, "remaining_cpu_seconds": 0.0, "remaining_wall_seconds": 0.0, "sample_count": 74}, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 16, "running": 1, "skipped": 45, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 16 | skipped 45 | elapsed 3h48m | eta rough 0s | total rough 3h48m
+estimate: medium confidence from 74 completed timings (k1 timing trend)
+active:
+  m95_k1_04 k1=4 pid=634899 elapsed=39m44s log=0B
+{"active": [{"elapsed_seconds": 2444.3388617038727, "k1": 4, "log_bytes": 0, "pid": 634899, "task_id": "m95_k1_04"}], "completed": 74, "elapsed_seconds": 13749.114714860916, "estimate": {"available": true, "confidence": "medium", "estimated_task_count": 1, "estimated_total_wall_seconds": 13749.114714860916, "method": "k1 timing trend", "note": "rough ETA from completed task timings; no internal branch progress is measured", "parallelism": 1, "remaining_cpu_seconds": 0.0, "remaining_wall_seconds": 0.0, "sample_count": 74}, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 16, "running": 1, "skipped": 45, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 16 | skipped 45 | elapsed 3h49m | eta rough 0s | total rough 3h49m
+estimate: medium confidence from 74 completed timings (k1 timing trend)
+active:
+  m95_k1_04 k1=4 pid=634899 elapsed=40m44s log=0B
+{"active": [{"elapsed_seconds": 2504.3548114299774, "k1": 4, "log_bytes": 0, "pid": 634899, "task_id": "m95_k1_04"}], "completed": 74, "elapsed_seconds": 13809.13066458702, "estimate": {"available": true, "confidence": "medium", "estimated_task_count": 1, "estimated_total_wall_seconds": 13809.13066458702, "method": "k1 timing trend", "note": "rough ETA from completed task timings; no internal branch progress is measured", "parallelism": 1, "remaining_cpu_seconds": 0.0, "remaining_wall_seconds": 0.0, "sample_count": 74}, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 16, "running": 1, "skipped": 45, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 16 | skipped 45 | elapsed 3h50m | eta rough 0s | total rough 3h50m
+estimate: medium confidence from 74 completed timings (k1 timing trend)
+active:
+  m95_k1_04 k1=4 pid=634899 elapsed=41m44s log=0B
+{"active": [{"elapsed_seconds": 2564.3709840774536, "k1": 4, "log_bytes": 0, "pid": 634899, "task_id": "m95_k1_04"}], "completed": 74, "elapsed_seconds": 13869.146837234497, "estimate": {"available": true, "confidence": "medium", "estimated_task_count": 1, "estimated_total_wall_seconds": 13869.146837234497, "method": "k1 timing trend", "note": "rough ETA from completed task timings; no internal branch progress is measured", "parallelism": 1, "remaining_cpu_seconds": 0.0, "remaining_wall_seconds": 0.0, "sample_count": 74}, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 16, "running": 1, "skipped": 45, "total": 75}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 16 | skipped 45 | elapsed 3h51m | eta rough 0s | total rough 3h51m
+estimate: medium confidence from 74 completed timings (k1 timing trend)
+active:
+  m95_k1_04 k1=4 pid=634899 elapsed=42m44s log=0B
+{"cmd": ["./build/affine_ladder_prefix", "95", "4", "0", "256"], "exit_code": 0, "log_sha256": "18de6c0e89a7d3bde51dfcd80b346c43f36fac729b9092642dd6daba94e01e83", "seconds": 2607.383524417877, "task_id": "m95_k1_04", "timed_out": false}
+[##############################] 75/75 complete (100.0%) | running 0 | pending 0 | quarantined 16 | skipped 45 | elapsed 3h51m | eta rough 0s | total rough 3h51m
+estimate: medium confidence from 75 completed timings (k1 timing trend)

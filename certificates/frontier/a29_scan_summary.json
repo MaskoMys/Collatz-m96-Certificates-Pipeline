@@ -1,0 +1,14 @@
+{
+  "P": "683381996816440",
+  "Q": "431166034846567",
+  "accepted": 18931398,
+  "epsilon_hi_scaled": "2439259423933907",
+  "epsilon_lo_scaled": "2439259423933906",
+  "inv_m_hi_scaled": "258180335",
+  "inv_m_lo_scaled": "258180334",
+  "rejected": 18931398,
+  "result": "CERTIFIED",
+  "scale_bits": 100,
+  "scan_max": 37862796,
+  "undecided": 0
+}

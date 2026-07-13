@@ -1,0 +1,120 @@
+  m94_k1_11 k1=11 pid=673663 elapsed=1m15s log=0B
+  m94_k1_12 k1=12 pid=672157 elapsed=1m31s log=0B
+next: m94_k1_05, m94_k1_04, m94_k1_03, m94_k1_02, m94_k1_01
+{"active": [{"elapsed_seconds": 98.16894555091858, "k1": 12, "log_bytes": 0, "pid": 672157, "task_id": "m94_k1_12"}, {"elapsed_seconds": 82.13764142990112, "k1": 11, "log_bytes": 0, "pid": 673663, "task_id": "m94_k1_11"}, {"elapsed_seconds": 68.1191177368164, "k1": 10, "log_bytes": 0, "pid": 681100, "task_id": "m94_k1_10"}, {"elapsed_seconds": 59.59780478477478, "k1": 9, "log_bytes": 0, "pid": 683086, "task_id": "m94_k1_09"}, {"elapsed_seconds": 39.07256555557251, "k1": 8, "log_bytes": 0, "pid": 689131, "task_id": "m94_k1_08"}, {"elapsed_seconds": 32.559300899505615, "k1": 7, "log_bytes": 0, "pid": 692873, "task_id": "m94_k1_07"}, {"elapsed_seconds": 23.532980918884277, "k1": 6, "log_bytes": 0, "pid": 693590, "task_id": "m94_k1_06"}, {"elapsed_seconds": 6.004575490951538, "k1": 5, "log_bytes": 0, "pid": 700185, "task_id": "m94_k1_05"}], "completed": 63, "elapsed_seconds": 270.81952834129333, "estimate": {"available": true, "confidence": "low", "estimated_task_count": 12, "estimated_total_wall_seconds": 396.2863348955793, "method": "k1 timing trend", "note": "rough ETA from completed task timings; no internal branch progress is measured", "parallelism": 8, "remaining_cpu_seconds": 1003.7344524342874, "remaining_wall_seconds": 125.46680655428592, "sample_count": 63}, "event": "heartbeat", "pending": 4, "pending_tasks": ["m94_k1_04", "m94_k1_03", "m94_k1_02", "m94_k1_01"], "quarantined": 0, "running": 8, "skipped": 0, "total": 75}
+[#########################.....] 63/75 complete (84.0%) | running 8 | pending 4 | quarantined 0 | elapsed 4m30s | eta rough 2m05s | total rough 6m36s
+estimate: low confidence from 63 completed timings (k1 timing trend)
+active:
+  m94_k1_05 k1=5 pid=700185 elapsed=6s log=0B
+  m94_k1_06 k1=6 pid=693590 elapsed=23s log=0B
+  m94_k1_07 k1=7 pid=692873 elapsed=32s log=0B
+  m94_k1_08 k1=8 pid=689131 elapsed=39s log=0B
+  m94_k1_09 k1=9 pid=683086 elapsed=59s log=0B
+  m94_k1_10 k1=10 pid=681100 elapsed=1m08s log=0B
+  m94_k1_11 k1=11 pid=673663 elapsed=1m22s log=0B
+  m94_k1_12 k1=12 pid=672157 elapsed=1m38s log=0B
+next: m94_k1_04, m94_k1_03, m94_k1_02, m94_k1_01
+{"cmd": ["./build/affine_ladder_prefix", "94", "12", "0", "256"], "exit_code": 0, "log_sha256": "c5964d1b6cf19dbd5a02d4ec552fb5e985f737d3246da45aa6d4384e30249e15", "seconds": 99.17767691612244, "task_id": "m94_k1_12", "timed_out": false}
+[#########################.....] 64/75 complete (85.3%) | running 7 | pending 4 | quarantined 0 | elapsed 4m31s | eta rough 2m08s | total rough 6m40s
+estimate: low confidence from 64 completed timings (k1 timing trend)
+active:
+  m94_k1_05 k1=5 pid=700185 elapsed=7s log=0B
+  m94_k1_06 k1=6 pid=693590 elapsed=24s log=0B
+  m94_k1_07 k1=7 pid=692873 elapsed=33s log=0B
+  m94_k1_08 k1=8 pid=689131 elapsed=40s log=0B
+  m94_k1_09 k1=9 pid=683086 elapsed=1m00s log=0B
+  m94_k1_10 k1=10 pid=681100 elapsed=1m09s log=0B
+  m94_k1_11 k1=11 pid=673663 elapsed=1m23s log=0B
+next: m94_k1_04, m94_k1_03, m94_k1_02, m94_k1_01
+{"cmd": ["./build/affine_ladder_prefix", "94", "11", "0", "256"], "exit_code": 0, "log_sha256": "2616d47ce3427c4354d031c8ad167fe25ae45657e391caf285fd96598ec66f49", "seconds": 90.65718531608582, "task_id": "m94_k1_11", "timed_out": false}
+[##########################....] 65/75 complete (86.7%) | running 7 | pending 3 | quarantined 0 | elapsed 4m39s | eta rough 1m39s | total rough 6m18s
+estimate: low confidence from 65 completed timings (k1 timing trend)
+active:
+  m94_k1_04 k1=4 pid=703086 elapsed=7s log=0B
+  m94_k1_05 k1=5 pid=700185 elapsed=14s log=0B
+  m94_k1_06 k1=6 pid=693590 elapsed=32s log=0B
+  m94_k1_07 k1=7 pid=692873 elapsed=41s log=0B
+  m94_k1_08 k1=8 pid=689131 elapsed=47s log=0B
+  m94_k1_09 k1=9 pid=683086 elapsed=1m08s log=0B
+  m94_k1_10 k1=10 pid=681100 elapsed=1m16s log=0B
+next: m94_k1_03, m94_k1_02, m94_k1_01
+{"cmd": ["./build/affine_ladder_prefix", "94", "10", "0", "256"], "exit_code": 0, "log_sha256": "d600c21f637a7bad7b7dc79f1b37f481120d4e583228d25094ca524fe855510e", "seconds": 77.15256142616272, "task_id": "m94_k1_10", "timed_out": false}
+[##########################....] 66/75 complete (88.0%) | running 7 | pending 2 | quarantined 0 | elapsed 4m39s | eta rough 1m10s | total rough 5m50s
+estimate: low confidence from 66 completed timings (k1 timing trend)
+active:
+  m94_k1_03 k1=3 pid=703696 elapsed=0s log=0B
+  m94_k1_04 k1=4 pid=703086 elapsed=7s log=0B
+  m94_k1_05 k1=5 pid=700185 elapsed=15s log=0B
+  m94_k1_06 k1=6 pid=693590 elapsed=32s log=0B
+  m94_k1_07 k1=7 pid=692873 elapsed=41s log=0B
+  m94_k1_08 k1=8 pid=689131 elapsed=48s log=0B
+  m94_k1_09 k1=9 pid=683086 elapsed=1m08s log=0B
+next: m94_k1_02, m94_k1_01
+{"cmd": ["./build/affine_ladder_prefix", "94", "9", "0", "256"], "exit_code": 0, "log_sha256": "7a88680ea4938b687f2b6220eebff16fe335b58261efc1f00540abd244b51d86", "seconds": 80.64754581451416, "task_id": "m94_k1_09", "timed_out": false}
+[##########################....] 67/75 complete (89.3%) | running 7 | pending 1 | quarantined 0 | elapsed 4m51s | eta rough 47s | total rough 5m39s
+estimate: low confidence from 67 completed timings (k1 timing trend)
+active:
+  m94_k1_02 k1=2 pid=703748 elapsed=11s log=0B
+  m94_k1_03 k1=3 pid=703696 elapsed=12s log=0B
+  m94_k1_04 k1=4 pid=703086 elapsed=19s log=0B
+  m94_k1_05 k1=5 pid=700185 elapsed=27s log=0B
+  m94_k1_06 k1=6 pid=693590 elapsed=44s log=0B
+  m94_k1_07 k1=7 pid=692873 elapsed=53s log=0B
+  m94_k1_08 k1=8 pid=689131 elapsed=1m00s log=0B
+next: m94_k1_01
+{"cmd": ["./build/affine_ladder_prefix", "94", "1", "0", "256"], "exit_code": 0, "log_sha256": "e398ec8def987aaf86d7ab66f749eaaba140365eef36e17f028f229088809468", "seconds": 0.504361629486084, "task_id": "m94_k1_01", "timed_out": false}
+[###########################...] 68/75 complete (90.7%) | running 7 | pending 0 | quarantined 0 | elapsed 4m52s | eta rough 0s | total rough 4m52s
+estimate: medium confidence from 68 completed timings (k1 timing trend)
+active:
+  m94_k1_02 k1=2 pid=703748 elapsed=12s log=0B
+  m94_k1_03 k1=3 pid=703696 elapsed=13s log=0B
+  m94_k1_04 k1=4 pid=703086 elapsed=20s log=0B
+  m94_k1_05 k1=5 pid=700185 elapsed=28s log=0B
+  m94_k1_06 k1=6 pid=693590 elapsed=45s log=0B
+  m94_k1_07 k1=7 pid=692873 elapsed=54s log=0B
+  m94_k1_08 k1=8 pid=689131 elapsed=1m01s log=0B
+{"cmd": ["./build/affine_ladder_prefix", "94", "8", "0", "256"], "exit_code": 0, "log_sha256": "c4c4394015639ab49b30c94cff4410fab9323e30e396e4db750d2459a29e3e20", "seconds": 68.6521315574646, "task_id": "m94_k1_08", "timed_out": false}
+[###########################...] 69/75 complete (92.0%) | running 6 | pending 0 | quarantined 0 | elapsed 5m00s | eta rough 0s | total rough 5m00s
+estimate: medium confidence from 69 completed timings (k1 timing trend)
+active:
+  m94_k1_02 k1=2 pid=703748 elapsed=20s log=0B
+  m94_k1_03 k1=3 pid=703696 elapsed=20s log=0B
+  m94_k1_04 k1=4 pid=703086 elapsed=28s log=0B
+  m94_k1_05 k1=5 pid=700185 elapsed=35s log=0B
+  m94_k1_06 k1=6 pid=693590 elapsed=53s log=0B
+  m94_k1_07 k1=7 pid=692873 elapsed=1m02s log=0B
+{"active": [{"elapsed_seconds": 62.652817726135254, "k1": 7, "log_bytes": 0, "pid": 692873, "task_id": "m94_k1_07"}, {"elapsed_seconds": 53.626497745513916, "k1": 6, "log_bytes": 0, "pid": 693590, "task_id": "m94_k1_06"}, {"elapsed_seconds": 36.09809231758118, "k1": 5, "log_bytes": 0, "pid": 700185, "task_id": "m94_k1_05"}, {"elapsed_seconds": 28.57743501663208, "k1": 4, "log_bytes": 0, "pid": 703086, "task_id": "m94_k1_04"}, {"elapsed_seconds": 21.060915231704712, "k1": 3, "log_bytes": 0, "pid": 703696, "task_id": "m94_k1_03"}, {"elapsed_seconds": 20.552316904067993, "k1": 2, "log_bytes": 0, "pid": 703748, "task_id": "m94_k1_02"}], "completed": 69, "elapsed_seconds": 300.913045167923, "estimate": {"available": true, "confidence": "medium", "estimated_task_count": 6, "estimated_total_wall_seconds": 300.913045167923, "method": "k1 timing trend", "note": "rough ETA from completed task timings; no internal branch progress is measured", "parallelism": 6, "remaining_cpu_seconds": 0.0, "remaining_wall_seconds": 0.0, "sample_count": 69}, "event": "heartbeat", "pending": 0, "pending_tasks": [], "quarantined": 0, "running": 6, "skipped": 0, "total": 75}
+[###########################...] 69/75 complete (92.0%) | running 6 | pending 0 | quarantined 0 | elapsed 5m00s | eta rough 0s | total rough 5m00s
+estimate: medium confidence from 69 completed timings (k1 timing trend)
+active:
+  m94_k1_02 k1=2 pid=703748 elapsed=20s log=0B
+  m94_k1_03 k1=3 pid=703696 elapsed=21s log=0B
+  m94_k1_04 k1=4 pid=703086 elapsed=28s log=0B
+  m94_k1_05 k1=5 pid=700185 elapsed=36s log=0B
+  m94_k1_06 k1=6 pid=693590 elapsed=53s log=0B
+  m94_k1_07 k1=7 pid=692873 elapsed=1m02s log=0B
+{"cmd": ["./build/affine_ladder_prefix", "94", "7", "0", "256"], "exit_code": 0, "log_sha256": "5729097f47ed55fca2e803f132e91430e78ddf46644a334cc48250e441ec253d", "seconds": 65.66140151023865, "task_id": "m94_k1_07", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "94", "3", "0", "256"], "exit_code": 0, "log_sha256": "49d1464e58a130bb05628f1f630e5c0a0f29f395678c45cf4a8d3ae8eebda63b", "seconds": 24.070364713668823, "task_id": "m94_k1_03", "timed_out": false}
+[############################..] 71/75 complete (94.7%) | running 4 | pending 0 | quarantined 0 | elapsed 5m03s | eta rough 0s | total rough 5m04s
+estimate: medium confidence from 71 completed timings (k1 timing trend)
+active:
+  m94_k1_02 k1=2 pid=703748 elapsed=23s log=0B
+  m94_k1_04 k1=4 pid=703086 elapsed=31s log=0B
+  m94_k1_05 k1=5 pid=700185 elapsed=39s log=0B
+  m94_k1_06 k1=6 pid=693590 elapsed=56s log=0B
+{"cmd": ["./build/affine_ladder_prefix", "94", "6", "0", "256"], "exit_code": 0, "log_sha256": "a49774c11c22c04cc0bf04b9e533ad0b847bc40ae13b6a94a2b8b8cf32a8a1f5", "seconds": 57.141008138656616, "task_id": "m94_k1_06", "timed_out": false}
+{"cmd": ["./build/affine_ladder_prefix", "94", "2", "0", "256"], "exit_code": 0, "log_sha256": "0b43cc393caac7e4ec54d5d63f5da27580b9dd933a1be36f1534befa93a52718", "seconds": 24.067566871643066, "task_id": "m94_k1_02", "timed_out": false}
+[#############################.] 73/75 complete (97.3%) | running 2 | pending 0 | quarantined 0 | elapsed 5m04s | eta rough 1s | total rough 5m06s
+estimate: medium confidence from 73 completed timings (k1 timing trend)
+active:
+  m94_k1_04 k1=4 pid=703086 elapsed=32s log=0B
+  m94_k1_05 k1=5 pid=700185 elapsed=39s log=0B
+{"cmd": ["./build/affine_ladder_prefix", "94", "5", "0", "256"], "exit_code": 0, "log_sha256": "91b9b502365dfcbf00b03acd218e602e0a1502d0103f9111719311af72d170b9", "seconds": 40.119603872299194, "task_id": "m94_k1_05", "timed_out": false}
+[#############################.] 74/75 complete (98.7%) | running 1 | pending 0 | quarantined 0 | elapsed 5m04s | eta rough 0s | total rough 5m04s
+estimate: medium confidence from 74 completed timings (k1 timing trend)
+active:
+  m94_k1_04 k1=4 pid=703086 elapsed=32s log=0B
+{"cmd": ["./build/affine_ladder_prefix", "94", "4", "0", "256"], "exit_code": 0, "log_sha256": "6d77ae497deebca3b3e4a83d7050de4f72649cb8f5aeb113da7462cd5fcfd08b", "seconds": 40.10535717010498, "task_id": "m94_k1_04", "timed_out": false}
+[##############################] 75/75 complete (100.0%) | running 0 | pending 0 | quarantined 0 | elapsed 5m12s | eta rough 0s | total rough 5m12s
+estimate: medium confidence from 75 completed timings (k1 timing trend)
+=== m=94 verified 2026-07-09T12:40:10+01:00 ===

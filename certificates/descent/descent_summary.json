@@ -1,0 +1,76 @@
+{
+  "endpoint_m2": {
+    "base": 27,
+    "base_bits": 5,
+    "covered_units": 7671903,
+    "depth": 28,
+    "descent_cells": 173892,
+    "descent_sha256": "6f6a80d431edba5b49427c9056fb96f205df8469b99e4798e0b7e3f4139ea341",
+    "max_steps": 17,
+    "max_valuation_sum": 27,
+    "residual_classes": 716705,
+    "residual_sha256": "aeaa250cb05a1a146e81701a5f2c07fbc11b1fed4c076f40dff1390d779da14d",
+    "total_units": 8388608
+  },
+  "primitive": [
+    {
+      "base": 3,
+      "base_bits": 4,
+      "covered_units": 1048575,
+      "depth": 24,
+      "descent_cells": 20,
+      "descent_sha256": "d14621890f2631a6fa40a3f137c9347af9546acc0efa358b98c357143f1ec1dc",
+      "max_steps": 2,
+      "max_valuation_sum": 23,
+      "residual_classes": 1,
+      "residual_sha256": "fedaf348279c43fbd3a08f9147e8c1090a7d6aedbffbf129005d10ed4c9ac921",
+      "total_units": 1048576
+    },
+    {
+      "base": 7,
+      "base_bits": 4,
+      "covered_units": 981761,
+      "depth": 24,
+      "descent_cells": 12889,
+      "descent_sha256": "c75f19b616b61dc36a4ede4e3628d4da862566f3a7f32acff55d4a698e52d44d",
+      "max_steps": 14,
+      "max_valuation_sum": 23,
+      "residual_classes": 66815,
+      "residual_sha256": "73c3edf1667d21fac57b66fd85407508bc98979fd3084cf904ce971dcf45f711",
+      "total_units": 1048576
+    },
+    {
+      "base": 11,
+      "base_bits": 4,
+      "covered_units": 981761,
+      "depth": 24,
+      "descent_cells": 12889,
+      "descent_sha256": "bc050c5745edfad0cf9f15319a5d5a196d2ad3ec545e47d1cd0cae0ae3379371",
+      "max_steps": 14,
+      "max_valuation_sum": 23,
+      "residual_classes": 66815,
+      "residual_sha256": "0f2782508a89b5c7653d519d2f3ceb1b76683435dfaecaebcd86eb4e13f2c965",
+      "total_units": 1048576
+    },
+    {
+      "base": 15,
+      "base_bits": 4,
+      "covered_units": 814509,
+      "depth": 24,
+      "descent_cells": 39397,
+      "descent_sha256": "5ae8269a0efe4ae15087abcd6fb7393580ea02a17d76b010848a8e6581f4e022",
+      "max_steps": 14,
+      "max_valuation_sum": 23,
+      "residual_classes": 234067,
+      "residual_sha256": "751714467d0c22bc53b79008ddd36b471cc242ba1d933bd2e3d7cd029a2af265",
+      "total_units": 1048576
+    }
+  ],
+  "primitive_combined": {
+    "covered_denominator": 2097152,
+    "covered_numerator": 1913303,
+    "residual_mod_2_pow_24": 367698
+  },
+  "result": "CERTIFIED",
+  "schema": "collatz-descent-covers-v1"
+}

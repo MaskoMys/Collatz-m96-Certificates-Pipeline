@@ -1,0 +1,61 @@
+{
+  "counts": [
+    {
+      "J": 28,
+      "Q": "52449289519716",
+      "count": 280139
+    },
+    {
+      "J": 29,
+      "Q": "431166034846567",
+      "count": 18931398
+    },
+    {
+      "J": 30,
+      "Q": "483615324366283",
+      "count": 23817367
+    },
+    {
+      "J": 32,
+      "Q": "6234549927241963",
+      "count": 3958255375
+    },
+    {
+      "J": 34,
+      "Q": "267118416222671843",
+      "count": 7266098126207
+    },
+    {
+      "J": 36,
+      "Q": "4242721909926539673",
+      "count": 1833085533337202
+    },
+    {
+      "J": 40,
+      "Q": "50247984153525417450",
+      "count": 257117053950509254
+    }
+  ],
+  "result": "CERTIFIED",
+  "schema": "collatz-frontier-oracle-v1",
+  "tau": [
+    {
+      "count_below": 0,
+      "count_through": 1,
+      "tau": "72057431991",
+      "verification_exponent": 71
+    },
+    {
+      "count_below": 0,
+      "count_through": 1,
+      "tau": "2396860564955",
+      "verification_exponent": 80
+    },
+    {
+      "count_below": 0,
+      "count_through": 1,
+      "tau": "64021008208555",
+      "verification_exponent": 88
+    }
+  ]
+}

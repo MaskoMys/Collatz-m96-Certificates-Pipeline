@@ -145,7 +145,7 @@ rejects. So this guard cannot silently hide a survivor.
 - **(A)** the caps `kcap[i]` are valid upper bounds for `k_i` (certified given the imported
   `k_{i+j} < α^j log2(n_1+1)`, `α<317/200`, `n_1<2^{76}`);
 - **(B)** the stage bounds `extra[i]` are valid lower bounds for `n_i` (imported m-cycle reduction;
-  the staged audit `scripts/audit_lower_bound.py` accepts for `m=96`);
+  the exact reduction verifier `scripts/verify_reduction_certificates.py` accepts for `m=96`);
 - **(C)** the height window `n_1 ∈ [2^{71}, 29·2^{71}]` is valid (imported);
 - **(D)** the hugging/frontier data (`floor_alpha`, `FIRST_POSITIVE_SURPLUS=72057431991`) are valid
   (Paper 2; CF bracket certified);

@@ -5,8 +5,10 @@ as a completed public certificate release.
 
 The current checkout is a reorganized pipeline with a committed full branch-run
 example. It is suitable for reviewing the source, manifests, proof notes,
-smoke-test verifier, and one accepted 75-branch output. It is not yet the
-immutable supplementary archive described by the manuscript PDF.
+smoke-test verifier, the configured `m=92..96` manifests, accepted `m=92..95`
+companion outputs, and one accepted `m=96` 75-branch output. It is not yet the
+immutable supplementary archive described by the manuscript PDF, but the full
+affine-ladder artifact now verifies with `python3 -B verify_all.py`.
 
 ## 1. Local Smoke Check
 
@@ -18,7 +20,7 @@ g++ -O3 -std=c++17 src/m96/affine_ladder_prefix.cpp -lgmpxx -lgmp \
   -o build/affine_ladder_prefix
 
 python3 scripts/certify_constants.py
-python3 scripts/audit_lower_bound.py
+python3 scripts/verify_reduction_certificates.py
 
 rm -rf build/runs_sample
 python3 scripts/run_tasks.py \
@@ -80,34 +82,80 @@ An accepted example output is committed at
 `examples/m96_full_run_2026-07-06/`. It was run with `--jobs 8` on an AMD Ryzen
 5 3600 and accepted all 75 tasks.
 
-## 3. Release Pieces Still Needed
+## 3. m=92..95 Reproduction
 
-A finished certificate release should add:
+The same runner/verifier flow applies to `m=92..95`. Generate the manifests:
 
-- a whole-file SHA-256 manifest for the release archive;
-- a one-command `verify_all.py` that checks the full release without rerunning
-  the expensive search;
-- adversarial verifier tests for missing branches, altered hit counts, modified
-  logs, source mismatches, unexpected files, malformed metadata, and path-safety
-  cases;
-- exact analytic certificate files referenced by the manuscript;
+```bash
+for m in 92 93 94 95; do
+  python3 scripts/generate_manifest.py \
+    --m "$m" \
+    --out "manifests/tasks_m${m}.jsonl" \
+    --mode k1 \
+    --source src/m96/affine_ladder_prefix.cpp
+done
+```
+
+Run and verify each case in its own directory:
+
+```bash
+for m in 92 93 94 95; do
+  mkdir -p dist/run_logs
+  python3 scripts/run_tasks.py \
+    --exe ./build/affine_ladder_prefix \
+    --tasks "manifests/tasks_m${m}.jsonl" \
+    --out "dist/runs_m${m}" \
+    --jobs 8 \
+    --timeout 0 \
+    --resume \
+    --retry-invalid \
+    --heartbeat-seconds 60 \
+    --progress \
+    --order desc \
+    > "dist/run_logs/m${m}_run.log" 2>&1
+
+  python3 scripts/verify_certificate.py \
+    --tasks "manifests/tasks_m${m}.jsonl" \
+    --runs "dist/runs_m${m}" \
+    --source src/m96/affine_ladder_prefix.cpp \
+    --exe ./build/affine_ladder_prefix \
+    > "dist/run_logs/m${m}_verify.json"
+done
+```
+
+Expected accepted task counts are `m=92: 73`, `m=93: 74`, `m=94: 75`, and
+`m=95: 75`. The tighter `m=94` and `m=95` caps and stage targets are now
+derived by the exact reduction verifier.
+
+An accepted example output is committed at
+`examples/m92_m95_full_runs_2026-07-09/`.
+
+## 4. Release Pieces Still Needed
+
+The computational release now has exact reductions, all manuscript certificate
+families, a whole-file manifest, `SHA256SUMS`, one-command verification, and
+adversarial tests. The complete publication still needs:
+
+- the LaTeX source and a reproducible PDF build;
 - a license selected by the author;
+- independent mathematical review and a second full computation;
 - release notes that state exactly what is proved and what remains conditional.
 
-## 4. GitHub Publication Checklist
+## 5. GitHub Publication Checklist
 
-- [ ] README status matches the shipped artifacts.
-- [ ] `python3 scripts/certify_constants.py` succeeds.
-- [ ] `python3 scripts/audit_lower_bound.py` succeeds.
+- [x] README status matches the shipped affine-ladder artifacts.
+- [x] `python3 scripts/certify_constants.py` succeeds.
+- [x] `python3 scripts/verify_reduction_certificates.py` succeeds.
 - [ ] CI smoke test is green.
-- [ ] The sample branch verifier accepts.
-- [ ] The full branch verifier accepts all 75 tasks.
+- [x] The sample branch verifier accepts.
+- [x] The `m=92`, `m=93`, `m=94`, and `m=95` branch verifiers accept.
+- [x] The `m=96` full branch verifier accepts all 75 tasks.
 - [ ] The manuscript data-availability statement matches the release contents.
 - [ ] No compiled binary is tracked.
 - [ ] A license is present.
 - [ ] The release tag points to the verified commit.
 
-## 5. Archival Submission
+## 6. Archival Submission
 
 After the full artifact exists, create an immutable GitHub release and consider
 archiving it with Zenodo. Cite the release tag or DOI, not the moving `main`

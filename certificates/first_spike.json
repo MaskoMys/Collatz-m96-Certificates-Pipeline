@@ -1,0 +1,520 @@
+{
+  "analytic_threshold_checks": {
+    "two_pow_897_gt_two_times_103_pow_133": true,
+    "two_times_two_pow_103_minus_one_pow_10_gt_two_pow_1030": true
+  },
+  "range": {
+    "m_max": 102,
+    "m_min": 2
+  },
+  "result": "CERTIFIED",
+  "rows": [
+    {
+      "largest_h_satisfying_upper": 1,
+      "m": 2,
+      "smallest_h_satisfying_positive_branch": 2
+    },
+    {
+      "largest_h_satisfying_upper": 1,
+      "m": 3,
+      "smallest_h_satisfying_positive_branch": 2
+    },
+    {
+      "largest_h_satisfying_upper": 2,
+      "m": 4,
+      "smallest_h_satisfying_positive_branch": 3
+    },
+    {
+      "largest_h_satisfying_upper": 2,
+      "m": 5,
+      "smallest_h_satisfying_positive_branch": 3
+    },
+    {
+      "largest_h_satisfying_upper": 3,
+      "m": 6,
+      "smallest_h_satisfying_positive_branch": 4
+    },
+    {
+      "largest_h_satisfying_upper": 4,
+      "m": 7,
+      "smallest_h_satisfying_positive_branch": 5
+    },
+    {
+      "largest_h_satisfying_upper": 4,
+      "m": 8,
+      "smallest_h_satisfying_positive_branch": 5
+    },
+    {
+      "largest_h_satisfying_upper": 5,
+      "m": 9,
+      "smallest_h_satisfying_positive_branch": 6
+    },
+    {
+      "largest_h_satisfying_upper": 5,
+      "m": 10,
+      "smallest_h_satisfying_positive_branch": 6
+    },
+    {
+      "largest_h_satisfying_upper": 6,
+      "m": 11,
+      "smallest_h_satisfying_positive_branch": 7
+    },
+    {
+      "largest_h_satisfying_upper": 7,
+      "m": 12,
+      "smallest_h_satisfying_positive_branch": 8
+    },
+    {
+      "largest_h_satisfying_upper": 7,
+      "m": 13,
+      "smallest_h_satisfying_positive_branch": 8
+    },
+    {
+      "largest_h_satisfying_upper": 8,
+      "m": 14,
+      "smallest_h_satisfying_positive_branch": 9
+    },
+    {
+      "largest_h_satisfying_upper": 8,
+      "m": 15,
+      "smallest_h_satisfying_positive_branch": 9
+    },
+    {
+      "largest_h_satisfying_upper": 9,
+      "m": 16,
+      "smallest_h_satisfying_positive_branch": 10
+    },
+    {
+      "largest_h_satisfying_upper": 9,
+      "m": 17,
+      "smallest_h_satisfying_positive_branch": 10
+    },
+    {
+      "largest_h_satisfying_upper": 10,
+      "m": 18,
+      "smallest_h_satisfying_positive_branch": 11
+    },
+    {
+      "largest_h_satisfying_upper": 11,
+      "m": 19,
+      "smallest_h_satisfying_positive_branch": 12
+    },
+    {
+      "largest_h_satisfying_upper": 11,
+      "m": 20,
+      "smallest_h_satisfying_positive_branch": 12
+    },
+    {
+      "largest_h_satisfying_upper": 12,
+      "m": 21,
+      "smallest_h_satisfying_positive_branch": 13
+    },
+    {
+      "largest_h_satisfying_upper": 12,
+      "m": 22,
+      "smallest_h_satisfying_positive_branch": 13
+    },
+    {
+      "largest_h_satisfying_upper": 13,
+      "m": 23,
+      "smallest_h_satisfying_positive_branch": 14
+    },
+    {
+      "largest_h_satisfying_upper": 14,
+      "m": 24,
+      "smallest_h_satisfying_positive_branch": 15
+    },
+    {
+      "largest_h_satisfying_upper": 14,
+      "m": 25,
+      "smallest_h_satisfying_positive_branch": 15
+    },
+    {
+      "largest_h_satisfying_upper": 15,
+      "m": 26,
+      "smallest_h_satisfying_positive_branch": 16
+    },
+    {
+      "largest_h_satisfying_upper": 15,
+      "m": 27,
+      "smallest_h_satisfying_positive_branch": 16
+    },
+    {
+      "largest_h_satisfying_upper": 16,
+      "m": 28,
+      "smallest_h_satisfying_positive_branch": 17
+    },
+    {
+      "largest_h_satisfying_upper": 16,
+      "m": 29,
+      "smallest_h_satisfying_positive_branch": 17
+    },
+    {
+      "largest_h_satisfying_upper": 17,
+      "m": 30,
+      "smallest_h_satisfying_positive_branch": 18
+    },
+    {
+      "largest_h_satisfying_upper": 18,
+      "m": 31,
+      "smallest_h_satisfying_positive_branch": 19
+    },
+    {
+      "largest_h_satisfying_upper": 18,
+      "m": 32,
+      "smallest_h_satisfying_positive_branch": 19
+    },
+    {
+      "largest_h_satisfying_upper": 19,
+      "m": 33,
+      "smallest_h_satisfying_positive_branch": 20
+    },
+    {
+      "largest_h_satisfying_upper": 19,
+      "m": 34,
+      "smallest_h_satisfying_positive_branch": 20
+    },
+    {
+      "largest_h_satisfying_upper": 20,
+      "m": 35,
+      "smallest_h_satisfying_positive_branch": 21
+    },
+    {
+      "largest_h_satisfying_upper": 21,
+      "m": 36,
+      "smallest_h_satisfying_positive_branch": 22
+    },
+    {
+      "largest_h_satisfying_upper": 21,
+      "m": 37,
+      "smallest_h_satisfying_positive_branch": 22
+    },
+    {
+      "largest_h_satisfying_upper": 22,
+      "m": 38,
+      "smallest_h_satisfying_positive_branch": 23
+    },
+    {
+      "largest_h_satisfying_upper": 22,
+      "m": 39,
+      "smallest_h_satisfying_positive_branch": 23
+    },
+    {
+      "largest_h_satisfying_upper": 23,
+      "m": 40,
+      "smallest_h_satisfying_positive_branch": 24
+    },
+    {
+      "largest_h_satisfying_upper": 23,
+      "m": 41,
+      "smallest_h_satisfying_positive_branch": 24
+    },
+    {
+      "largest_h_satisfying_upper": 24,
+      "m": 42,
+      "smallest_h_satisfying_positive_branch": 25
+    },
+    {
+      "largest_h_satisfying_upper": 25,
+      "m": 43,
+      "smallest_h_satisfying_positive_branch": 26
+    },
+    {
+      "largest_h_satisfying_upper": 25,
+      "m": 44,
+      "smallest_h_satisfying_positive_branch": 26
+    },
+    {
+      "largest_h_satisfying_upper": 26,
+      "m": 45,
+      "smallest_h_satisfying_positive_branch": 27
+    },
+    {
+      "largest_h_satisfying_upper": 26,
+      "m": 46,
+      "smallest_h_satisfying_positive_branch": 27
+    },
+    {
+      "largest_h_satisfying_upper": 27,
+      "m": 47,
+      "smallest_h_satisfying_positive_branch": 28
+    },
+    {
+      "largest_h_satisfying_upper": 28,
+      "m": 48,
+      "smallest_h_satisfying_positive_branch": 29
+    },
+    {
+      "largest_h_satisfying_upper": 28,
+      "m": 49,
+      "smallest_h_satisfying_positive_branch": 29
+    },
+    {
+      "largest_h_satisfying_upper": 29,
+      "m": 50,
+      "smallest_h_satisfying_positive_branch": 30
+    },
+    {
+      "largest_h_satisfying_upper": 29,
+      "m": 51,
+      "smallest_h_satisfying_positive_branch": 30
+    },
+    {
+      "largest_h_satisfying_upper": 30,
+      "m": 52,
+      "smallest_h_satisfying_positive_branch": 31
+    },
+    {
+      "largest_h_satisfying_upper": 31,
+      "m": 53,
+      "smallest_h_satisfying_positive_branch": 32
+    },
+    {
+      "largest_h_satisfying_upper": 31,
+      "m": 54,
+      "smallest_h_satisfying_positive_branch": 32
+    },
+    {
+      "largest_h_satisfying_upper": 32,
+      "m": 55,
+      "smallest_h_satisfying_positive_branch": 33
+    },
+    {
+      "largest_h_satisfying_upper": 32,
+      "m": 56,
+      "smallest_h_satisfying_positive_branch": 33
+    },
+    {
+      "largest_h_satisfying_upper": 33,
+      "m": 57,
+      "smallest_h_satisfying_positive_branch": 34
+    },
+    {
+      "largest_h_satisfying_upper": 33,
+      "m": 58,
+      "smallest_h_satisfying_positive_branch": 34
+    },
+    {
+      "largest_h_satisfying_upper": 34,
+      "m": 59,
+      "smallest_h_satisfying_positive_branch": 35
+    },
+    {
+      "largest_h_satisfying_upper": 35,
+      "m": 60,
+      "smallest_h_satisfying_positive_branch": 36
+    },
+    {
+      "largest_h_satisfying_upper": 35,
+      "m": 61,
+      "smallest_h_satisfying_positive_branch": 36
+    },
+    {
+      "largest_h_satisfying_upper": 36,
+      "m": 62,
+      "smallest_h_satisfying_positive_branch": 37
+    },
+    {
+      "largest_h_satisfying_upper": 36,
+      "m": 63,
+      "smallest_h_satisfying_positive_branch": 37
+    },
+    {
+      "largest_h_satisfying_upper": 37,
+      "m": 64,
+      "smallest_h_satisfying_positive_branch": 38
+    },
+    {
+      "largest_h_satisfying_upper": 38,
+      "m": 65,
+      "smallest_h_satisfying_positive_branch": 39
+    },
+    {
+      "largest_h_satisfying_upper": 38,
+      "m": 66,
+      "smallest_h_satisfying_positive_branch": 39
+    },
+    {
+      "largest_h_satisfying_upper": 39,
+      "m": 67,
+      "smallest_h_satisfying_positive_branch": 40
+    },
+    {
+      "largest_h_satisfying_upper": 39,
+      "m": 68,
+      "smallest_h_satisfying_positive_branch": 40
+    },
+    {
+      "largest_h_satisfying_upper": 40,
+      "m": 69,
+      "smallest_h_satisfying_positive_branch": 41
+    },
+    {
+      "largest_h_satisfying_upper": 40,
+      "m": 70,
+      "smallest_h_satisfying_positive_branch": 41
+    },
+    {
+      "largest_h_satisfying_upper": 41,
+      "m": 71,
+      "smallest_h_satisfying_positive_branch": 42
+    },
+    {
+      "largest_h_satisfying_upper": 42,
+      "m": 72,
+      "smallest_h_satisfying_positive_branch": 43
+    },
+    {
+      "largest_h_satisfying_upper": 42,
+      "m": 73,
+      "smallest_h_satisfying_positive_branch": 43
+    },
+    {
+      "largest_h_satisfying_upper": 43,
+      "m": 74,
+      "smallest_h_satisfying_positive_branch": 44
+    },
+    {
+      "largest_h_satisfying_upper": 43,
+      "m": 75,
+      "smallest_h_satisfying_positive_branch": 44
+    },
+    {
+      "largest_h_satisfying_upper": 44,
+      "m": 76,
+      "smallest_h_satisfying_positive_branch": 45
+    },
+    {
+      "largest_h_satisfying_upper": 45,
+      "m": 77,
+      "smallest_h_satisfying_positive_branch": 46
+    },
+    {
+      "largest_h_satisfying_upper": 45,
+      "m": 78,
+      "smallest_h_satisfying_positive_branch": 46
+    },
+    {
+      "largest_h_satisfying_upper": 46,
+      "m": 79,
+      "smallest_h_satisfying_positive_branch": 47
+    },
+    {
+      "largest_h_satisfying_upper": 46,
+      "m": 80,
+      "smallest_h_satisfying_positive_branch": 47
+    },
+    {
+      "largest_h_satisfying_upper": 47,
+      "m": 81,
+      "smallest_h_satisfying_positive_branch": 48
+    },
+    {
+      "largest_h_satisfying_upper": 47,
+      "m": 82,
+      "smallest_h_satisfying_positive_branch": 48
+    },
+    {
+      "largest_h_satisfying_upper": 48,
+      "m": 83,
+      "smallest_h_satisfying_positive_branch": 49
+    },
+    {
+      "largest_h_satisfying_upper": 49,
+      "m": 84,
+      "smallest_h_satisfying_positive_branch": 50
+    },
+    {
+      "largest_h_satisfying_upper": 49,
+      "m": 85,
+      "smallest_h_satisfying_positive_branch": 50
+    },
+    {
+      "largest_h_satisfying_upper": 50,
+      "m": 86,
+      "smallest_h_satisfying_positive_branch": 51
+    },
+    {
+      "largest_h_satisfying_upper": 50,
+      "m": 87,
+      "smallest_h_satisfying_positive_branch": 51
+    },
+    {
+      "largest_h_satisfying_upper": 51,
+      "m": 88,
+      "smallest_h_satisfying_positive_branch": 52
+    },
+    {
+      "largest_h_satisfying_upper": 52,
+      "m": 89,
+      "smallest_h_satisfying_positive_branch": 53
+    },
+    {
+      "largest_h_satisfying_upper": 52,
+      "m": 90,
+      "smallest_h_satisfying_positive_branch": 53
+    },
+    {
+      "largest_h_satisfying_upper": 53,
+      "m": 91,
+      "smallest_h_satisfying_positive_branch": 54
+    },
+    {
+      "largest_h_satisfying_upper": 53,
+      "m": 92,
+      "smallest_h_satisfying_positive_branch": 54
+    },
+    {
+      "largest_h_satisfying_upper": 54,
+      "m": 93,
+      "smallest_h_satisfying_positive_branch": 55
+    },
+    {
+      "largest_h_satisfying_upper": 54,
+      "m": 94,
+      "smallest_h_satisfying_positive_branch": 55
+    },
+    {
+      "largest_h_satisfying_upper": 55,
+      "m": 95,
+      "smallest_h_satisfying_positive_branch": 56
+    },
+    {
+      "largest_h_satisfying_upper": 56,
+      "m": 96,
+      "smallest_h_satisfying_positive_branch": 57
+    },
+    {
+      "largest_h_satisfying_upper": 56,
+      "m": 97,
+      "smallest_h_satisfying_positive_branch": 57
+    },
+    {
+      "largest_h_satisfying_upper": 57,
+      "m": 98,
+      "smallest_h_satisfying_positive_branch": 58
+    },
+    {
+      "largest_h_satisfying_upper": 57,
+      "m": 99,
+      "smallest_h_satisfying_positive_branch": 58
+    },
+    {
+      "largest_h_satisfying_upper": 58,
+      "m": 100,
+      "smallest_h_satisfying_positive_branch": 59
+    },
+    {
+      "largest_h_satisfying_upper": 59,
+      "m": 101,
+      "smallest_h_satisfying_positive_branch": 60
+    },
+    {
+      "largest_h_satisfying_upper": 59,
+      "m": 102,
+      "smallest_h_satisfying_positive_branch": 60
+    }
+  ],
+  "schema": "collatz-first-spike-v1",
+  "survivors": 0
+}

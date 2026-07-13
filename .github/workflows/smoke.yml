@@ -10,18 +10,36 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
 
-      - name: Install GMP
-        run: sudo apt-get update && sudo apt-get install -y g++ libgmp-dev
+      - name: Install native dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++ libgmp-dev libssl-dev m4 \
+            nlohmann-json3-dev python3-jsonschema
 
       - name: Compile Python scripts
-        run: python3 -m py_compile scripts/*.py
+        run: python3 -m py_compile scripts/*.py tools/*.py verifiers/*.py verify_all.py
+
+      - name: Check Rust formatting and lints
+        run: |
+          cargo fmt --manifest-path src/verifier-rust/Cargo.toml -- --check
+          make rust-clippy
+
+      - name: Build all engines
+        run: make build-all
 
       - name: Run exact audit scripts
-        run: |
-          python3 scripts/certify_constants.py
-          python3 scripts/audit_lower_bound.py
+        run: make audit
+
+      - name: Run unit and mutation tests
+        run: make test
+
+      - name: Run complete m92 and m93 dual-engine replay
+        run: make engineering-smoke
+
+      - name: Verify committed release artifact
+        run: python3 -B verify_all.py --profile fast --skip-tests
 
       - name: Build m96 search engine
         run: |
@@ -42,3 +60,6 @@ jobs:
             --runs runs_sample \
             --source src/m96/affine_ladder_prefix.cpp \
             --exe ./build/affine_ladder_prefix
+
+      - name: Run sanitizer smoke test
+        run: make sanitize-smoke
