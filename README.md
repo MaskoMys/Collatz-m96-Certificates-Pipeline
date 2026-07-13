@@ -13,32 +13,22 @@ The older 372 branch logs are preserved as historical execution records. They
 are useful corroboration and planning data, but they are not substitutes for
 the v2 dual-engine replay certificate.
 
-## TL;DR: Audit the Current Repository
+## TL;DR
 
-From a clean checkout with the prerequisites installed:
+There is one definitive workflow: follow [Definitive Production
+Run](#definitive-production-run) from top to bottom. It builds the pinned
+environment, audits the committed repository, plans all 372 roots, runs both
+independent engines, freezes the evidence, and checks the computational
+acceptance marker.
 
-```bash
-python3 -B verify_all.py --profile fast
-```
+If you only want to audit the current checkout, stop after the workflow's first
+`verify_all.py --profile fast` command. An `ACCEPT` result with a null theorem
+marker is expected until the production computation is frozen.
 
-Success is a final JSON object with:
+Do not rerun the legacy branch-log pipeline, and do not delete `examples/`.
+Legacy reproduction is documented separately in `docs/LEGACY_BRANCH_RUNS.md`.
 
-```json
-{
-  "profile": "fast",
-  "result": "ACCEPT",
-  "theorem_marker": null
-}
-```
-
-This verifies the release inventory, rebuilds the analytic reductions, checks
-all 372 legacy branch records, verifies the frontier and descent certificates,
-and runs the adversarial test suite. It does not rerun the expensive searches.
-
-The null marker is expected. The stronger profiles reject until the complete
-v2 production artifacts have been frozen.
-
-## TL;DR: Produce the Definitive Certificate
+## Definitive Production Run
 
 Authoritative production uses the pinned container and the authenticated
 binaries under `release/bin/`. Run the following from the repository root on
