@@ -29,3 +29,17 @@ The other certificate families are:
 - `first_spike.json`: the finite positive first-spike exclusion;
 - `descent/`: four depth-24 primitive-minimum covers and the depth-28 endpoint
   `m=2` cover, including all descent and residual leaves.
+
+The v2 engineering layer adds:
+
+- `analytic/m92_96_reductions.json`: the authenticated mathematical input from
+  which all five search configurations are reconstructed;
+- `config/`: canonical search configurations checked independently by both
+  engines;
+- `search-v2/`: reserved for the final exact partition, dual-engine unit
+  results, and aggregate certificates. This directory is intentionally absent
+  until all 372 branches have completed and passed release verification.
+
+Pinned binaries and operational execution provenance live under `release/`,
+outside the mathematical proof-object identities but inside the immutable
+release manifest.
