@@ -15,7 +15,7 @@ from exact_math import canonical_json_bytes, fraction_json, logarithm_intervals,
 P = 83_130_157_078_217
 Q = 52_449_289_519_716
 X = 1 << 71
-SCAN_MAX = 560_277
+EXPECTED_SCAN_MAX = 560_277
 MARGIN = Fraction(27, 50)
 Q26 = 6_162_414_764_360
 Q27 = 11_571_718_688_839
@@ -33,7 +33,12 @@ def greater(n1: int, d1: int, n2: int, d2: int) -> bool:
     return n1 * d2 > n2 * d1
 
 
-def classify_and_check_margins() -> list[int]:
+def strict_integer_ceiling_minus_one(value: Fraction) -> int:
+    """Largest integer that can satisfy d < value."""
+    return (value.numerator + value.denominator - 1) // value.denominator - 1
+
+
+def classify_and_check_margins() -> tuple[list[int], int]:
     intervals = logarithm_intervals()
     delta_lower, delta_upper = intervals["delta"]
     ln2_lower, ln2_upper = intervals["ln2"]
@@ -42,12 +47,13 @@ def classify_and_check_margins() -> list[int]:
     if epsilon_lower <= 0 or Q * epsilon_upper >= 1:
         raise AssertionError("continued-fraction epsilon bounds failed")
     completeness_upper = Q * epsilon_upper + Fraction(Q * Q, 3 * X) / ln2_lower
-    if completeness_upper >= SCAN_MAX + 1:
-        raise AssertionError("frontier scan distance is not complete")
+    scan_max = strict_integer_ceiling_minus_one(completeness_upper)
+    if scan_max != EXPECTED_SCAN_MAX:
+        raise AssertionError(f"derived frontier cutoff changed to {scan_max}")
 
     inverse = pow(P, -1, Q)
     accepted = []
-    for distance in range(1, SCAN_MAX + 1):
+    for distance in range(1, scan_max + 1):
         t = (-distance * inverse) % Q
         a_lower_num = distance * epsilon_upper.denominator - t * epsilon_upper.numerator
         a_upper_num = distance * epsilon_lower.denominator - t * epsilon_lower.numerator
@@ -80,7 +86,7 @@ def classify_and_check_margins() -> list[int]:
         ):
             raise AssertionError(f"upper decision margin failed at d={distance}")
     accepted.sort()
-    return accepted
+    return accepted, scan_max
 
 
 def verify_rho(accepted: list[int]) -> None:
@@ -118,6 +124,17 @@ def continued_fraction(count: int) -> list[int]:
     return result
 
 
+def convergent(coefficients: list[int]) -> tuple[int, int]:
+    p_minus_two, p_minus_one = 0, 1
+    q_minus_two, q_minus_one = 1, 0
+    for coefficient in coefficients:
+        p = coefficient * p_minus_one + p_minus_two
+        q = coefficient * q_minus_one + q_minus_two
+        p_minus_two, p_minus_one = p_minus_one, p
+        q_minus_two, q_minus_one = q_minus_one, q
+    return p_minus_one, q_minus_one
+
+
 def read_csv(path: Path) -> list[int]:
     if path.is_symlink():
         raise AssertionError("frontier CSV may not be a symlink")
@@ -150,8 +167,11 @@ def main() -> None:
         raise AssertionError("frontier certificate file set mismatch")
 
     csv_path = directory / "A28_certificate.csv"
+    coefficients = continued_fraction(29)
+    if convergent(coefficients) != (P, Q):
+        raise AssertionError("A28 convergent is not reconstructed from log intervals")
     recorded = read_csv(csv_path)
-    regenerated = classify_and_check_margins()
+    regenerated, scan_max = classify_and_check_margins()
     if recorded != regenerated:
         raise AssertionError("frontier CSV does not match the complete exact scan")
     verify_rho(recorded)
@@ -161,8 +181,8 @@ def main() -> None:
     expected_summary = {
         "schema": "collatz-a28-frontier-v1",
         "alpha_convergent": {"P": str(P), "Q": str(Q)},
-        "continued_fraction_coefficients": continued_fraction(29),
-        "scan_distance_max": SCAN_MAX,
+        "continued_fraction_coefficients": coefficients,
+        "scan_distance_max": scan_max,
         "decision_margin_strictly_greater_than": fraction_json(MARGIN),
         "undecided": 0,
         "count": len(recorded),
