@@ -77,6 +77,13 @@ class ReleaseManifestTest(unittest.TestCase):
         result = self.verify()
         self.assertEqual(result.returncode, 0, result.stderr)
 
+    def test_rust_target_directory_is_ignored(self):
+        target = self.root / "src" / "verifier-rust" / "target" / "debug"
+        target.mkdir(parents=True)
+        (target / "generated-artifact").write_bytes(b"machine-specific")
+        result = self.verify()
+        self.assertEqual(result.returncode, 0, result.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()

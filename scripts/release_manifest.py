@@ -29,7 +29,18 @@ EXCLUDED_FILES = {
     "certificates/release_manifest.json",
 }
 IGNORED_PARTS = {"__pycache__", ".pytest_cache"}
+IGNORED_RELATIVE_DIRECTORIES = {"src/verifier-rust/target"}
 IGNORED_TOP_LEVEL_DIRECTORIES = {".git", ".venv", "build", "dist"}
+
+
+def ignored_release_path(relative: Path) -> bool:
+    if any(part in IGNORED_PARTS for part in relative.parts):
+        return True
+    name = relative.as_posix()
+    return any(
+        name == directory or name.startswith(f"{directory}/")
+        for directory in IGNORED_RELATIVE_DIRECTORIES
+    )
 
 
 def release_files(root: Path) -> list[Path]:
@@ -51,7 +62,7 @@ def release_files(root: Path) -> list[Path]:
             raise AssertionError(f"managed release directory missing: {directory}")
         for path in base.rglob("*"):
             relative = path.relative_to(root)
-            if any(part in IGNORED_PARTS for part in relative.parts):
+            if ignored_release_path(relative):
                 continue
             name = relative.as_posix()
             if name in EXCLUDED_FILES:
