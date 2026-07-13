@@ -12,12 +12,17 @@ MANAGED_DIRECTORIES = (
     ".github",
     "certificates",
     "docs",
+    "environment",
     "examples",
     "manifests",
     "paper",
+    "release",
+    "schemas",
     "scripts",
     "src",
     "tests",
+    "tools",
+    "verifiers",
 )
 EXCLUDED_FILES = {
     "SHA256SUMS",
@@ -33,6 +38,8 @@ def release_files(root: Path) -> list[Path]:
         if path.is_symlink():
             raise AssertionError(f"symlinked release path: {path.name}")
         if path.is_dir() and path.name not in MANAGED_DIRECTORIES:
+            if path.name in IGNORED_PARTS:
+                continue
             if path.name not in IGNORED_TOP_LEVEL_DIRECTORIES:
                 raise AssertionError(f"unmanaged top-level directory: {path.name}")
             continue

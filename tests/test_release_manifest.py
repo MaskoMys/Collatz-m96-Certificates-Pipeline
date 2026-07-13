@@ -4,21 +4,14 @@ import tempfile
 import unittest
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+from release_manifest import MANAGED_DIRECTORIES
+
+
 GENERATOR = ROOT / "scripts" / "generate_release_manifest.py"
 VERIFIER = ROOT / "scripts" / "verify_release_manifest.py"
-MANAGED = (
-    ".github",
-    "certificates",
-    "docs",
-    "examples",
-    "manifests",
-    "paper",
-    "scripts",
-    "src",
-    "tests",
-)
+MANAGED = MANAGED_DIRECTORIES
 
 
 class ReleaseManifestTest(unittest.TestCase):
@@ -76,6 +69,13 @@ class ReleaseManifestTest(unittest.TestCase):
         result = self.verify()
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("unmanaged top-level directory", result.stderr)
+
+    def test_top_level_python_cache_is_ignored(self):
+        cache = self.root / "__pycache__"
+        cache.mkdir()
+        (cache / "module.pyc").write_bytes(b"cache")
+        result = self.verify()
+        self.assertEqual(result.returncode, 0, result.stderr)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,62 @@
+name: Nightly v2 replay
+
+on:
+  schedule:
+    - cron: "17 1 * * 0"
+  workflow_dispatch:
+
+jobs:
+  m94-dual-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+
+      - name: Install native dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++ libgmp-dev libssl-dev m4 \
+            nlohmann-json3-dev python3-jsonschema
+
+      - name: Build pinned release environment
+        run: docker build --file environment/Dockerfile --tag collatz-v2:nightly .
+
+      - name: Build independent engines
+        run: make build-prover build-rust-verifier
+
+      - name: Plan and verify m94 roots
+        run: |
+          python3 tools/plan_work_units.py --case 94 --out build/nightly/plan
+          python3 verifiers/verify_partition_manifest.py \
+            --case 94 --partitions build/nightly/plan
+
+      - name: Run C++ prover
+        run: |
+          python3 tools/run_prover_units.py \
+            --case 94 --jobs 2 \
+            --plan build/nightly/plan \
+            --out build/nightly/results/prover
+
+      - name: Run independent Rust verifier
+        run: |
+          python3 tools/run_verifier_units.py \
+            --case 94 --jobs 2 \
+            --plan build/nightly/plan \
+            --out build/nightly/results/verifier
+
+      - name: Aggregate and independently verify
+        run: |
+          python3 tools/aggregate_search_certificate.py \
+            --case 94 \
+            --plan build/nightly/plan \
+            --prover-results build/nightly/results/prover \
+            --verifier-results build/nightly/results/verifier \
+            --out build/nightly/certificates
+          python3 verifiers/verify_global_search_certificate.py \
+            --allow-incomplete \
+            --plan build/nightly/plan \
+            --prover-results build/nightly/results/prover \
+            --verifier-results build/nightly/results/verifier \
+            --certificates build/nightly/certificates

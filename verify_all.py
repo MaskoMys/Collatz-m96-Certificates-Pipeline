@@ -147,13 +147,16 @@ def verify_independent_a29_scan() -> dict[str, object]:
         )
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--skip-tests", action="store_true")
-    args = parser.parse_args()
-
+def verify_fast(skip_tests: bool) -> dict[str, object]:
     release = run_json([PYTHON, "scripts/verify_release_manifest.py"])
+    authoritative_builds = run_json(
+        [PYTHON, "verifiers/verify_build_provenance.py"]
+    )
     reductions = run_json([PYTHON, "scripts/verify_reduction_certificates.py"])
+    engineering_reductions = run_json(
+        [PYTHON, "verifiers/verify_mathematical_reductions.py"]
+    )
+    schemas = run_json([PYTHON, "verifiers/verify_schemas.py"])
     frontier = run_json([PYTHON, "scripts/verify_frontier_certificate.py"])
     frontier_oracle = run_json([PYTHON, "scripts/verify_frontier_oracle.py"])
     a29_scan_record = run_json([PYTHON, "scripts/verify_a29_scan.py"])
@@ -172,30 +175,149 @@ def main() -> None:
         branches[str(m)] = result
 
     tests = "SKIPPED"
-    if not args.skip_tests:
-        run([PYTHON, "-m", "unittest", "discover", "-s", "tests"])
+    if not skip_tests:
+        run(["make", "test"])
         tests = "ACCEPT"
+    return {
+        "result": "ACCEPT",
+        "profile": "fast",
+        "theorem_marker": None,
+        "release_integrity": release,
+        "authoritative_builds": authoritative_builds,
+        "analytic_reductions": reductions,
+        "engineering_analytic_inputs": engineering_reductions,
+        "engineering_schemas": schemas,
+        "frontier_certificate": frontier,
+        "frontier_oracle": frontier_oracle,
+        "a29_scan_record": a29_scan_record,
+        "a29_scan_reproduction": a29_scan_reproduction,
+        "first_spike_certificate": first_spike,
+        "descent_certificates": descent,
+        "legacy_branch_records": branches,
+        "reduction_regeneration": "ACCEPT",
+        "adversarial_tests": tests,
+    }
 
-    print(
-        json.dumps(
-            {
-                "result": "ACCEPT",
-                "release_integrity": release,
-                "analytic_reductions": reductions,
-                "frontier_certificate": frontier,
-                "frontier_oracle": frontier_oracle,
-                "a29_scan_record": a29_scan_record,
-                "a29_scan_reproduction": a29_scan_reproduction,
-                "first_spike_certificate": first_spike,
-                "descent_certificates": descent,
-                "branch_certificates": branches,
-                "reduction_regeneration": "ACCEPT",
-                "adversarial_tests": tests,
-            },
-            indent=2,
-            sort_keys=True,
-        )
+
+def verify_theorem_artifacts(args: argparse.Namespace) -> dict[str, object]:
+    result = run_json(
+        [
+            PYTHON,
+            "verifiers/verify_global_search_certificate.py",
+            "--plan",
+            args.search_plan,
+            "--prover-results",
+            args.prover_results,
+            "--verifier-results",
+            args.verifier_results,
+            "--certificates",
+            args.search_certificates,
+            "--prover-binary",
+            args.prover_binary,
+            "--verifier-binary",
+            args.verifier_binary,
+            "--build-provenance",
+            args.build_provenance,
+            "--computation-provenance",
+            args.computation_provenance,
+        ]
     )
+    if result.get("computational_marker") != "ACCEPT_COMPUTATIONAL_ARTIFACT_SET_M_LE_96":
+        raise AssertionError("global artifact verifier did not emit its computational marker")
+    return result
+
+
+def verify_full_replay(args: argparse.Namespace) -> dict[str, object]:
+    artifact_result = verify_theorem_artifacts(args)
+    stored = ROOT / args.verifier_results
+    with tempfile.TemporaryDirectory() as temporary:
+        fresh = Path(temporary) / "verifier-results"
+        run(
+            [
+                PYTHON,
+                "tools/run_verifier_units.py",
+                "--plan",
+                args.search_plan,
+                "--out",
+                str(fresh),
+                "--exe",
+                args.verifier_binary,
+                "--jobs",
+                str(args.jobs),
+                "--heartbeat-seconds",
+                "300",
+            ]
+        )
+        expected = sorted(path.name for path in stored.glob("*.json"))
+        actual = sorted(path.name for path in fresh.glob("*.json"))
+        if actual != expected:
+            raise AssertionError("fresh replay result-file set mismatch")
+        for name in expected:
+            if (stored / name).read_bytes() != (fresh / name).read_bytes():
+                raise AssertionError(f"fresh replay differs from frozen result: {name}")
+    return {
+        "result": "ACCEPT",
+        "profile": "full-replay",
+        "artifact_verification": artifact_result,
+        "computational_marker": "ACCEPT_COMPUTATIONAL_REPLAY_M_LE_96",
+        "theorem_marker": None,
+    }
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--profile",
+        choices=("fast", "theorem-artifacts", "full-replay"),
+        default="fast",
+    )
+    parser.add_argument("--skip-tests", action="store_true")
+    parser.add_argument("--jobs", type=int, default=1)
+    parser.add_argument("--search-plan", default="certificates/search-v2/plan")
+    parser.add_argument(
+        "--prover-results", default="certificates/search-v2/results/prover"
+    )
+    parser.add_argument(
+        "--verifier-results", default="certificates/search-v2/results/verifier"
+    )
+    parser.add_argument(
+        "--search-certificates", default="certificates/search-v2/certificates"
+    )
+    parser.add_argument("--prover-binary", default="release/bin/collatz_prover")
+    parser.add_argument(
+        "--verifier-binary", default="release/bin/collatz_verify_unit"
+    )
+    parser.add_argument(
+        "--build-provenance",
+        default="release/build_provenance/authoritative_binaries.json",
+    )
+    parser.add_argument(
+        "--computation-provenance", default="release/computation_provenance"
+    )
+    args = parser.parse_args()
+    if args.jobs < 1:
+        parser.error("--jobs must be positive")
+
+    fast = verify_fast(args.skip_tests)
+    if args.profile == "fast":
+        result = fast
+    elif args.profile == "theorem-artifacts":
+        result = {
+            "result": "ACCEPT",
+            "profile": "theorem-artifacts",
+            "fast_verification": fast,
+            "search_verification": verify_theorem_artifacts(args),
+            "computational_marker": "ACCEPT_COMPUTATIONAL_ARTIFACT_SET_M_LE_96",
+            "theorem_marker": None,
+        }
+    else:
+        result = {
+            "result": "ACCEPT",
+            "profile": "full-replay",
+            "fast_verification": fast,
+            **verify_full_replay(args),
+        }
+    print(json.dumps(result, indent=2, sort_keys=True))
 
 
 if __name__ == "__main__":
