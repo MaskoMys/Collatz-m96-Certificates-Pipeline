@@ -27,8 +27,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "a4e2df5d11d2d7dc42c1f2ca3eb611f88638f68e840faa997fc8ad9153b2ed1d",
-      "size": 12588
+      "sha256": "28188faafcdcd7c42ca67c86bdfa4c462f3b959d8abc81bcb493628bd9cb89c1",
+      "size": 15526
     },
     {
       "path": "certificates/README.md",
@@ -4274,6 +4274,11 @@
       "path": "scripts/audit_lower_bound.py",
       "sha256": "47a52e57131fe2cbb797636bab3062853d7673a9c6f69a03cd17c00499af910b",
       "size": 3120
+    },
+    {
+      "path": "scripts/aws_compute.sh",
+      "sha256": "9d25eaa06ec6beea7e1e7835ea4297c0233c7fd7559147e1ef650de4c4b00bb1",
+      "size": 22250
     },
     {
       "path": "scripts/certify_constants.py",

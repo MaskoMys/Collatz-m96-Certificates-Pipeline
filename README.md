@@ -205,6 +205,81 @@ The estimated production budget is approximately 4,000 CPU-hours. Wall-clock
 time is roughly total CPU time divided by effective sustained parallelism, not
 simply the advertised logical-CPU count.
 
+## AWS Compute Helper
+
+The repository includes a lifecycle helper for the recommended AWS machine. By
+default it uses the `navoy` profile, `us-east-1`, a `c8a.8xlarge`, and `JOBS=30`.
+It creates one encrypted 200 GiB `gp3` data volume, mounts it at `/work`, and
+keeps that volume when the instance is terminated.
+
+```bash
+scripts/aws_compute.sh create
+scripts/aws_compute.sh status
+scripts/aws_compute.sh ssh
+```
+
+The first launch installs Docker and Git, mounts the persistent volume, and
+transfers a private Git bundle containing the exact commit from which the
+helper was invoked. No GitHub credential is stored on the VM. Bootstrap can
+take a few minutes. After connecting, the repository is at
+`/work/Collatz-m96-Certificates-Pipeline`; follow Definitive Production Run
+above from its first command.
+
+Stop the machine temporarily, or terminate it while retaining all accepted and
+partial computation on the data volume:
+
+```bash
+scripts/aws_compute.sh stop
+scripts/aws_compute.sh create
+scripts/aws_compute.sh destroy
+```
+
+`create` restarts an existing stopped instance or creates a new one beside the
+preserved data volume. `destroy` prompts before terminating the VM and does not
+delete the data volume. Snapshots and permanent data deletion are explicit:
+
+```bash
+scripts/aws_compute.sh snapshot
+COLLATZ_CONFIRM_DELETE_VOLUME=vol-0123456789abcdef0 \
+  scripts/aws_compute.sh delete-data
+```
+
+The SSH security group is restricted to the caller's current public IPv4
+address and is refreshed by `create` and `ssh`. All defaults can be overridden
+with environment variables listed by `scripts/aws_compute.sh --help`.
+
+### tmux quick guide
+
+Use one named tmux session so the computation survives SSH disconnections. A
+convenient layout is one window for the active runner and a second window for
+status. Install tmux once, then create or reattach the session:
+
+```bash
+sudo apt-get install -y tmux
+tmux new-session -A -s collatz
+```
+
+tmux commands begin with the prefix `Ctrl+B`: press `Ctrl+B`, release both
+keys, and then press the command key.
+
+| Action                                  | Keys or command                        |
+| --------------------------------------- | -------------------------------------- |
+| Detach while leaving everything running | `Ctrl+B`, then `d`                     |
+| Reattach after reconnecting over SSH    | `tmux attach -t collatz`               |
+| List sessions                           | `tmux ls`                              |
+| Create a second window                  | `Ctrl+B`, then `c`                     |
+| Next or previous window                 | `Ctrl+B`, then `n` or `p`              |
+| List and select windows                 | `Ctrl+B`, then `w`                     |
+| Rename the current window               | `Ctrl+B`, then `,`                     |
+| Enter scroll mode                       | `Ctrl+B`, then `[`; press `q` to leave |
+| Close the current shell/window          | `exit` or `Ctrl+D`                     |
+| Delete the entire tmux session          | `tmux kill-session -t collatz`         |
+
+Closing SSH or detaching tmux does not stop the runner. To interrupt the actual
+computation gracefully, return to its window and press plain `Ctrl+C`, wait for
+the runner to exit, and only then stop or destroy the EC2 instance. Do not kill
+the tmux session merely to check or hide progress.
+
 ## How the Certificate Works
 
 1. Authenticated analytic inputs define the exact finite searches for
