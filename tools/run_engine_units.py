@@ -169,15 +169,28 @@ def terminate(process: subprocess.Popen[bytes]) -> None:
             os.killpg(process.pid, signal.SIGKILL)
 
 
-def process_exists(pid: int) -> bool:
-    try:
-        os.kill(pid, 0)
-        return True
-    except (OSError, ValueError):
+def runner_lock_is_held(output: Path) -> bool:
+    """Check the shared filesystem lock without relying on PID visibility."""
+    lock_path = output / ".runner.lock"
+    if not lock_path.is_file():
         return False
+    handle = lock_path.open("r", encoding="ascii")
+    try:
+        try:
+            fcntl.flock(handle, fcntl.LOCK_SH | fcntl.LOCK_NB)
+        except BlockingIOError:
+            return True
+        return False
+    finally:
+        handle.close()
 
 
-def active_statuses(output: Path, selected_ids: set[str]) -> tuple[list[dict[str, Any]], int]:
+def active_statuses(
+    output: Path,
+    selected_ids: set[str],
+    *,
+    runner_active: bool,
+) -> tuple[list[dict[str, Any]], int]:
     active = []
     stale = 0
     now = time.time()
@@ -186,7 +199,10 @@ def active_statuses(output: Path, selected_ids: set[str]) -> tuple[list[dict[str
             record = load(path)
             pid = int(record["pid"])
             identifier = record["unit_id"]
-            if identifier not in selected_ids or not process_exists(pid):
+            # A status command commonly runs in a sibling Docker container,
+            # where the runner's PIDs are intentionally invisible. The shared
+            # flock is authoritative for whether these records are live.
+            if identifier not in selected_ids or not runner_active:
                 stale += 1
                 continue
             active.append(
@@ -319,11 +335,17 @@ def run(engine: str, argv: list[str] | None = None) -> int:
         elif result.exists():
             invalid += 1
     if args.status:
-        running, stale_status = active_statuses(output, selected_ids)
+        runner_active = runner_lock_is_held(output)
+        running, stale_status = active_statuses(
+            output,
+            selected_ids,
+            runner_active=runner_active,
+        )
         print(
             json.dumps(
                 {
                     "engine": info["engine"],
+                    "runner_active": runner_active,
                     "total": len(records),
                     "completed": completed,
                     "running": len(running),
