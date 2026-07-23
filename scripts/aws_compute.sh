@@ -27,6 +27,7 @@ Commands:
   create       Create the persistent disk if needed and launch/start the VM.
   status       Show the VM, persistent disk, and SSH command.
   sync         Transfer the exact local Git commit to a fresh data disk.
+  update       Safely update runner/docs code while preserving production data.
   ssh          Refresh the SSH rule and connect to the VM.
   stop         Stop the VM, preserving both its disks.
   destroy      Cleanly stop and terminate the VM; preserve the data disk.
@@ -470,6 +471,72 @@ REMOTE
   note "Remote repository is ready at $REPO_DIR ($commit)."
 }
 
+update_repository() {
+  require_commands
+  verify_key_pair
+  local id state vpc_id group_id ip commit bundle remote_bundle
+  id="$(instance_id)"
+  [[ -n "$id" ]] || die "no managed instance; run create first"
+  state="$(instance_state "$id")"
+  [[ "$state" == "running" ]] || die "instance $id is $state, not running"
+  vpc_id="$(default_vpc_id)"
+  group_id="$(security_group_id "$vpc_id")"
+  refresh_ssh_rule "$group_id"
+  ip="$(wait_for_bootstrap "$id")"
+  commit="$(git rev-parse HEAD 2>/dev/null || true)"
+  [[ -n "$commit" ]] || die "run this helper from a Git checkout"
+
+  bundle="$(mktemp --suffix=.bundle)"
+  remote_bundle="/tmp/${PROJECT_TAG}-update-${commit}.bundle"
+  trap 'rm -f "${bundle:-}"' RETURN
+  git bundle create "$bundle" --all
+  note "Transferring guarded update $commit."
+  scp -q \
+    -i "$SSH_KEY_PATH" \
+    -o BatchMode=yes \
+    -o StrictHostKeyChecking=accept-new \
+    "$bundle" "ubuntu@$ip:$remote_bundle"
+  ssh -i "$SSH_KEY_PATH" \
+    -o BatchMode=yes \
+    -o StrictHostKeyChecking=accept-new \
+    "ubuntu@$ip" \
+    bash -s -- "$REPO_DIR" "$commit" "$remote_bundle" <<'REMOTE'
+set -euo pipefail
+repo_dir="$1"
+commit="$2"
+bundle="$3"
+[[ -d "$repo_dir/.git" ]] || {
+  echo "Remote repository is missing; run sync instead." >&2
+  exit 1
+}
+[[ -z "$(git -C "$repo_dir" status --porcelain --untracked-files=no)" ]] || {
+  echo "Refusing to update a modified tracked worktree." >&2
+  exit 1
+}
+old_commit="$(git -C "$repo_dir" rev-parse HEAD)"
+git -C "$repo_dir" bundle unbundle "$bundle" >/dev/null
+rm -f "$bundle"
+if [[ -e "$repo_dir/dist/search-v2" ]]; then
+  while IFS= read -r changed; do
+    case "$changed" in
+      README.md|SHA256SUMS|certificates/release_manifest.json|docs/*|tests/*|\
+      scripts/aws_compute.sh|tools/historical_timings.py|\
+      tools/plan_work_units.py|tools/run_engine_units.py)
+        ;;
+      *)
+        echo "Refusing production-data update containing $changed." >&2
+        exit 1
+        ;;
+    esac
+  done < <(git -C "$repo_dir" diff --name-only "$old_commit" "$commit")
+fi
+git -C "$repo_dir" checkout --detach "$commit"
+echo "Updated remote checkout from $old_commit to $commit."
+REMOTE
+  rm -f "$bundle"
+  trap - RETURN
+}
+
 show_connection() {
   local id="$1"
   local ip
@@ -702,6 +769,7 @@ main() {
     create|start) create_instance ;;
     status) show_status ;;
     sync) sync_repository ;;
+    update) update_repository ;;
     ssh) ssh_instance ;;
     stop) stop_instance ;;
     destroy) destroy_instance ;;

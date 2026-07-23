@@ -18,6 +18,13 @@
 
 The remaining work is an engineering and computational-certification project. It must establish, for every finite-search region produced by the completed mathematics, that two separately implemented exact-arithmetic engines exhaust the region and find zero survivors.
 
+> **Operational correction (2026-07-23):** the root-only certificate model
+> remains authoritative, but the 15-30 minute linear subdivision estimate and
+> unattended adaptive-timeout recommendation did not hold empirically for
+> `m=96`. Current production caps expensive branches at two root units and
+> uses no timeout. See
+> [PERFORMANCE_REVIEW_2026-07-23.md](PERFORMANCE_REVIEW_2026-07-23.md).
+
 A literal JSON record for every current search node is not viable. The archived runs report approximately:
 
 | Case | Recursive nodes | Deterministic values | Historical CPU time |

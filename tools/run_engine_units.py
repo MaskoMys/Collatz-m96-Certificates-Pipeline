@@ -15,14 +15,15 @@ import subprocess
 import sys
 import time
 import platform
-from collections import deque
+from collections import defaultdict, deque
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from tools.canonical_json import atomic_write, load, sha256_file
+from tools.canonical_json import atomic_write, config_id, load, sha256_file
+from tools.historical_timings import estimated_unit_seconds
 from verifiers.verify_work_unit_result import verify_result
 from tools.split_work_unit import split as split_work_unit
 from verifiers.verify_partition_manifest import verify_branch as verify_partition
@@ -61,6 +62,18 @@ def enumerate_units(plan: Path, cases: set[int] | None) -> list[tuple[int, Path]
             for leaf in partition["leaves"]:
                 records.append((m, branch_dir / "units" / f"{leaf['unit_id']}.json"))
     return records
+
+
+def timing_order_key(record: tuple[int, Path]) -> tuple[float, int, int, str]:
+    m, path = record
+    unit = load(path)
+    estimate = estimated_unit_seconds(m, unit)
+    return (
+        estimate if estimate is not None else -1.0,
+        m,
+        int(unit["k1"]),
+        unit["unit_id"],
+    )
 
 
 def acquire_lock(output: Path):
@@ -232,6 +245,65 @@ def status_record(item: dict[str, Any]) -> dict[str, str]:
     }
 
 
+def attempt_summary(
+    output: Path,
+    cases: set[int] | None,
+    selected_k1: set[int] | None,
+) -> dict[str, int | float]:
+    attempts = 0
+    timed_out = 0
+    interrupted = 0
+    failed = 0
+    timeout_milliseconds = 0
+    for path in (output / ".attempts").glob("*.json"):
+        try:
+            record = load(path)
+            m = int(record["m"])
+            if cases is not None and m not in cases:
+                continue
+            if selected_k1 is not None:
+                command_text = " ".join(str(value) for value in record["command"])
+                if not any(f"/k1_{k1:02d}/" in command_text for k1 in selected_k1):
+                    continue
+            attempts += 1
+            elapsed = int(record["elapsed_milliseconds"])
+            if record["timed_out"]:
+                timed_out += 1
+                timeout_milliseconds += elapsed
+            elif record["exit_code"] in (-15, -9):
+                interrupted += 1
+            else:
+                failed += 1
+        except Exception:
+            failed += 1
+    return {
+        "attempts": attempts,
+        "timed_out_attempts": timed_out,
+        "interrupted_attempts": interrupted,
+        "failed_attempts": failed,
+        "discarded_timeout_cpu_hours": round(timeout_milliseconds / 3_600_000, 6),
+    }
+
+
+def orphan_results(
+    output: Path,
+    plan_unit_ids: set[str],
+    selected_config_ids: set[str],
+) -> list[Path]:
+    orphans = []
+    for path in output.glob("*.json"):
+        try:
+            record = load(path)
+            if (
+                record.get("config_id") in selected_config_ids
+                and record.get("unit_id") not in plan_unit_ids
+            ):
+                orphans.append(path)
+        except Exception:
+            continue
+    return orphans
+
+
 def write_attempt(
     output: Path,
     item: dict[str, Any],
@@ -282,8 +354,18 @@ def run(engine: str, argv: list[str] | None = None) -> int:
     parser.add_argument("--heartbeat-seconds", type=int, default=60)
     parser.add_argument("--memory-mb", type=int, default=0)
     parser.add_argument("--cpu-seconds", type=int, default=0)
-    parser.add_argument("--order", choices=("asc", "desc"), default="asc")
+    parser.add_argument(
+        "--order",
+        choices=("asc", "desc", "timing-desc"),
+        default="asc",
+    )
     parser.add_argument("--adaptive-split", action="store_true")
+    parser.add_argument(
+        "--stop-after-splits",
+        type=int,
+        default=0,
+        help="gracefully stop an adaptive pilot after this many splits",
+    )
     parser.add_argument(
         "--resume",
         action="store_true",
@@ -297,10 +379,13 @@ def run(engine: str, argv: list[str] | None = None) -> int:
         or args.enum_threshold < 1
         or args.memory_mb < 0
         or args.cpu_seconds < 0
+        or args.stop_after_splits < 0
     ):
         parser.error("jobs/threshold must be positive and timeout nonnegative")
     if args.adaptive_split and (engine != "prover" or args.timeout == 0):
         parser.error("--adaptive-split requires the prover and a nonzero timeout")
+    if args.stop_after_splits and not args.adaptive_split:
+        parser.error("--stop-after-splits requires --adaptive-split")
 
     plan = (ROOT / args.plan).resolve()
     output = (ROOT / args.out).resolve()
@@ -312,28 +397,51 @@ def run(engine: str, argv: list[str] | None = None) -> int:
             raise RuntimeError(f"engine executable is missing: {executable}")
         plan_lock = acquire_plan_lock(plan, args.adaptive_split)
         validate_selected_plan(plan, cases)
-    records = enumerate_units(plan, cases)
+    case_records = enumerate_units(plan, cases)
+    plan_unit_ids = {load(unit)["unit_id"] for _, unit in case_records}
+    selected_config_ids = {
+        config_id(load(ROOT / f"certificates/config/case_m{m}.json"))
+        for m, _ in case_records
+    }
+    records = case_records
     if args.k1:
         selected_k1 = set(args.k1)
         records = [record for record in records if int(load(record[1])["k1"]) in selected_k1]
+    else:
+        selected_k1 = None
     if args.order == "desc":
         records.reverse()
+    elif args.order == "timing-desc":
+        records.sort(key=timing_order_key, reverse=True)
     if not records:
         raise RuntimeError("no work units selected")
     selected_ids = {load(unit)["unit_id"] for _, unit in records}
     completed = 0
     invalid = 0
     existing_survivors = 0
+    branch_totals: dict[tuple[int, int], int] = defaultdict(int)
+    branch_completed: dict[tuple[int, int], int] = defaultdict(int)
     for m, unit in records:
-        identifier = load(unit)["unit_id"]
+        unit_record = load(unit)
+        identifier = unit_record["unit_id"]
+        branch = (m, int(unit_record["k1"]))
+        branch_totals[branch] += 1
         result = output / f"{identifier}.json"
         config = ROOT / f"certificates/config/case_m{m}.json"
         if valid_existing(result, config, unit, info["engine"], executable):
             completed += 1
+            branch_completed[branch] += 1
             if load(result)["outcome"] == "SURVIVOR":
                 existing_survivors += 1
         elif result.exists():
             invalid += 1
+    completed_branches = sum(
+        branch_completed[branch] == total for branch, total in branch_totals.items()
+    )
+    partial_branches = sum(
+        0 < branch_completed[branch] < total for branch, total in branch_totals.items()
+    )
+    orphans = orphan_results(output, plan_unit_ids, selected_config_ids)
     if args.status:
         runner_active = runner_lock_is_held(output)
         running, stale_status = active_statuses(
@@ -352,8 +460,18 @@ def run(engine: str, argv: list[str] | None = None) -> int:
                     "active": running,
                     "pending": len(records) - completed - len(running),
                     "invalid": invalid,
+                    "orphan_results": len(orphans),
                     "survivors": existing_survivors,
                     "stale_status": stale_status,
+                    "branches": {
+                        "total": len(branch_totals),
+                        "completed": completed_branches,
+                        "partial": partial_branches,
+                        "pending": (
+                            len(branch_totals) - completed_branches - partial_branches
+                        ),
+                    },
+                    "history": attempt_summary(output, cases, selected_k1),
                 },
                 indent=2,
                 sort_keys=True,
@@ -392,6 +510,9 @@ def run(engine: str, argv: list[str] | None = None) -> int:
     status_dir.mkdir(parents=True, exist_ok=True)
     provenance_dir.mkdir(parents=True, exist_ok=True)
     attempts_dir.mkdir(parents=True, exist_ok=True)
+    for orphan in orphans:
+        provenance = provenance_dir / orphan.name
+        quarantine(output, [orphan, provenance], "orphan-result")
     for stale in partial_dir.iterdir():
         if stale.is_file():
             quarantine(output, [stale], "stale")
@@ -416,13 +537,20 @@ def run(engine: str, argv: list[str] | None = None) -> int:
     survivors = 0
     splits = 0
     halt_for_survivor = False
+    halt_for_split_limit = False
     start = time.monotonic()
     last_heartbeat = 0.0
     signal.signal(signal.SIGINT, signal_handler)
     signal.signal(signal.SIGTERM, signal_handler)
     try:
         while pending or active:
-            while pending and len(active) < args.jobs and not STOP and not halt_for_survivor:
+            while (
+                pending
+                and len(active) < args.jobs
+                and not STOP
+                and not halt_for_survivor
+                and not halt_for_split_limit
+            ):
                 m, unit = pending.popleft()
                 unit_record = load(unit)
                 identifier = unit_record["unit_id"]
@@ -514,13 +642,19 @@ def run(engine: str, argv: list[str] | None = None) -> int:
                             verify_partition(
                                 load(item["config"]), branch_dir, item["k1"]
                             )
-                            pending.extend((item["m"], child) for child in children)
+                            for child in reversed(children):
+                                pending.appendleft((item["m"], child))
                             splits += 1
                             quarantine(
                                 output,
                                 [item["partial"], item["log"]],
                                 "split-timeout",
                             )
+                            if (
+                                args.stop_after_splits
+                                and splits >= args.stop_after_splits
+                            ):
+                                halt_for_split_limit = True
                     else:
                         failures += 1
                         quarantine(
@@ -536,6 +670,8 @@ def run(engine: str, argv: list[str] | None = None) -> int:
                     result=result if accepted else None,
                 )
                 del active[pid]
+                if halt_for_split_limit:
+                    break
             if now - last_heartbeat >= args.heartbeat_seconds:
                 for item in active.values():
                     atomic_write(item["status"], status_record(item))
@@ -572,7 +708,7 @@ def run(engine: str, argv: list[str] | None = None) -> int:
                     flush=True,
                 )
                 last_heartbeat = now
-            if STOP or halt_for_survivor:
+            if STOP or halt_for_survivor or halt_for_split_limit:
                 for item in active.values():
                     terminate(item["process"])
                     item["log_handle"].close()
@@ -586,7 +722,15 @@ def run(engine: str, argv: list[str] | None = None) -> int:
                     quarantine(
                         output,
                         [item["partial"], item["log"], item["status"]],
-                        "interrupted" if STOP else "stopped-after-survivor",
+                        (
+                            "interrupted"
+                            if STOP
+                            else (
+                                "stopped-after-survivor"
+                                if halt_for_survivor
+                                else "stopped-after-split-limit"
+                            )
+                        ),
                     )
                 active.clear()
                 break
@@ -596,7 +740,7 @@ def run(engine: str, argv: list[str] | None = None) -> int:
         plan_lock.close()
     if survivors:
         return 2
-    if STOP or failures or pending:
+    if STOP or halt_for_split_limit or failures or pending:
         return 1
     return 0
 

@@ -66,13 +66,13 @@ v2 python3 -B verify_all.py --profile fast
 ### 1. Plan and verify all 372 roots
 
 The planner refuses to overwrite an existing output directory. Do not delete
-`dist/search-v2/` when resuming, and do not rerun the planner after adaptive
-subdivision has begun.
+`dist/search-v2/` when resuming.
 
 ```bash
 v2 python3 tools/plan_work_units.py \
   --all-cases \
   --target-seconds 1800 \
+  --max-segments-per-branch 2 \
   --out dist/search-v2/plan
 
 v2 python3 verifiers/verify_partition_manifest.py \
@@ -80,9 +80,11 @@ v2 python3 verifiers/verify_partition_manifest.py \
   --partitions dist/search-v2/plan
 ```
 
-The initial production plan contains 372 root branches. Historical timings
-currently divide them into approximately 3,098 work units; adaptive timeout
-splits may increase that number while preserving the exact root cover.
+The production plan contains 372 root branches and currently produces 434
+initial work units. Historical timings decide whether a branch receives one or
+two units. The two-unit cap is deliberate: root subdivision preserves coverage
+but duplicates search work and does not scale linearly. See
+[the production performance review](docs/PERFORMANCE_REVIEW_2026-07-23.md).
 
 ### 2. Run the C++/GMP prover
 
@@ -93,8 +95,8 @@ v2 python3 tools/run_prover_units.py \
   --out dist/search-v2/results/prover \
   --jobs "$JOBS" \
   --resume \
-  --timeout 7200 \
-  --adaptive-split \
+  --timeout 0 \
+  --order timing-desc \
   --heartbeat-seconds 60
 ```
 
@@ -110,6 +112,54 @@ v2 python3 tools/run_prover_units.py \
 Press `Ctrl+C` for a graceful interruption. Accepted units remain reusable;
 rerun the identical prover command to resume. Never remove `dist/search-v2/`
 when resuming.
+
+The status JSON reports both the mutable unit frontier and completed branches.
+Its `history` object also reports timed-out attempts and discarded timeout
+CPU-hours. Unit completion divided by current leaf count is not a mathematical
+or computational percentage when adaptive subdivision has changed the
+frontier.
+
+Adaptive splitting remains available for a controlled diagnostic pilot. Give
+such a pilot an explicit stop guard so it cannot split whole generations
+unattended:
+
+```bash
+v2 python3 tools/run_prover_units.py \
+  --exe release/bin/collatz_prover \
+  --plan dist/search-v2/plan \
+  --out dist/search-v2/results/prover \
+  --case 96 \
+  --k1 2 \
+  --jobs "$JOBS" \
+  --timeout 7200 \
+  --adaptive-split \
+  --stop-after-splits "$JOBS" \
+  --heartbeat-seconds 60
+```
+
+Adaptive children are scheduled before untouched peers. Production does not
+use this mode unless a measured unit demonstrates that subdivision is
+beneficial.
+
+To replace only a previously over-subdivided `m=96` plan while preserving
+other cases and their accepted results:
+
+```bash
+v2 python3 tools/plan_work_units.py \
+  --case 96 \
+  --target-seconds 1800 \
+  --max-segments-per-branch 2 \
+  --out dist/search-v2/plan \
+  --replace-selected
+
+v2 python3 verifiers/verify_partition_manifest.py \
+  --all \
+  --partitions dist/search-v2/plan
+```
+
+The replaced case plan is archived beside the active plan. On the next run,
+root result files for selected units that no longer exist are quarantined
+rather than treated as accepted evidence.
 
 ### 3. Replay the final frontier independently in Rust
 
@@ -224,6 +274,17 @@ helper was invoked. No GitHub credential is stored on the VM. Bootstrap can
 take a few minutes. After connecting, the repository is at
 `/work/Collatz-m96-Certificates-Pipeline`; follow Definitive Production Run
 above from its first command.
+
+After committing scheduler or documentation fixes, update an existing remote
+checkout without deleting `dist/search-v2/`:
+
+```bash
+scripts/aws_compute.sh update
+```
+
+The guarded update refuses to proceed if tracked remote files are modified or
+if the commit changes authenticated certificates, engine sources, release
+binaries, schemas, or the pinned environment.
 
 Stop the machine temporarily, or terminate it while retaining all accepted and
 partial computation on the data volume:

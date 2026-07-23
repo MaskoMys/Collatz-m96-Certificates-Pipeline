@@ -481,6 +481,200 @@ class V2CertificateTest(unittest.TestCase):
         self.assertEqual(len(list(output.glob("*.json"))), 2)
         self.assertEqual(len(list((output / ".provenance").glob("*.json"))), 2)
         self.assertEqual(len(list((output / ".attempts").glob("*.json"))), 1)
+        status = subprocess.run(
+            [*command, "--status"],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        summary = json.loads(status.stdout)
+        self.assertEqual(summary["branches"]["completed"], 1)
+        self.assertEqual(summary["history"]["timed_out_attempts"], 1)
+        self.assertGreater(summary["history"]["discarded_timeout_cpu_hours"], 0)
+
+    def test_adaptive_children_run_before_untouched_peers(self) -> None:
+        plan = self.temp / "priority-plan"
+        subprocess.run(
+            [
+                "python3",
+                "tools/plan_work_units.py",
+                "--case",
+                "92",
+                "--segments-per-branch",
+                "2",
+                "--out",
+                str(plan),
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        branch = plan / "m92/k1_29"
+        parent_id = load(branch / "partition.json")["leaves"][0]["unit_id"]
+        starts = self.temp / "starts.txt"
+        fake = self.temp / "priority_engine.py"
+        fake.write_text(
+            "#!/usr/bin/env python3\n"
+            "import hashlib, pathlib, subprocess, sys, time\n"
+            f"sys.path.insert(0, {str(ROOT)!r})\n"
+            "from tools.canonical_json import atomic_write, load, result_id\n"
+            "unit_path = pathlib.Path(sys.argv[sys.argv.index('--unit') + 1])\n"
+            "identifier = load(unit_path)['unit_id']\n"
+            f"with pathlib.Path({str(starts)!r}).open('a', encoding='ascii') as handle:\n"
+            "    handle.write(identifier + '\\n')\n"
+            f"if identifier == {parent_id!r}:\n"
+            "    time.sleep(10)\n"
+            "    raise SystemExit(2)\n"
+            f"command = [{str(ROOT / 'build/collatz_prover')!r}, *sys.argv[1:]]\n"
+            "completed = subprocess.run(command)\n"
+            "output = pathlib.Path(sys.argv[sys.argv.index('--output') + 1])\n"
+            "result = load(output)\n"
+            "result['binary_sha256'] = hashlib.sha256(pathlib.Path(sys.argv[0]).read_bytes()).hexdigest()\n"
+            "result['result_id'] = result_id(result)\n"
+            "atomic_write(output, result)\n"
+            "raise SystemExit(completed.returncode)\n",
+            encoding="ascii",
+        )
+        fake.chmod(0o755)
+        run = subprocess.run(
+            [
+                "python3",
+                "tools/run_prover_units.py",
+                "--case",
+                "92",
+                "--k1",
+                "29",
+                "--plan",
+                str(plan),
+                "--out",
+                str(self.temp / "priority-results"),
+                "--exe",
+                str(fake),
+                "--jobs",
+                "1",
+                "--timeout",
+                "1",
+                "--adaptive-split",
+                "--heartbeat-seconds",
+                "1",
+            ],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(run.returncode, 0, run.stderr or run.stdout)
+        final_leaves = load(branch / "partition.json")["leaves"]
+        order = starts.read_text(encoding="ascii").splitlines()
+        self.assertEqual(order[0], parent_id)
+        self.assertEqual(order[1:3], [leaf["unit_id"] for leaf in final_leaves[:2]])
+
+    def test_selected_replan_quarantines_orphan_result(self) -> None:
+        output = self.temp / "replan-results"
+        command = [
+            "python3",
+            "tools/run_prover_units.py",
+            "--case",
+            "92",
+            "--k1",
+            "29",
+            "--plan",
+            str(self.temp / "plan"),
+            "--out",
+            str(output),
+            "--exe",
+            str(ROOT / "build/collatz_prover"),
+            "--heartbeat-seconds",
+            "1",
+        ]
+        first = subprocess.run(
+            command,
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(first.returncode, 0, first.stderr or first.stdout)
+        old_result = next(output.glob("*.json"))
+        subprocess.run(
+            [
+                "python3",
+                "tools/plan_work_units.py",
+                "--case",
+                "92",
+                "--segments-per-branch",
+                "2",
+                "--max-segments-per-branch",
+                "2",
+                "--out",
+                str(self.temp / "plan"),
+                "--replace-selected",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        status = subprocess.run(
+            [*command, "--status"],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(json.loads(status.stdout)["orphan_results"], 1)
+        second = subprocess.run(
+            command,
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(second.returncode, 0, second.stderr or second.stdout)
+        self.assertFalse(old_result.exists())
+        self.assertEqual(len(list(output.glob("*.json"))), 2)
+        self.assertTrue(list((output / ".quarantine").rglob(old_result.name)))
+
+    def test_adaptive_split_limit_stops_pilot(self) -> None:
+        sleeper = self.temp / "split_limit_engine.py"
+        sleeper.write_text(
+            "#!/usr/bin/env python3\nimport time\ntime.sleep(30)\n",
+            encoding="ascii",
+        )
+        sleeper.chmod(0o755)
+        output = self.temp / "split-limit-results"
+        run = subprocess.run(
+            [
+                "python3",
+                "tools/run_prover_units.py",
+                "--case",
+                "92",
+                "--k1",
+                "29",
+                "--plan",
+                str(self.temp / "plan"),
+                "--out",
+                str(output),
+                "--exe",
+                str(sleeper),
+                "--jobs",
+                "1",
+                "--timeout",
+                "1",
+                "--adaptive-split",
+                "--stop-after-splits",
+                "1",
+                "--heartbeat-seconds",
+                "1",
+            ],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(run.returncode, 1, run.stderr or run.stdout)
+        config = load(ROOT / "certificates/config/case_m92.json")
+        self.assertEqual(verify_branch(config, self.branch(29), 29), 2)
+        self.assertFalse(list(output.glob("*.json")))
+        self.assertEqual(len(list((output / ".attempts").glob("*.json"))), 1)
 
     def test_status_reports_active_unit_and_interrupt_cleans_it(self) -> None:
         sleeper = self.temp / "sleep_engine.py"

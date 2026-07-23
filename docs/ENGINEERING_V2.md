@@ -67,13 +67,15 @@ host while all linked libraries come from the pinned image.
 
 ## Plan the production frontier
 
-The historical timings are planning hints only. This command targets roughly
-30-minute initial units and then verifies every root and split exactly:
+The historical timings are planning hints only. Root subdivision is
+non-linear because every unit repeats part of the recursive prefix search.
+Production therefore uses timings only to choose one or two units per branch:
 
 ~~~bash
 python3 tools/plan_work_units.py \
   --all-cases \
   --target-seconds 1800 \
+  --max-segments-per-branch 2 \
   --out dist/search-v2/plan
 
 python3 verifiers/verify_partition_manifest.py \
@@ -81,15 +83,15 @@ python3 verifiers/verify_partition_manifest.py \
   --partitions dist/search-v2/plan
 ~~~
 
-The planner refuses to overwrite an existing plan. Do not delete
-`dist/search-v2/` when resuming, and do not rerun the planner after adaptive
-subdivision begins. Remove that directory only when deliberately abandoning an
-entire previous v2 computation and starting again from zero.
+The planner refuses to overwrite an existing plan. `--replace-selected`
+archives and replaces only explicitly selected cases while preserving every
+other case. The empirical basis for the two-unit cap is recorded in
+[PERFORMANCE_REVIEW_2026-07-23.md](PERFORMANCE_REVIEW_2026-07-23.md).
 
 ## Run both engines
 
-Run the prover first. A timed-out prover unit can be replaced by two exact
-midpoint children:
+Run the prover first. Expensive branches are scheduled first, and each
+production unit runs to completion:
 
 ~~~bash
 python3 tools/run_prover_units.py \
@@ -98,8 +100,8 @@ python3 tools/run_prover_units.py \
   --out dist/search-v2/results/prover \
   --jobs 8 \
   --resume \
-  --timeout 7200 \
-  --adaptive-split \
+  --timeout 0 \
+  --order timing-desc \
   --heartbeat-seconds 60
 ~~~
 
@@ -126,6 +128,10 @@ partials, publish out-of-band `.status/` records, retain accepted execution
 provenance, validate results before skipping them, and terminate process groups
 on interruption. The memory-mb and cpu-seconds options set optional
 per-process limits.
+
+Adaptive timeout splitting is diagnostic rather than the production default.
+When used, `--stop-after-splits N` bounds an experiment and newly created
+children run before untouched peers.
 
 Status is non-mutating:
 
