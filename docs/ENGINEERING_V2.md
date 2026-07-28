@@ -120,6 +120,7 @@ python3 tools/run_verifier_units.py \
   --jobs 8 \
   --resume \
   --timeout 0 \
+  --order timing-desc \
   --heartbeat-seconds 60
 ~~~
 
@@ -138,11 +139,13 @@ Status is non-mutating:
 ~~~bash
 python3 tools/run_prover_units.py \
   --status \
+  --exe release/bin/collatz_prover \
   --plan dist/search-v2/plan \
   --out dist/search-v2/results/prover
 ~~~
 
-Use run_verifier_units.py and its result directory for verifier status.
+Use `run_verifier_units.py`, `--exe release/bin/collatz_verify_unit`, and its
+result directory for verifier status.
 Repeatable `--case` and `--k1` options select validated case/branch pilots
 without weakening the underlying partition checks.
 

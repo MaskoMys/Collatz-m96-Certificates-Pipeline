@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import json
+import os
 import signal
 import shutil
 import subprocess
+import sys
 import tempfile
 import time
 import unittest
@@ -732,6 +734,75 @@ class V2CertificateTest(unittest.TestCase):
             if process.poll() is None:
                 process.kill()
                 process.communicate()
+
+    @unittest.skipUnless(sys.platform == "linux", "requires Linux parent-death signals")
+    def test_killed_runner_does_not_leave_orphan_worker(self) -> None:
+        sleeper = self.temp / "orphan_engine.py"
+        sleeper.write_text(
+            "#!/usr/bin/env python3\nimport time\ntime.sleep(60)\n",
+            encoding="ascii",
+        )
+        sleeper.chmod(0o755)
+        output = self.temp / "orphan-results"
+        command = [
+            "python3",
+            "tools/run_prover_units.py",
+            "--case",
+            "92",
+            "--plan",
+            str(self.temp / "plan"),
+            "--k1",
+            "73",
+            "--out",
+            str(output),
+            "--exe",
+            str(sleeper),
+            "--jobs",
+            "1",
+            "--heartbeat-seconds",
+            "1",
+        ]
+        process = subprocess.Popen(
+            command,
+            cwd=ROOT,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        child_pid = None
+        try:
+            deadline = time.monotonic() + 5
+            while time.monotonic() < deadline:
+                statuses = list((output / ".status").glob("*.json"))
+                if statuses:
+                    child_pid = int(load(statuses[0])["pid"])
+                    break
+                if process.poll() is not None:
+                    break
+                time.sleep(0.02)
+            self.assertIsNotNone(child_pid)
+            process.kill()
+            process.communicate(timeout=5)
+
+            deadline = time.monotonic() + 5
+            while child_pid is not None and time.monotonic() < deadline:
+                stat = Path(f"/proc/{child_pid}/stat")
+                if not stat.exists() or stat.read_text(encoding="ascii").split()[2] == "Z":
+                    break
+                time.sleep(0.02)
+            stat = Path(f"/proc/{child_pid}/stat")
+            self.assertTrue(
+                not stat.exists() or stat.read_text(encoding="ascii").split()[2] == "Z"
+            )
+        finally:
+            if process.poll() is None:
+                process.kill()
+                process.communicate()
+            if child_pid is not None:
+                try:
+                    os.killpg(child_pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
 
     def test_fault_injected_prover_disagrees_and_is_not_certifiable(self) -> None:
         _, verifier_path = self.run_pair(29)

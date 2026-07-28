@@ -27,6 +27,7 @@ Commands:
   create       Create the persistent disk if needed and launch/start the VM.
   status       Show the VM, persistent disk, and SSH command.
   sync         Transfer the exact local Git commit to a fresh data disk.
+  upload-data  Upload local dist/search-v2 to a fresh remote checkout.
   update       Safely update runner/docs code while preserving production data.
   ssh          Refresh the SSH rule and connect to the VM.
   stop         Stop the VM, preserving both its disks.
@@ -64,7 +65,7 @@ aws_cli() {
 
 require_commands() {
   local command
-  for command in aws curl ssh ssh-keygen git; do
+  for command in aws curl ssh ssh-keygen git tar sha256sum flock; do
     command -v "$command" >/dev/null 2>&1 || die "required command not found: $command"
   done
 }
@@ -471,6 +472,86 @@ REMOTE
   note "Remote repository is ready at $REPO_DIR ($commit)."
 }
 
+upload_search_data() {
+  require_commands
+  verify_key_pair
+
+  local root source id state vpc_id group_id ip archive remote_archive digest
+  root="$(git rev-parse --show-toplevel 2>/dev/null || true)"
+  [[ -n "$root" ]] || die "run this helper from a Git checkout"
+  source="$root/dist/search-v2"
+  [[ -d "$source/plan" && -d "$source/results" ]] || \
+    die "local dist/search-v2 plan/results are missing"
+
+  local lock
+  for lock in \
+    "$source/plan/.plan.lock" \
+    "$source/results/prover/.runner.lock" \
+    "$source/results/verifier/.runner.lock"; do
+    if [[ -e "$lock" ]] && ! flock --nonblock "$lock" true; then
+      die "local computation is active: $lock"
+    fi
+  done
+
+  sync_repository
+  id="$(instance_id)"
+  [[ -n "$id" ]] || die "no managed instance; run create first"
+  state="$(instance_state "$id")"
+  [[ "$state" == "running" ]] || die "instance $id is $state, not running"
+  vpc_id="$(default_vpc_id)"
+  group_id="$(security_group_id "$vpc_id")"
+  refresh_ssh_rule "$group_id"
+  ip="$(normalize_text "$(public_ip "$id")")"
+  [[ -n "$ip" ]] || die "instance has no public IP"
+
+  archive="$(mktemp --suffix=.search-v2.tar.gz)"
+  remote_archive="/tmp/${PROJECT_TAG}-search-v2-$(date +%s).tar.gz"
+  trap 'rm -f "${archive:-}"' RETURN
+  tar -C "$root/dist" -czf "$archive" search-v2
+  digest="$(sha256sum "$archive" | awk '{print $1}')"
+  note "Uploading $(du -h "$archive" | awk '{print $1}') search state."
+  scp -q \
+    -i "$SSH_KEY_PATH" \
+    -o BatchMode=yes \
+    -o StrictHostKeyChecking=accept-new \
+    "$archive" "ubuntu@$ip:$remote_archive"
+  ssh -i "$SSH_KEY_PATH" \
+    -o BatchMode=yes \
+    -o StrictHostKeyChecking=accept-new \
+    "ubuntu@$ip" \
+    bash -s -- "$REPO_DIR" "$remote_archive" "$digest" <<'REMOTE'
+set -euo pipefail
+repo_dir="$1"
+archive="$2"
+expected_digest="$3"
+[[ -d "$repo_dir/.git" ]] || {
+  echo "Remote repository is missing; run sync first." >&2
+  exit 1
+}
+[[ ! -e "$repo_dir/dist/search-v2" ]] || {
+  echo "Refusing to replace existing remote dist/search-v2." >&2
+  exit 1
+}
+actual_digest="$(sha256sum "$archive" | awk '{print $1}')"
+[[ "$actual_digest" == "$expected_digest" ]] || {
+  echo "Uploaded search-state checksum mismatch." >&2
+  exit 1
+}
+staging="$(mktemp -d /work/.collatz-search-v2-upload.XXXXXX)"
+trap 'rm -rf "$staging" "$archive"' EXIT
+tar -xzf "$archive" -C "$staging"
+[[ -d "$staging/search-v2/plan" && -d "$staging/search-v2/results" ]] || {
+  echo "Uploaded search state is incomplete." >&2
+  exit 1
+}
+mkdir -p "$repo_dir/dist"
+mv "$staging/search-v2" "$repo_dir/dist/search-v2"
+echo "Installed uploaded search state at $repo_dir/dist/search-v2."
+REMOTE
+  rm -f "$archive"
+  trap - RETURN
+}
+
 update_repository() {
   require_commands
   verify_key_pair
@@ -769,6 +850,7 @@ main() {
     create|start) create_instance ;;
     status) show_status ;;
     sync) sync_repository ;;
+    upload-data) upload_search_data ;;
     update) update_repository ;;
     ssh) ssh_instance ;;
     stop) stop_instance ;;

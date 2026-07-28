@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import ctypes
 import fcntl
 import json
 import os
@@ -42,11 +43,24 @@ ENGINE_INFO = {
     },
 }
 STOP = False
+_PR_SET_PDEATHSIG = 1
+_LIBC = ctypes.CDLL(None, use_errno=True) if sys.platform == "linux" else None
 
 
 def signal_handler(_signum: int, _frame: object) -> None:
     global STOP
     STOP = True
+
+
+def configure_child_lifetime(expected_parent_pid: int) -> None:
+    """Ensure a Linux worker cannot outlive an unexpectedly killed runner."""
+    if _LIBC is None:
+        return
+    if _LIBC.prctl(_PR_SET_PDEATHSIG, signal.SIGKILL, 0, 0, 0) != 0:
+        error = ctypes.get_errno()
+        raise OSError(error, os.strerror(error))
+    if os.getppid() != expected_parent_pid:
+        os.kill(os.getpid(), signal.SIGKILL)
 
 
 def enumerate_units(plan: Path, cases: set[int] | None) -> list[tuple[int, Path]]:
@@ -561,11 +575,15 @@ def run(engine: str, argv: list[str] | None = None) -> int:
                 child_command = command(
                     engine, executable, config, unit, partial, args.enum_threshold
                 )
+                parent_pid = os.getpid()
                 process = subprocess.Popen(
                     child_command,
                     stdout=log_handle,
                     stderr=subprocess.STDOUT,
                     start_new_session=True,
+                    preexec_fn=(
+                        lambda expected=parent_pid: configure_child_lifetime(expected)
+                    ),
                 )
                 if args.memory_mb:
                     limit = args.memory_mb * 1024 * 1024

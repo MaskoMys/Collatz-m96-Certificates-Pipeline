@@ -105,6 +105,7 @@ Check progress from another terminal after defining the same `v2` helper:
 ```bash
 v2 python3 tools/run_prover_units.py \
   --status \
+  --exe release/bin/collatz_prover \
   --plan dist/search-v2/plan \
   --out dist/search-v2/results/prover
 ```
@@ -178,6 +179,7 @@ v2 python3 tools/run_verifier_units.py \
   --jobs "$JOBS" \
   --resume \
   --timeout 0 \
+  --order timing-desc \
   --heartbeat-seconds 60
 ```
 
@@ -186,6 +188,7 @@ Rust replay status is also non-mutating:
 ```bash
 v2 python3 tools/run_verifier_units.py \
   --status \
+  --exe release/bin/collatz_verify_unit \
   --plan dist/search-v2/plan \
   --out dist/search-v2/results/verifier
 ```
@@ -274,6 +277,16 @@ helper was invoked. No GitHub credential is stored on the VM. Bootstrap can
 take a few minutes. After connecting, the repository is at
 `/work/Collatz-m96-Certificates-Pipeline`; follow Definitive Production Run
 above from its first command.
+
+`dist/` is intentionally not stored in Git. To resume accepted local work on a
+fresh AWS data volume, stop the local runner and upload the state once:
+
+```bash
+scripts/aws_compute.sh upload-data
+```
+
+The upload refuses to run while a local runner lock is held and refuses to
+replace an existing remote `dist/search-v2/` directory.
 
 After committing scheduler or documentation fixes, update an existing remote
 checkout without deleting `dist/search-v2/`:
