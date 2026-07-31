@@ -15,7 +15,7 @@ that any nontrivial positive Collatz cycle must have at least 97 local minima.
 This is a certificate for the stated finite `m`-cycle exclusion, not a proof of
 the full Collatz conjecture. Its published mathematical inputs and remaining
 human-review obligations are listed in [the theorem-to-certificate
-map](docs/THEOREM_MAP.md). The immutable public artifact is [release
+map](docs/THEOREM_MAP.md). The versioned, hash-authenticated public artifact is [release
 v1.0.0](https://github.com/MaskoMys/Collatz-m96-Certificates-Pipeline/releases/tag/v1.0.0).
 
 ## TL;DR

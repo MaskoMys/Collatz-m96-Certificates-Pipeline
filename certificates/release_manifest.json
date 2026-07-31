@@ -27,13 +27,13 @@
     },
     {
       "path": "README.md",
-      "sha256": "0e6bb10d7584132a399d658b44977905d40ca6d720e3c0cc91ed988cd584ede4",
-      "size": 19468
+      "sha256": "395f3e9ebe04b120315b51296af1f396529fc170370b2b86bdd29843c9cb63fa",
+      "size": 19488
     },
     {
       "path": "certificates/README.md",
-      "sha256": "7acd9c99bf8e85cda23670c7bc0f23745729a04e2e072717397e81d802375540",
-      "size": 1838
+      "sha256": "ddc171875bafbbe7a96f753d6050edb1e0956168d508498d370ec231369a9158",
+      "size": 1848
     },
     {
       "path": "certificates/analytic/m92_96_reductions.json",
@@ -10902,8 +10902,8 @@
     },
     {
       "path": "docs/REPRODUCIBILITY.md",
-      "sha256": "23641062e0320640dcf8b5598eeab2ca83d8bda1137dfbc1c61a9e64ab6ee920",
-      "size": 2107
+      "sha256": "cba2ce0dde29e90a5a34aa8b70b028e182065f8adb956a9fe448bc9c57f0e18b",
+      "size": 2134
     },
     {
       "path": "docs/THEOREM_MAP.md",
@@ -10957,8 +10957,8 @@
     },
     {
       "path": "docs/publication_guide.md",
-      "sha256": "ae2ccb242e269e93defd11dd8606fabfb2b974ab7014aa4b04a7a0a30d386c5b",
-      "size": 5127
+      "sha256": "e7ed7e6bbc55914e614fd41d9f8b42fb372085054e2cb615d3338a003afa8146",
+      "size": 5154
     },
     {
       "path": "environment/Dockerfile",

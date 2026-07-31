@@ -157,9 +157,9 @@ complete paper publication still needs:
 
 ## 6. Archival Submission
 
-The immutable GitHub release is the first external integrity anchor. Consider
-archiving it with Zenodo and cite the release tag or DOI, not the moving `main`
-branch, in a manuscript or submission form.
+The versioned GitHub release and its published hashes are the first external
+integrity anchors. Consider archiving it with Zenodo and cite the release tag
+or DOI, not the moving `main` branch, in a manuscript or submission form.
 
 If the full raw archive is large, attach it to the GitHub release or Zenodo
 record rather than relying on local files outside version control.

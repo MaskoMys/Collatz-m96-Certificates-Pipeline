@@ -52,5 +52,5 @@ python3 scripts/verify_release_manifest.py
 ```
 
 Regenerate `certificates/release_manifest.json` and `SHA256SUMS` only after all
-release content is frozen. The final external integrity anchor is the immutable
-release tag or archival DOI.
+release content is frozen. The external integrity anchors are the versioned
+release tag, published hashes, and any future archival DOI.
