@@ -61,23 +61,29 @@ the generic suffix-block bound.
 
 ## Finite searches
 
-The accepted branch surfaces are:
+The authoritative search surface is frozen below `certificates/search-v2/`.
+It contains all 372 mathematical root branches for `m=92,...,96`, partitioned
+into 464 final work units. Each unit has an authenticated zero-hit result from
+both the optimized C++17/GMP prover and the separately implemented Rust/rug
+replay engine. The global certificate records `NO_M_CYCLE_92_TO_96`, zero
+hits, and zero unresolved units.
 
-- `examples/m92_m95_full_runs_2026-07-09/m*/runs/` for `m=92..95`;
-- `examples/m96_full_run_2026-07-06/runs/` for `m=96`.
+`verifiers/verify_global_search_certificate.py` independently checks exact
+root coverage, disjoint work-unit partitions, canonical identifiers, source and
+binary hashes, build and execution provenance, matching dual-engine counters,
+and zero survivors. The fixed-branch completeness argument is documented in
+`docs/m96/fixed_branch_completeness.md`.
 
-`scripts/verify_certificate.py` checks source identity, exact task cover,
-metadata schema, command arguments, exit status, timeout status, log hashes,
-case and branch markers, and the unique zero-hit result. The fixed-branch
-partition argument is documented in `docs/m96/fixed_branch_completeness.md`.
+The older logs under `examples/` remain historical corroboration and timing
+data. They are not inputs to the authoritative v2 result.
 
 ## Trust boundary
 
-`verify_all.py` verifies artifact integrity and every arithmetic certificate
-without rerunning the expensive branch searches. The raw branch logs are
-execution records, not compact proof traces: independent confirmation of the
-search computation requires rerunning the frozen source or producing a future
-pruning-witness certificate format.
+`verify_all.py --profile theorem-artifacts` verifies artifact integrity, every
+arithmetic certificate, the complete partition, both frozen result sets, and
+their provenance without rerunning the expensive searches. The
+`full-replay` profile additionally recomputes every frozen unit with the
+independent Rust engine.
 
 The following remain human proof-review obligations:
 

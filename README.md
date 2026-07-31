@@ -1,35 +1,48 @@
-# Collatz m=92-96 certificate pipeline
+# Certified exclusion of Collatz m-cycles for m=92-96
 
-This repository implements an exact-arithmetic certificate pipeline for the
-Hercher/Simons--de Weger Collatz cycle route for `m=92,93,94,95,96`.
+This repository contains a completed exact-arithmetic certificate excluding
+nontrivial positive Collatz `m`-cycles for every
+`m=92,93,94,95,96`. An `m`-cycle is a periodic orbit with exactly `m` local
+minima in one period.
 
-The mathematical reductions and the definitive engineering layer are present.
-The remaining computational step is to execute and independently replay the
-complete v2 search frontier, then freeze those results into the release. Until
-that production run exists, the repository intentionally emits no theorem
-marker.
+The frozen certificate covers all 372 mathematical root branches through 464
+final work units. Every unit was exhausted by both the optimized C++17/GMP
+prover and a separately implemented Rust/rug replay engine. The authenticated
+global result is `NO_M_CYCLE_92_TO_96`, with zero hits and zero unresolved
+units. Together with Hercher's published exclusion through `m=91`, this implies
+that any nontrivial positive Collatz cycle must have at least 97 local minima.
 
-The older 372 branch logs are preserved as historical execution records. They
-are useful corroboration and planning data, but they are not substitutes for
-the v2 dual-engine replay certificate.
+This is a certificate for the stated finite `m`-cycle exclusion, not a proof of
+the full Collatz conjecture. Its published mathematical inputs and remaining
+human-review obligations are listed in [the theorem-to-certificate
+map](docs/THEOREM_MAP.md). The immutable public artifact is [release
+v1.0.0](https://github.com/MaskoMys/Collatz-m96-Certificates-Pipeline/releases/tag/v1.0.0).
 
 ## TL;DR
 
-There is one definitive workflow: follow [Definitive Production
-Run](#definitive-production-run) from top to bottom. It builds the pinned
-environment, audits the committed repository, plans all 372 roots, runs both
-independent engines, freezes the evidence, and checks the computational
-acceptance marker.
+To verify the completed certificate without rerunning the expensive searches,
+run this from the repository root:
 
-If you only want to audit the current checkout, stop after the workflow's first
-`verify_all.py --profile fast` command. An `ACCEPT` result with a null theorem
-marker is expected until the production computation is frozen.
+```bash
+python3 -B verify_all.py --profile theorem-artifacts
+```
+
+Success is `"result": "ACCEPT"`, with 372 verified branches, 464 verified work
+units, cases 92 through 96, and the marker
+`ACCEPT_COMPUTATIONAL_ARTIFACT_SET_M_LE_96`. The `theorem_marker` field remains
+null by design: software can authenticate the exact reductions and exhaustive
+computations, but it cannot certify peer review of the imported theorems and
+human proof obligations.
+
+Only follow [Reproduce the Production Run](#reproduce-the-production-run) when
+you intentionally want to recompute the certificate from scratch.
 
 Do not rerun the legacy branch-log pipeline, and do not delete `examples/`.
 Legacy reproduction is documented separately in `docs/LEGACY_BRANCH_RUNS.md`.
 
-## Definitive Production Run
+## Reproduce the Production Run
 
+This section is for a new exhaustive reproduction, not ordinary verification.
 Authoritative production uses the pinned container and the authenticated
 binaries under `release/bin/`. Run the following from the repository root on
 an AMD64 Linux machine with Docker.
@@ -57,10 +70,11 @@ Set `JOBS` to the number of concurrent CPU-heavy processes the machine can
 sustain. Eight is a conservative starting point; do not blindly use the full
 logical-CPU count on a shared or thermally constrained machine.
 
-Confirm the committed inputs and authoritative binaries before computing:
+Confirm the completed committed artifact and authoritative binaries before
+computing:
 
 ```bash
-v2 python3 -B verify_all.py --profile fast
+v2 python3 -B verify_all.py --profile theorem-artifacts
 ```
 
 ### 1. Plan and verify all 372 roots
@@ -80,10 +94,11 @@ v2 python3 verifiers/verify_partition_manifest.py \
   --partitions dist/search-v2/plan
 ```
 
-The production plan contains 372 root branches and currently produces 434
-initial work units. Historical timings decide whether a branch receives one or
-two units. The two-unit cap is deliberate: root subdivision preserves coverage
-but duplicates search work and does not scale linearly. See
+The production plan contains 372 root branches. The released run began with
+434 work units and finished with an authenticated frontier of 464 units after
+controlled subdivision. Historical timings decide whether a branch initially
+receives one or two units. The two-unit cap is deliberate: root subdivision
+preserves coverage but duplicates search work and does not scale linearly. See
 [the production performance review](docs/PERFORMANCE_REVIEW_2026-07-23.md).
 
 ### 2. Run the C++/GMP prover
@@ -220,7 +235,7 @@ v2 python3 verifiers/verify_global_search_certificate.py \
   --verifier-binary release/bin/collatz_verify_unit
 ```
 
-### 5. Freeze and accept the computational artifact
+### 5. Freeze and accept a reproduced artifact
 
 Run this only after the mutable global verifier accepts. The freeze command
 refuses to overwrite an existing release certificate unless explicitly told to
@@ -250,9 +265,10 @@ Its success marker is:
 ACCEPT_COMPUTATIONAL_REPLAY_M_LE_96
 ```
 
-These are computational acceptance markers. The final paper theorem marker
-remains unavailable because manuscript synchronization is deliberately outside
-this engineering pass.
+These are computational acceptance markers. A null `theorem_marker` does not
+mean the frozen certificate is incomplete; it keeps automated artifact
+acceptance distinct from manuscript synchronization, independent mathematical
+review, and peer review.
 
 The estimated production budget is approximately 4,000 CPU-hours. Wall-clock
 time is roughly total CPU time divided by effective sustained parallelism, not
@@ -396,7 +412,7 @@ workflow.
 ```text
 certificates/analytic/       authenticated m=92..96 analytic inputs
 certificates/config/         generated and authenticated case configurations
-certificates/search-v2/      frozen production certificate, once completed
+certificates/search-v2/      completed frozen dual-engine certificate
 environment/                 pinned production build environment
 examples/                    committed historical runs and timing reports
 release/bin/                 authoritative C++ and Rust binaries
@@ -477,31 +493,32 @@ make freeze-authoritative-build
 That last command is a reproducible-build audit. It is not necessary merely to
 use the already authenticated binaries committed under `release/bin/`.
 
-## Current Acceptance Boundary
+## Release Status
 
-Available now:
+The completed certificate release contains:
 
 - exact analytic reductions and case configurations for m=92..96;
 - independent A28, A29, frontier, first-spike, structural, and descent checks;
 - 372 accepted historical branch records;
+- a frozen v2 partition covering all 372 mathematical branches with 464 work
+  units;
+- accepted C++/GMP and independent Rust/rug results for every work unit;
+- matching dual-engine counters, zero hits, and zero unresolved units;
+- complete build and execution provenance plus strict schemas and hashes;
 - canonical work-unit and result formats with strict schemas;
 - exact partition planning and adaptive subdivision;
 - optimized C++ prover and separately implemented Rust replay engine;
 - resumable runners, locks, status records, provenance, and quarantine;
 - reproducible authoritative binaries, mutation tests, fault injection, and CI.
 
-Still required for computational acceptance:
-
-- execute every final work unit with both engines;
-- freeze complete computation provenance and the v2 certificate;
-- obtain an independent full replay.
-
-Still required before presenting a final archival paper release:
+The repository therefore satisfies its computational acceptance contract and
+emits `ACCEPT_COMPUTATIONAL_ARTIFACT_SET_M_LE_96`. Work outside that contract
+still includes:
 
 - synchronize the manuscript and data-availability statement;
 - obtain independent mathematical review;
 - select explicit code, paper, and data licenses;
-- publish an immutable tagged release and archival DOI.
+- archive the tagged release with a DOI.
 
 ## Trust Boundary
 

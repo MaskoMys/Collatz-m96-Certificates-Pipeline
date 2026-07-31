@@ -27,8 +27,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "b5489ca508c17f32a57ef3bc58709bc95d515a16965baf46721a3fd6152db478",
-      "size": 18381
+      "sha256": "0e6bb10d7584132a399d658b44977905d40ca6d720e3c0cc91ed988cd584ede4",
+      "size": 19468
     },
     {
       "path": "certificates/README.md",
@@ -10907,8 +10907,8 @@
     },
     {
       "path": "docs/THEOREM_MAP.md",
-      "sha256": "e7a3d7b8e1314dcc328628aea8f1e724677c6876318cec2c3a2854fe06e84d44",
-      "size": 4807
+      "sha256": "76354a67f28cd074a6a897d65a2406bab0a5000ee0fabe112c2cac4a01f2ab97",
+      "size": 5225
     },
     {
       "path": "docs/knight_relevance.md",
@@ -10957,8 +10957,8 @@
     },
     {
       "path": "docs/publication_guide.md",
-      "sha256": "4d14c0ccdbf019788e557eacfcb01e082c95b9d1846131d24625ef6052482bd9",
-      "size": 5202
+      "sha256": "ae2ccb242e269e93defd11dd8606fabfb2b974ab7014aa4b04a7a0a30d386c5b",
+      "size": 5127
     },
     {
       "path": "environment/Dockerfile",

@@ -1,14 +1,12 @@
 # Publication readiness guide
 
-This guide tracks what must be true before this repository should be advertised
-as a completed public certificate release.
+This guide distinguishes the completed public computational certificate from
+the remaining manuscript, review, licensing, and archival work.
 
-The current checkout is a reorganized pipeline with a committed full branch-run
-example. It is suitable for reviewing the source, manifests, proof notes,
-smoke-test verifier, the configured `m=92..96` manifests, accepted `m=92..95`
-companion outputs, and one accepted `m=96` 75-branch output. It is not yet the
-immutable supplementary archive described by the manuscript PDF, but the full
-affine-ladder artifact now verifies with `python3 -B verify_all.py`.
+The current checkout contains the frozen dual-engine certificate excluding
+nontrivial positive Collatz `m`-cycles for `m=92,...,96`. It covers all 372
+mathematical branches with 464 final work units and verifies with
+`python3 -B verify_all.py --profile theorem-artifacts`.
 
 ## 1. Local Smoke Check
 
@@ -130,35 +128,37 @@ derived by the exact reduction verifier.
 An accepted example output is committed at
 `examples/m92_m95_full_runs_2026-07-09/`.
 
-## 4. Release Pieces Still Needed
+## 4. Work Outside the Computational Certificate
 
-The computational release now has exact reductions, all manuscript certificate
-families, a whole-file manifest, `SHA256SUMS`, one-command verification, and
-adversarial tests. The complete publication still needs:
+The computational release has exact reductions, all manuscript certificate
+families, two independently implemented exhaustive engines, a whole-file
+manifest, `SHA256SUMS`, one-command verification, and adversarial tests. A
+complete paper publication still needs:
 
 - the LaTeX source and a reproducible PDF build;
-- a license selected by the author;
-- independent mathematical review and a second full computation;
-- release notes that state exactly what is proved and what remains conditional.
+- independent mathematical review;
+- paper and data licenses selected by the author;
+- manuscript synchronization with the in-house `m=92,...,95` certificates.
 
 ## 5. GitHub Publication Checklist
 
-- [x] README status matches the shipped affine-ladder artifacts.
+- [x] README status matches the completed v2 certificate.
 - [x] `python3 scripts/certify_constants.py` succeeds.
 - [x] `python3 scripts/verify_reduction_certificates.py` succeeds.
-- [ ] CI smoke test is green.
+- [x] CI smoke test is green.
 - [x] The sample branch verifier accepts.
 - [x] The `m=92`, `m=93`, `m=94`, and `m=95` branch verifiers accept.
 - [x] The `m=96` full branch verifier accepts all 75 tasks.
 - [ ] The manuscript data-availability statement matches the release contents.
-- [ ] No compiled binary is tracked.
+- [x] The two authoritative binaries are tracked with reproducible-build
+      provenance.
 - [ ] A license is present.
-- [ ] The release tag points to the verified commit.
+- [x] The release tag points to the verified commit.
 
 ## 6. Archival Submission
 
-After the full artifact exists, create an immutable GitHub release and consider
-archiving it with Zenodo. Cite the release tag or DOI, not the moving `main`
+The immutable GitHub release is the first external integrity anchor. Consider
+archiving it with Zenodo and cite the release tag or DOI, not the moving `main`
 branch, in a manuscript or submission form.
 
 If the full raw archive is large, attach it to the GitHub release or Zenodo
