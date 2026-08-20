@@ -40,15 +40,17 @@ jobs:
 
       - name: Verify frozen v1.0.0 release artifact
         run: |
-          git fetch --depth=1 origin refs/tags/v1.0.0:refs/tags/v1.0.0
+          git fetch --force --tags origin
           frozen_dir="$(mktemp -d)"
           git archive v1.0.0 | tar -x -C "$frozen_dir"
+
           (
-          cd "$frozen_dir"
-          python3 -B verify_all.py --profile fast --skip-tests
+            cd "$frozen_dir"
+            make build-all
+            python3 -B verify_all.py --profile fast --skip-tests
           )
+
           rm -rf "$frozen_dir"
-          run: python3 -B verify_all.py --profile fast --skip-tests
 
       - name: Build m96 search engine
         run: |
