@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: >-
+  If you use the computational certificate, please cite the versioned Zenodo
+  release and the associated manuscript.
+title: "Certificates of Collatz m-Cycles for m <= 96"
+type: software
+authors:
+  - family-names: Mghirbi
+    given-names: Nidhal
+version: 1.0.0
+date-released: 2026-07-31
+doi: 10.5281/zenodo.21724745
+repository-code: "https://github.com/MaskoMys/Collatz-m96-Certificates-Pipeline"
+url: "https://doi.org/10.5281/zenodo.21724745"
+license: MIT
+keywords:
+  - Collatz problem
+  - m-cycles
+  - computer-assisted proof
+  - exact arithmetic
+  - reproducibility
